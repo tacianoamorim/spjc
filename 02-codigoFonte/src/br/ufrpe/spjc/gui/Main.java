@@ -1,5 +1,7 @@
 package br.ufrpe.spjc.gui;
 
+import br.ufrpe.spjc.negocio.controlador.ControladorJuizado;
+
 public class Main {
 	public static void main(String[] args) {
         try {
@@ -21,6 +23,9 @@ public class Main {
 
         java.awt.EventQueue.invokeLater(() -> {
             try {
+            	System.out.println("Main Ini");
+            	ControladorJuizado.getInstance().inserir();
+            	System.out.println("Main Fim");
                 //FrmOpcao app= new FrmOpcao();
                 //app.setVisible(true);
             } catch (Throwable e) {
