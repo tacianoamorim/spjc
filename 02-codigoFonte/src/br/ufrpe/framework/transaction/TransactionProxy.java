@@ -1,7 +1,7 @@
 package br.ufrpe.framework.transaction;
 
-
 import java.lang.reflect.Method;
+import java.sql.Connection;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -20,7 +20,6 @@ public class TransactionProxy implements MethodInterceptor {
         e.setCallback(new TransactionProxy());
         //cria uma nova instancia do objeto de negocio com o proxy plugado nela
         return e.create();
-
     }
 
     /**
@@ -28,25 +27,27 @@ public class TransactionProxy implements MethodInterceptor {
      */
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws
         Throwable, Exception {
-        //resultado da execu��o do m�todo interceptado
+        //resultado da execucao do metodo interceptado
         Object result = null;
-        TransactionManager tm = TransactionManager.instance();
+        TransactionManager transactionManager= new TransactionManager();
+        Connection con = transactionManager.getConnection();
+        boolean resultTransaction= true;
+        
         try {
             //fazer um start Transaction
-            tm.startTransaction();
-            //executar o m�todo interceptado
+        	transactionManager.getTransaction(con);
+            //executar o metodo interceptado
             result = proxy.invokeSuper(obj, args);
+            
         } catch (Throwable ex) {
             //fazer um set roll back only
-            tm.setRollBackOnly();
+        	resultTransaction= false;
             throw ex;
         } finally {
-            //fazer um finish Transaction
-            tm.finishTransaction();
+        	transactionManager.doFinishTransaction(con, resultTransaction);
         }
-        //chama o m�todo do objeto interceptado
+        //chama o metodo do objeto interceptado
         return result;
-
     }
 
 }

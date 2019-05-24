@@ -7,38 +7,42 @@
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Sistemas Processual de Juizados Civeis</name>
-	<url>http://maven.apache.org</url>
 
 	<dependencies>
+		<!-- Teste unitario -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
-			<scope>test</scope>vc
+		</dependency>
+
+		<!-- Dependencias banco dados -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.199</version>
-			<scope>test</scope>
 		</dependency>
+
+		<!-- Dependencias banco dados -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-full</artifactId>
 			<version>2.0.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.mchange</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.5.4</version>
-		</dependency>
+
+		<!-- Sistema de log -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
-    
+
 	<build>
 		<finalName>spjc</finalName>
 		<plugins>
@@ -53,4 +57,11 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>my-alternate-repository</id>
+			<url>http://myrepo.net/repo</url>
+		</repository>
+	</repositories>
 </project>
