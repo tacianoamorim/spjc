@@ -66,8 +66,8 @@ CREATE TABLE Execucao (
 CREATE INDEX FK_Execucao_Processo ON Execucao (processo);
 
 CREATE TABLE Processo (
-  dataAjuizamento                INTEGER UNSIGNED NOT NULL
- ,dataBaixa                      DATETIME NULL
+  dataAjuizamento                DATE NOT NULL
+ ,dataBaixa                      DATE NULL
  ,juizado                        INTEGER UNSIGNED NOT NULL
  ,npu                            VARCHAR(20) NOT NULL
  ,observacao                     VARCHAR(512) NULL
@@ -165,7 +165,7 @@ CREATE TABLE Servidor (
  ,dataFim                        DATE NULL
  ,dataInicio                     DATE NULL
  ,endereco                       INTEGER UNSIGNED NOT NULL
- ,juizado                        INTEGER UNSIGNED NOT NULL
+ ,juizado                        INTEGER UNSIGNED NULL
  ,matricula                      INTEGER UNSIGNED NOT NULL
  ,nome                           VARCHAR(100) NOT NULL
  ,numeroEndereco                 VARCHAR(10) NULL
@@ -261,11 +261,11 @@ CREATE INDEX FK_ProcessoRepresentante_Processo ON ProcessoRepresentante (process
 CREATE INDEX FK_ProcessoRepresentante_Representante ON ProcessoRepresentante (representante);
 
 CREATE TABLE Comunicacao (
-  dataHoraEnvio                  TIMESTAMP NOT NULL
+  id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
+ ,dataHoraEnvio                  TIMESTAMP NOT NULL
  ,dataHoraRecebimento            TIMESTAMP NULL
- ,id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
  ,numeroAR                       VARCHAR(10) NULL
- ,parte                          INTEGER UNSIGNED NOT NULL
+ ,parte                          INTEGER UNSIGNED NULL
  ,servidor                       VARCHAR(11) NOT NULL
  ,testemunha                     INTEGER UNSIGNED NULL
  ,texto                          VARCHAR(512) NOT NULL
