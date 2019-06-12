@@ -1,3 +1,5 @@
+USE DBSPJC;
+
 # Listar todas os envolvidos no processo
 SELECT p.npu, pf.nome, pt.email, 'Parte', pt.polo
 FROM Processo p 

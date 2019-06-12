@@ -32,8 +32,8 @@ CREATE TABLE Pauta (
 CREATE INDEX FK_EstadoPauta ON Pauta (estadoPauta);
 
 CREATE TABLE Feito (
-  nome                           INTEGER UNSIGNED NOT NULL
- ,id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
+   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
+  ,nome                           INTEGER UNSIGNED NOT NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
