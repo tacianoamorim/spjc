@@ -1,0 +1,9 @@
+package br.ufrpe.spjc.gui
+
+import javafx.scene.layout.AnchorPane
+
+component Principal {
+	AnchorPane {
+		//TODO Add Nodes
+	}
+}
