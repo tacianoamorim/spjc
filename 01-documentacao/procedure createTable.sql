@@ -1,4 +1,3 @@
-delimiter :
 create procedure createTable
 begin
 	use company;
@@ -11,7 +10,8 @@ begin
 	 new_salary decimal, 
 	 percentual_aumento decimal, 
 	 dataAlteracao Date,
-	 PRIMARY KEY (sequencial)
+	 primary key (sequencial),
+	 foreign key (ssn) references employee(empid)
 	);
 
-end : 
+end; 

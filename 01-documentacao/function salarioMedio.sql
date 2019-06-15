@@ -1,9 +1,10 @@
 delimiter :
-create trigger update_salary2
-after update on employee
-for each row
+create function salarioMedio(id integer) 
+returns decimal
+deterministic
 begin
-
+	
+	declare valor decimal;
 	if old.dno is not null then
 		update deptsal
 		set totalsalary= totalsalary - old.salary
