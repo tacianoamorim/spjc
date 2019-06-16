@@ -1,7 +1,9 @@
-create procedure createTable
+delimiter //
+DROP PROCEDURE IF EXISTS COMPANY.createTable //
+
+create procedure COMPANY.createTable()
 begin
-	use company;
-	create table if not exists LOG_AUDIT_GERENTE ( 
+	create table if not exists COMPANY.LOG_AUDIT_GERENTE ( 
 	 sequencial integer AUTO_INCREMENT NOT NULL, 
 	 empid integer,
 	 user varchar(40), 
@@ -10,8 +12,7 @@ begin
 	 new_salary decimal, 
 	 percentual_aumento decimal, 
 	 dataAlteracao Date,
-	 primary key (sequencial),
-	 foreign key (ssn) references employee(empid)
+	 primary key (sequencial)
 	);
 
-end; 
+end; //
