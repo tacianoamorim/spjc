@@ -41,17 +41,17 @@ INSERT INTO EstadoAudiencia (id, nome) VALUES
 (6, 'Cancelada'),
 (7, 'Suspensa e Bloqueada');
 
-INSERT INTO Fase (id, nome) VALUES
-(1, 'Conciliatória'),
-(2, 'Instrutória'),
-(3, 'Encerramento'),
-(4, 'Recursal'),
-(5, 'Execução - Andamento'),
-(6, 'Execução - Suspensão'),
-(7, 'Execução - Diligência'),
-(8, 'Execução - Encerramento'),
-(9, 'Execução - Retorno à Origem'),
-(10, 'Vinculações');
+INSERT INTO Fase (id, nome, descricao) VALUES
+(1, 'Conciliatória',' Ajuste para conciliacao'),
+(2, 'Instrutória', 'Ajuste para instrutorio'),
+(3, 'Encerramento', 'Encerramento de lado'),
+(4, 'Recursal', NULL),
+(5, 'Execução - Andamento', NULL),
+(6, 'Execução - Suspensão', NULL),
+(7, 'Execução - Diligência', NULL),
+(8, 'Execução - Encerramento', NULL),
+(9, 'Execução - Retorno à Origem', NULL),
+(10, 'Vinculações', NULL);
 
 INSERT INTO Feito (id, nome) VALUES
 (1, 'Cobrança de Dívidas'),
@@ -62,13 +62,7 @@ INSERT INTO Feito (id, nome) VALUES
 (6, 'Relação de Seguro de'),
 (7, 'Saúde, Relação de Serviços de Educação'),
 (8, 'Reivindicação de Bens Móveis e Semoventes'),
-(9, 'Indenização por Danos Morais'),
-(10, 'Cobrança de Taxas Condominiais'),
-(11, 'Relação de Vizinhança'),
-(12, 'Ação de Despejo para Uso Próprio'),
-(13, 'Ação Possessória'),
-(14, 'Cumprimento de Sentença'),
-(15, 'Execução de Título Extrajudicial');
+(9, 'Indenização por Danos Morais');
 
 INSERT INTO Endereco (cep, cidade, pais, estado, bairro, rua) VALUES
 (50920135, 'Recife', 'Brasil', 'PE', 'Jardim São Paulo', 'Av. Liberdade'),
@@ -103,10 +97,10 @@ INSERT INTO Servidor (cpf,dataFim,dataInicio,endereco,juizado,matricula,nome,num
 ('46473646353', '2023-05-02', '2019-06-10', 50400110, NULL, 1678221,'Joao Batista','1783','123456789','T'),
 ('74857574774', '2023-09-01', '2019-06-10', 50920135, NULL, 1283746,'Marcos Silva','1','18936475','C');
 
-INSERT INTO  CursoEspecializacao (id,servidor,dataConclusao,nivel,nome) VALUE 
-(1, '84637673636', '2017-06-09', 'superior', 'Contabilidade'), 
-(2, '84637673636', '2010-06-09', 'superior', 'Administracao'), 
-(3, '98764736373', '2003-11-01', 'superior', 'Contabilidade'); 
+INSERT INTO  CursoEspecializacao (id,servidor,dataConclusao,nivel,nome,cargaHoraria) VALUE 
+(1, '84637673636', '2017-06-09', 'superior', 'Contabilidade',68), 
+(2, '84637673636', '2010-06-09', 'superior', 'Administracao',60), 
+(3, '98764736373', '2003-11-01', 'superior', 'Contabilidade',120); 
 
 INSERT INTO Juizado (id,dataFim,dataInicio,endereco,magistrado,nome,numeroEndereco,servidorChefe,telefone) VALUES
 (1, '2020-06-10','2019-06-10',50000000,'71874846073','Juizados Civeis 1G','45C','98764736373','081 99991-8752'),
@@ -166,10 +160,10 @@ INSERT INTO Recebimento (id,execucao,dataVencimento,numeroParcela,observacao,val
 (1,1, '2019-07-10', 1, 'Obs 1', 501.20),
 (2,1, '2019-08-10', 2, 'Obs 2', 502.50),
 (3,1, '2019-09-10', 3, 'Obs 3', 505.00),
-(4,2, '2019-07-10', 1, 'Obs 1', 4000.00),
-(5,2, '2019-08-10', 2, 'Obs 2', 4200.00),
-(6,2, '2019-09-10', 3, 'Obs 3', 4350.00),
-(7,2, '2019-10-10', 4, 'Obs 4', 4500.00);
+(4,2, '2019-07-10', 1, 'Obs 1', 400.00),
+(5,2, '2019-08-10', 2, 'Obs 2', 420.00),
+(6,2, '2019-09-10', 3, 'Obs 3', 435.00),
+(7,2, '2019-10-10', 4, 'Obs 4', 450.00);
 
 INSERT INTO Representante (cpf,nome,email,matricula,numeroEndereco,oab,polo,senha,telefone,tipoRepresentante) VALUES 
 ('15411554486','Paulo Andrade Lima', 'andradelima@uol.com', NULL, '150', '13256-PE','A','123456','81 96589-9856','D'),
@@ -209,12 +203,6 @@ INSERT INTO Testemunha(id,nome, email, numeroEndereco, polo, telefone, dataNasci
 (4,'Pedro Souza','psouza@uol.com.br','1','A','81 84567-8976','1996-07-01'),
 (5,'Mario Lopes','mlopes@ter.com.br','4','A','81 99984-8444','1970-07-01');
 
-INSERT INTO Comunicacao (id, parte, testemunha, servidor, texto, dataHoraEnvio, tipoComunicacao, numeroAR, dataHoraRecebimento) VALUES 
-(1, 1, NULL,'98764736373','TEXTO','2000-09-01 14:00:00','I','1231245637','2000-09-01 14:00:00'), 
-(2, 2, NULL,'00394575873','TEXTO','2000-07-03 16:00:00','C','5436781234','2010-10-01 15:00:00'),
-(3, NULL, 3,'02198374484','TEXTO','2000-07-03 16:40:00','I','9856734510','2016-07-10 16:30:00'),
-(4, NULL, 4,'03576768574','TEXTO','2000-07-03 17:30:00','C','0987346271','2002-09-01 10:00:00');
-
 INSERT INTO Movimentacao (id, processo, servidor, tipoMovimentacao, dataHota) VALUES 
 (1, '00051564620198170002','00394575873', 1,'2019-01-03 14:00'), 
 (2, '00051564620198170002','00394575873', 2,'2019-02-03 15:00'), 
@@ -231,11 +219,11 @@ INSERT INTO Documento (id,magistrado,servidor,representante,processo,documentopr
 (3,'09457374848','02198374484', NULL,'00051564620198170002', NULL,3,'2019-05-08','texto sdkh kjhkjh ajkhdjash jdkashdjk ahkjd'),
 (4,'74837585484','03576768574', NULL,'00145656920198170001', NULL,4,'2019-03-04','texto jkggakkskA S GaksgkAGSKJaskjA KJSGajksgKAJSGKJagskjAGKJSagksjAGKJSakjsk');
 
-INSERT INTO ProcessoFase (id,fase,processo,dataregistro) VALUES 
-(1, 1, '00051564620198170002','2000-09-01'), 
-(2, 2, '00051564620198170002','2000-07-03'),
-(3, 3, '00123948920198170001','2000-10-08'),
-(4, 4, '00123948920198170001','2000-03-04');
+INSERT INTO ProcessoFase (id,fase,processo,dataregistro,faseAtual) VALUES 
+(1, 1, '00051564620198170002','2000-09-01 12:01:00',false), 
+(2, 2, '00051564620198170002','2000-07-03 20:00:00',true),
+(3, 3, '00123948920198170001','2000-10-08 11:03:01',true),
+(4, 4, '00123948920198170001','2000-03-04 12:13:09',true);
 
 INSERT INTO ProcessoTestemunha (processo,testemunha) VALUES 
 ('00051564620198170002', 1), 
@@ -243,18 +231,44 @@ INSERT INTO ProcessoTestemunha (processo,testemunha) VALUES
 ('00123948920198170001', 3), 
 ('00445554520198170002', 4); 
 
-
 INSERT INTO ProcessoFeito (processo, feito) VALUES 
 ('00051564620198170002', 1), 
 ('00051564620198170002', 2), 
 ('00123948920198170001', 3), 
 ('00445554520198170002', 4);
 
-
 INSERT INTO ProcessoParte (processo,parte) VALUES 
 ('00051564620198170002', 1), 
 ('00051564620198170002', 2), 
 ('00123948920198170001', 3), 
 ('00445554520198170002', 4); 
+
+INSERT INTO ComunicacaoParte (id, parte,servidor) VALUES 
+(1, 1, '98764736373'), 
+(2, 1, '98764736373'), 
+(3, 2, '98764736373'), 
+(4, 2, '98764736373'),
+(5, 1, '98764736373');
+
+INSERT INTO ComunicacaoTestemunha (id, testemunha,servidor) VALUES 
+(1, 1, '98764736373'), 
+(2, 1, '98764736373'), 
+(3, 2, '98764736373'), 
+(4, 2, '98764736373'),
+(5, 1, '98764736373');
+
+INSERT INTO CorrespondenciaParte (id, comunicacaoParte, texto, dataHoraEnvio, tipoComunicacao, numeroAR, dataHoraRecebimento) VALUES 
+(1, 1, 'TEXTO 1','2000-09-01 14:00:00','I','1231245637','2000-09-01 14:00:00'), 
+(2, 2, 'TEXTO 2','2000-07-03 16:00:00','C','5436781234','2010-10-01 15:00:00'),
+(3, 3, 'TEXTO 3','2000-07-03 16:40:00','I','9856734510','2016-07-10 16:30:00'),
+(4, 4, 'TEXTO 4','2000-07-03 17:30:00','C','0987346271','2002-09-01 10:00:00'),
+(5, 5, 'TEXTO 5','2000-07-03 17:30:00','C','0987346271','2002-09-01 10:00:00');
+
+INSERT INTO CorrespondenciaTestemunha (id, comunicacaoTestemunha, texto, dataHoraEnvio, tipoComunicacao, numeroAR, dataHoraRecebimento) VALUES 
+(1, 1, 'TEXTO 6','2000-09-01 14:00:00','I','1231245637','2000-09-01 14:00:00'), 
+(2, 2, 'TEXTO 7','2000-07-03 16:00:00','C','5436781234','2010-10-01 15:00:00'),
+(3, 3, 'TEXTO 8','2000-07-03 16:40:00','I','9856734510','2016-07-10 16:30:00'),
+(4, 4, 'TEXTO 9','2000-07-03 17:30:00','C','0987346271','2002-09-01 10:00:00'),
+(5, 5, 'TEXTO 10','2000-07-03 17:30:00','C','0987346271','2002-09-01 10:00:00');
 
 COMMIT;

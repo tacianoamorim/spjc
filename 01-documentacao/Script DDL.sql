@@ -16,7 +16,7 @@ CREATE TABLE Juizado (
  ,telefone                       VARCHAR(100) NOT NULL
  ,numeroEndereco                 VARCHAR(10) NOT NULL
  ,dataInicio                     DATE NULL
- ,dataFim                        INTEGER UNSIGNED NULL
+ ,dataFim                        DATE NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_Juizado_Endereco ON Juizado (endereco);
@@ -59,7 +59,7 @@ CREATE TABLE Execucao (
  ,processo                       VARCHAR(20) NOT NULL
  ,numeroParcelas                 INTEGER UNSIGNED NOT NULL
  ,dataRegistro                   DATETIME NOT NULL
- ,valorTotalDivida               DECIMAL NOT NULL
+ ,valorTotalDivida               DECIMAL(10,2) NOT NULL
  ,dataCumprimento                DATETIME NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
@@ -138,7 +138,7 @@ CREATE TABLE Recebimento (
  ,execucao                       INTEGER UNSIGNED NOT NULL
  ,numeroParcela                  INTEGER UNSIGNED NOT NULL
  ,dataVencimento                 DATE NOT NULL
- ,valor                          DECIMAL NOT NULL
+ ,valor                          DECIMAL(10,2)  NOT NULL
  ,dataPagamento                  DATE NULL
  ,observacao                     VARCHAR(512) NULL
  ,PRIMARY KEY (id)
@@ -202,7 +202,7 @@ CREATE TABLE Movimentacao (
  ,processo                       VARCHAR(20) NOT NULL
  ,servidor                       VARCHAR(11) NOT NULL
  ,tipoMovimentacao               INTEGER UNSIGNED NOT NULL
- ,dataHota                       TIMESTAMP NOT NULL
+ ,dataHota                       DATETIME NOT NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_Movimentacao_TipoMovimentacao ON Movimentacao (tipoMovimentacao);
@@ -215,14 +215,12 @@ CREATE TABLE ProcessoFase (
   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
  ,fase                           INTEGER UNSIGNED NOT NULL
  ,processo                       VARCHAR(20) NOT NULL
- ,dataRegistro                   INTEGER UNSIGNED NOT NULL
+ ,dataRegistro                   DATETIME NOT NULL
  ,faseAtual                      BOOL NOT NULL DEFAULT false
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_ProcessoFase_Processo ON ProcessoFase (processo);
-
 CREATE INDEX FK_ProcessoFase_Fase ON ProcessoFase (fase);
-
 CREATE UNIQUE INDEX UN_Fase_Processo ON ProcessoFase (fase, processo);
 
 CREATE TABLE Documento (
@@ -233,11 +231,11 @@ CREATE TABLE Documento (
  ,processo                       VARCHAR(20) NOT NULL
  ,documentoPrincipal             INTEGER UNSIGNED NULL
  ,tipoDocumento                  INTEGER UNSIGNED NOT NULL
- ,dataCriacao                    TIMESTAMP NULL
+ ,dataCriacao                    DATETIME NULL
  ,texto                          VARCHAR(5000) NULL
  ,arquivo                        BLOB NULL
  ,assinatura                     VARCHAR(512) NULL
- ,dataAssinatura                 TIMESTAMP NULL
+ ,dataAssinatura                 DATETIME NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_Documento_TipoDocumento ON Documento (tipoDocumento);
@@ -265,6 +263,7 @@ CREATE TABLE Representante (
  ,matricula                      INTEGER UNSIGNED NULL
  ,PRIMARY KEY (cpf)
 ) ENGINE=InnoDB;
+
 CREATE TABLE ProcessoRepresentante (
   processo                       VARCHAR(20) NOT NULL
  ,representante                  VARCHAR(11) NOT NULL
@@ -278,10 +277,10 @@ CREATE TABLE CorrespondenciaParte (
   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
  ,comunicacaoParte               INTEGER UNSIGNED NOT NULL
  ,texto                          VARCHAR(512) NOT NULL
- ,dataHoraEnvio                  TIMESTAMP NOT NULL
+ ,dataHoraEnvio                  DATETIME NOT NULL
  ,tipoComunicacao                CHAR(1) NOT NULL
  ,numeroAR                       VARCHAR(10) NULL
- ,dataHoraRecebimento            TIMESTAMP NULL
+ ,dataHoraRecebimento            DATETIME NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_CorrespondenciaParte_ComunicacaoParte ON CorrespondenciaParte (comunicacaoParte);
@@ -310,7 +309,7 @@ CREATE TABLE CorrespondenciaTestemunha (
  ,dataHoraEnvio                  TIMESTAMP NOT NULL
  ,tipoComunicacao                CHAR(1) NOT NULL
  ,numeroAR                       VARCHAR(10) NULL
- ,dataHoraRecebimento            TIMESTAMP NULL
+ ,dataHoraRecebimento            DATETIME NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_CorrespondenciaTestemunha_ComunicacaoTestemumha ON CorrespondenciaTestemunha (comunicacaoTestemunha);

@@ -6,20 +6,14 @@ create function DBSPJC.faseAtualProcesso(npu VARCHAR(20))
 returns int
 deterministic
 begin
-	declare fase double;
-	set fase= 0;
-    select avg(salary) INTO media 
-    from COMPANY.employee;
-    select *
+	declare codigoFase double;
+	set codigoFase= 0;
+    
+    select id INTO codigoFase
 	from DBSPJC.ProcessoFase pf
-	where pf.processo= '00051564620198170002'
-	AND id = (
-	select MAX(id)
-	from DBSPJC.ProcessoFase
-	where processo= pf.processo
-	)    
-	return fase;
+	where pf.processo= npu
+		and pf.faseAtual= 1;
+	   
+	return codigoFase;
 
 end :
-
-
