@@ -51,7 +51,8 @@ INSERT INTO Fase (id, nome, descricao) VALUES
 (7, 'Execução - Diligência', NULL),
 (8, 'Execução - Encerramento', NULL),
 (9, 'Execução - Retorno à Origem', NULL),
-(10, 'Vinculações', NULL);
+(10, 'Vinculações', NULL),
+(11, 'Finalizado', NULL);
 
 INSERT INTO Feito (id, nome) VALUES
 (1, 'Cobrança de Dívidas'),
