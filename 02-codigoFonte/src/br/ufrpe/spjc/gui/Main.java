@@ -19,8 +19,6 @@ public class Main {
             	//cargaInicial();
             	FrmLogin window= new FrmLogin();
             	window.setVisible(true);
-//				FrmLogin window = new FrmLogin();
-//				window.setVisible(true);
 				
             } catch (Throwable e) {
                 e.printStackTrace();

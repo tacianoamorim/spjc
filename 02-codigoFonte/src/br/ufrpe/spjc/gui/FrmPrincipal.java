@@ -22,32 +22,17 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import br.ufrpe.spjc.util.Constantes;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 public class FrmPrincipal {
 
-	JFrame frame;
+	JFrame frmSpjcSistema;
 	private JDesktopPane desktop;
 	
 	public static String acaoInicializacao;
 	public static String perfilLogado;
-	
-//	public static Professor professorLogado;
-//	public static Aluno alunoLogado;
-
-	private final JToolBar tbProfessor = new JToolBar();
-	private JButton tbBtnAluno;
-	private JButton tbBtnProfessor;
-	private JSeparator separator;
-	private JSeparator separator_1;
-	private JButton tbBtnDisciplina;
-	private JSeparator separator_2;
-	private JButton tbBtnRendimentoEscolar;
-	private JSeparator separator_3;
-	private JButton tbBtnTurma;
-	private JSeparator separator_4;
-	private JButton tbBtnSair;
-	private Panel pnlTree;
-	private JTree tree;
 	
 	private DefaultMutableTreeNode root;
 
@@ -76,7 +61,6 @@ public class FrmPrincipal {
     		tbBtnTurma.setEnabled(true);
 			tbBtnRendimentoEscolar.setEnabled(true);				
 		}
-		tbBtnSair.setEnabled(true);
 	}
 
 
@@ -84,126 +68,71 @@ public class FrmPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 828, 490);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("SIGA");
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
+		frmSpjcSistema = new JFrame();
+		frmSpjcSistema.setResizable(false);
+		frmSpjcSistema.setBounds(100, 100, 828, 490);
+		frmSpjcSistema.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSpjcSistema.setTitle("SPJC - Sistema Judicial de Juizados Cíveis");
+		frmSpjcSistema.getContentPane().setLayout(new BoxLayout(frmSpjcSistema.getContentPane(), BoxLayout.X_AXIS));
 		
 		desktop = new JDesktopPane();
-		frame.setContentPane(desktop);
+		frmSpjcSistema.setContentPane(desktop);
 
 		//Make dragging a little faster but perhaps uglier.
 	    desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
 	    desktop.setLayout(null);
 	    
-	    JPanel pnlBarraTarefa = new JPanel();
-	    pnlBarraTarefa.setBounds(0, 0, 822, 51);
-	    desktop.add(pnlBarraTarefa);
-	    pnlBarraTarefa.add(tbProfessor);
-	    tbProfessor.setFloatable(false);
+	    JMenuBar menuBar = new JMenuBar();
+	    menuBar.setBounds(0, 0, 254, 21);
+	    desktop.add(menuBar);
 	    
-	    tbBtnAluno = new JButton(" Aluno   ");
-	    tbBtnAluno.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		//FrmAluno frmCadastroAluno= new FrmAluno();
-	    		//frmCadastroAluno.setVisible(true);
-	    	}
-	    });
-	    tbBtnAluno.setEnabled(false);
-	    tbBtnAluno.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/image/aluno_32.png")));
-	    tbBtnAluno.setBackground(Color.WHITE);
-	    tbProfessor.add(tbBtnAluno);
+	    JMenu mnCrudTipoI = new JMenu("CRUD Tipo I");
+	    menuBar.add(mnCrudTipoI);
 	    
-	    separator = new JSeparator();
-	    separator.setOrientation(SwingConstants.VERTICAL);
-	    tbProfessor.add(separator);
+	    JMenuItem mntmRepresentante = new JMenuItem("Representante");
+	    mnCrudTipoI.add(mntmRepresentante);
 	    
-	    tbBtnProfessor = new JButton(" Professor    ");
-	    tbBtnProfessor.setEnabled(false);
-	    tbBtnProfessor.setBackground(Color.WHITE);
-	    tbBtnProfessor.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		//FrmProfessor frmProfessor= new FrmProfessor();
-	    		//frmProfessor.setVisible(true);
-	    	}
-	    });
-	    tbBtnProfessor.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/image/professor_32.png")));
-	    tbProfessor.add(tbBtnProfessor);
+	    JMenuItem mntmParte = new JMenuItem("Parte");
+	    mnCrudTipoI.add(mntmParte);
 	    
-	    separator_1 = new JSeparator();
-	    separator_1.setOrientation(SwingConstants.VERTICAL);
-	    tbProfessor.add(separator_1);
+	    JMenuItem mntmMagistrado = new JMenuItem("Magistrado");
+	    mnCrudTipoI.add(mntmMagistrado);
 	    
-	    tbBtnDisciplina = new JButton(" Disciplina   ");
-	    tbBtnDisciplina.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		//FrmDisciplina frmDisciplina= new FrmDisciplina();
-	    		//frmDisciplina.setVisible(true);
-	    	}
-	    });
-	    tbBtnDisciplina.setEnabled(false);
-	    tbBtnDisciplina.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/image/disciplina_32.png")));
-	    tbBtnDisciplina.setBackground(Color.WHITE);
-	    tbProfessor.add(tbBtnDisciplina);
+	    JMenu mnCrudTipoII = new JMenu("CRUD Tipo II");
+	    menuBar.add(mnCrudTipoII);
 	    
-	    separator_3 = new JSeparator();
-	    separator_3.setOrientation(SwingConstants.VERTICAL);
-	    tbProfessor.add(separator_3);
+	    JMenu mnDocumento = new JMenu("Documento");
+	    mnCrudTipoII.add(mnDocumento);
 	    
-	    tbBtnTurma = new JButton(" Turma   ");
-	    tbBtnTurma.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		//FrmTurma frmTurma= new FrmTurma();
-	    		//frmTurma.setVisible(true);
-	    	}
-	    });
-	    tbBtnTurma.setEnabled(false);
-	    tbBtnTurma.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/image/classe_32.png")));
-	    tbBtnTurma.setBackground(Color.WHITE);
-	    tbProfessor.add(tbBtnTurma);
+	    JMenuItem mntmComunicao = new JMenuItem("Comunicação");
+	    mnCrudTipoII.add(mntmComunicao);
 	    
-	    separator_2 = new JSeparator();
-	    separator_2.setOrientation(SwingConstants.VERTICAL);
-	    tbProfessor.add(separator_2);
+	    JMenuItem mntmProcesso = new JMenuItem("Processo");
+	    mnCrudTipoII.add(mntmProcesso);
 	    
-	    tbBtnRendimentoEscolar = new JButton(" Rendimento escolar   ");
-	    tbBtnRendimentoEscolar.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		
-
-	    	}
-	    });
-	    tbBtnRendimentoEscolar.setEnabled(false);
-	    tbBtnRendimentoEscolar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/image/redimentoEscolar_32.png")));
-	    tbBtnRendimentoEscolar.setBackground(Color.WHITE);
-	    tbProfessor.add(tbBtnRendimentoEscolar);
+	    JMenu mnCrudTipoIII = new JMenu("CRUD Tipo III");
+	    menuBar.add(mnCrudTipoIII);
 	    
-	    separator_4 = new JSeparator();
-	    separator_4.setOrientation(SwingConstants.VERTICAL);
-	    tbProfessor.add(separator_4);
+	    JMenuItem mntmProcesso_1 = new JMenuItem("Processo");
+	    mnCrudTipoIII.add(mntmProcesso_1);
 	    
-	    tbBtnSair = new JButton(" Sair   ");
-	    tbBtnSair.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		FrmPrincipal.perfilLogado= null;
-	    		tbBtnProfessor.setEnabled(false);
-	    		tbBtnAluno.setEnabled(false);
-	    		tbBtnDisciplina.setEnabled(false);
-	    		tbBtnTurma.setEnabled(false);
-	    		tbBtnRendimentoEscolar.setEnabled(false);
-	    		frame.setVisible(false);
-	    		
-	    		FrmLogin login= new FrmLogin();
-	    		login.setVisible(true);
-	    	}
-	    	
-	    });
-	    tbBtnSair.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/image/sair_32.png")));
-	    tbBtnSair.setEnabled(false);
-	    tbBtnSair.setBackground(Color.WHITE);
-	    tbProfessor.add(tbBtnSair);
+	    JMenuItem mntmDocumento = new JMenuItem("Documento");
+	    mnCrudTipoIII.add(mntmDocumento);
+	    
+	    JMenuItem mntmJuizado = new JMenuItem("Juizado");
+	    mnCrudTipoIII.add(mntmJuizado);
+	    
+	    JMenu mnRelatorio = new JMenu("Relatorio");
+	    menuBar.add(mnRelatorio);
+	    
+	    JMenuItem mntmRelatrioResumido = new JMenuItem("Relatório Resumido Processo");
+	    mnRelatorio.add(mntmRelatrioResumido);
+	    
+	    JMenuItem mntmRelatrioDetalhadoComunicacao = new JMenuItem("Relatório Detalhado Comunicacao");
+	    mnRelatorio.add(mntmRelatrioDetalhadoComunicacao);
+	    
+	    JMenuItem mntmRelatrioDetalhadoConciliacao = new JMenuItem("Relatório Detalhado Conciliacao");
+	    mnRelatorio.add(mntmRelatrioDetalhadoConciliacao);
 	    
 	    JPanel pnlCorpo = new JPanel();
 	    pnlCorpo.setBounds(0, 51, 822, 410);
@@ -213,60 +142,8 @@ public class FrmPrincipal {
         
 	    //create the tree by passing in the root node
 	    root= new DefaultMutableTreeNode("Turmas");
-	    tree = new JTree(root);
-	    tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-	    tree.setBounds(10, 10, 250, 380);
-	    tree.addTreeSelectionListener(new TreeSelectionListener() {
-	        public void valueChanged(TreeSelectionEvent e) {
-			    TreePath[] paths = tree.getSelectionPaths();
-		        for (TreePath path : paths) {
-		        	try {
-		        		
-		        		// Caso click em um no de aluno
-		        		String texto= path.getLastPathComponent().toString();
-		        		String numero= texto.substring(7,9);
-		        		int id= new Integer(numero);
-		        		if (texto.contains("Aluno")) {
-//							RendimentoEscolar rendEsc= Fachada.getInstance()
-//									.buscarRendimentoEscolarPorId(id);
-//							
-//							FrmRendimentoEscolar dialog = new FrmRendimentoEscolar( rendEsc );
-//							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//							dialog.setVisible(true);
-		        		}
-		        		
-		        		// Caso click em um no de turma
-		        		if (texto.contains("Turma")) {
-		        			if (FrmPrincipal.perfilLogado.equalsIgnoreCase(Constantes.PERFIL_ALUNO)) {
-//		        				if ( !Fachada.getInstance().alunoMatriculadoTurma(id, FrmPrincipal.alunoLogado ) ) {
-//		        					
-//		        					int input = JOptionPane.showConfirmDialog(null, "Deseja se matricular nessa turma?");
-//		        					if ( input == 0 ) {
-//		        						Turma turma= Fachada.getInstance().buscarTurma(id);
-//		        						
-//		        						RendimentoEscolar rendEscolar09= new RendimentoEscolar(0, turma, alunoLogado);
-//		        						Fachada.getInstance().inserir(rendEscolar09);
-//		        						carregar( root );
-//		        					}
-//		        				} 
-		        			}
-		        		}
-		        		
-					} catch (Exception e2) {
-						//e2.printStackTrace();
-					}
-		        }
-	        }
-	    });    
 	    
 	    carregar( root );
-
-	    pnlTree = new Panel();
-	    pnlTree.setBackground(new Color(255, 255, 255));
-	    pnlTree.setBounds(0, 0, 300, 410);
-	    pnlCorpo.add(pnlTree);
-	    pnlTree.setLayout(null);
-	    pnlTree.add(tree);
 
 	}
 
@@ -310,5 +187,4 @@ public class FrmPrincipal {
 		}
 		return result;
 	}
-
 }

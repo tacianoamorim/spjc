@@ -29,6 +29,7 @@ CREATE TABLE Pauta (
   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
  ,estadoPauta                    INTEGER UNSIGNED NOT NULL
  ,dataAgendamento                DATETIME NOT NULL
+ ,qtdeProcesso                   INTEGER UNSIGNED NULL DEFAULT 0
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_EstadoPauta ON Pauta (estadoPauta);
@@ -519,11 +520,4 @@ ALTER TABLE ComunicacaoTestemunha
   ADD CONSTRAINT Rel_Testemunha_ComunicacaoTestemunha FOREIGN KEY (testemunha)
     REFERENCES Testemunha (id)
 ;
-ALTER TABLE ProcessoFase
-  ADD CONSTRAINT Rel_Processo_ProcessoFase FOREIGN KEY (processo)
-    REFERENCES Processo (npu)
-;
-ALTER TABLE ProcessoFase
-  ADD CONSTRAINT Rel_Fase_ProcessoFase FOREIGN KEY (fase)
-    REFERENCES Fase (id)
-;
+
