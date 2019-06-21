@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class FrmTipoIRepresentante extends JDialog {
 
@@ -37,12 +40,18 @@ public class FrmTipoIRepresentante extends JDialog {
 	 */
 	public FrmTipoIRepresentante() {
 		setTitle("Formulário Tipo I - Gerenciamento de REPRESENTANTE");
-		setBounds(100, 100, 763, 415);
+		setBounds(100, 100, 598, 290);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Relatório ");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblNewLabel.setBounds(12, 12, 566, 23);
+		contentPanel.add(lblNewLabel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -70,5 +79,4 @@ public class FrmTipoIRepresentante extends JDialog {
 			}
 		}
 	}
-
 }

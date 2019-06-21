@@ -76,7 +76,7 @@ public class FrmPrincipal {
 	    JMenu mnCrudTipoII = new JMenu("CRUD Tipo II");
 	    menuBar.add(mnCrudTipoII);
 	    
-	    JMenu mnDocumento = new JMenu("Documento");
+	    JMenuItem mnDocumento = new JMenuItem("Documento");
 	    mnDocumento.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
 	    		FrmTipoIIDocumento window=new FrmTipoIIDocumento();
@@ -132,11 +132,6 @@ public class FrmPrincipal {
 	    pnlCorpo.setBackground(new Color(255, 255, 255));
 	    desktop.add(pnlCorpo);
 	    pnlCorpo.setLayout(null);
-        
-		if ( !FrmLogin.usuarioLogado ) {
-			JOptionPane.showMessageDialog(null, "Usuário não logado");
-			//frmSpjcSistema.dispose();
-		} 
 		
 	}
 	

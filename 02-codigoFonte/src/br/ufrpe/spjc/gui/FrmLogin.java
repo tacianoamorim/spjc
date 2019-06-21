@@ -87,7 +87,7 @@ public class FrmLogin extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if ( "01234567890".equalsIgnoreCase(txtTxtcpf.getText()) ) {
+						if ( "012".equalsIgnoreCase(txtTxtcpf.getText()) ) {
 							setVisible(false);
 							usuarioLogado= true;
 							FrmPrincipal window= new FrmPrincipal();
