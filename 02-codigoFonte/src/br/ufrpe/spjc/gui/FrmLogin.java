@@ -3,17 +3,17 @@ package br.ufrpe.spjc.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class FrmLogin extends JDialog {
@@ -21,113 +21,92 @@ public class FrmLogin extends JDialog {
 	/**
 	 * serialVersionUID
 	 */
-	private static final long serialVersionUID = 1864210157235754121L;
+	private static final long serialVersionUID = 6234032704127284755L;
 	
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtCodigo;
-	private JTextField txtSenha;
-	public static boolean usuarioLogado;
-	
-	private JButton btnCadastro, tbnLogar;
-	
+	private JTextField txtTxtcpf;
+	private JTextField textField;
+	public static boolean usuarioLogado= false;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			FrmLogin dialog = new FrmLogin();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Create the dialog.
 	 */
 	public FrmLogin() {
-		setTitle("Login");
-		setType(Type.POPUP);
-		setBounds(100, 100, 398, 194);
+		setTitle("Sistema Processual de Juizados Cíveis");
+		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		{
+			JLabel lblNewLabel = new JLabel("Login");
+			lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 20));
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setBounds(12, 10, 418, 24);
+			contentPanel.add(lblNewLabel);
+		}
 		
-		{
-			JLabel lblCPF = new JLabel("CPF:");
-			lblCPF.setBounds(10, 19, 102, 14);
-			contentPanel.add(lblCPF);
-		}
-		{
-			txtCodigo = new JTextField();
-			txtCodigo.setText("paulo");
-			txtCodigo.setBounds(132, 12, 188, 30);
-			txtCodigo.setColumns(10);
-			contentPanel.add(txtCodigo);
-		}
-		{
-			txtSenha = new JTextField();
-			txtSenha.setText("123");
-			txtSenha.setBounds(132, 51, 188, 30);
-			txtSenha.setColumns(10);
-			contentPanel.add(txtSenha);
-		}
-		{
-			JLabel label = new JLabel("Senha:");
-			label.setBounds(10, 58, 88, 14);
-			contentPanel.add(label);
-		}
+		JLabel lblCpf = new JLabel("CPF:");
+		lblCpf.setBounds(58, 84, 66, 15);
+		contentPanel.add(lblCpf);
+		
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setBounds(40, 126, 66, 15);
+		contentPanel.add(lblSenha);
+		
+		txtTxtcpf = new JTextField();
+		txtTxtcpf.setFont(new Font("Dialog", Font.PLAIN, 14));
+		txtTxtcpf.setBounds(122, 77, 222, 24);
+		contentPanel.add(txtTxtcpf);
+		txtTxtcpf.setColumns(10);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Dialog", Font.PLAIN, 14));
+		textField.setBounds(120, 119, 224, 24);
+		contentPanel.add(textField);
+		textField.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnCadastro = new JButton("");
-				btnCadastro.addActionListener(new ActionListener() {
+				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						FrmPrincipal.perfilLogado= null;
+						if ( "01234567890".equalsIgnoreCase(txtTxtcpf.getText()) ) {
+							setVisible(false);
+							usuarioLogado= true;
+							FrmPrincipal window= new FrmPrincipal();
+							window.frmSpjcSistema.setVisible(true);
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Usuário ou senha inválido.");
+						}
 					}
 				});
-				btnCadastro.setIcon(new ImageIcon(FrmLogin.class.getResource("/image/novo_32.png")));
-				buttonPane.add(btnCadastro);
-				getRootPane().setDefaultButton(btnCadastro);
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				tbnLogar = new JButton("");
-				tbnLogar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						try {
-							// Limpa a variavel
-							
-							if ( txtCodigo.getText() != null && 
-									txtCodigo.getText().trim().length() == 0) {
-								JOptionPane.showMessageDialog(null,"Informe o usuario de login");
-								
-							} else if ( txtSenha.getText() != null && 
-									txtSenha.getText().trim().length() == 0 ) {
-								JOptionPane.showMessageDialog(null,"Informe a senha");
-								
-							} else {
-								
-								String tipo= "";
-								boolean loginLiberado= 	Fachada.getInstance().login( txtCodigo.getText(), 
-										txtSenha.getText(), tipo );
-								
-								if ( loginLiberado ) {
-									setVisible(false);
-									FrmPrincipal.perfilLogado= tipo;
-									FrmPrincipal window = new FrmPrincipal();
-									window.frame.setVisible(true);
-								};
-							}
-							
-						} catch (Exception ex) {
-							ex.printStackTrace();
-							JOptionPane.showMessageDialog(null,"Verifique o usuario e a senha informada.");
-						}
-						
-						
-					}
-				});
-				tbnLogar.setIcon(new ImageIcon(FrmLogin.class.getResource("/image/login_32.png")));
-				buttonPane.add(tbnLogar);
+				JButton cancelButton = new JButton("Cancel");
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
 			}
 		}
-		
-		grupo = new ButtonGroup();
 	}
-	
-
-
 }

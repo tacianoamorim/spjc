@@ -1,95 +1,70 @@
 package br.ufrpe.spjc.gui;
 
 import java.awt.Color;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JToolBar;
-import javax.swing.JTree;
-import javax.swing.SwingConstants;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
-import br.ufrpe.spjc.util.Constantes;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JMenu;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import br.ufrpe.spjc.gui.taciano.FrmRelatorioResumido;
+import br.ufrpe.spjc.gui.taciano.FrmTipoIIDocumento;
+import br.ufrpe.spjc.gui.taciano.FrmTipoIIIProcesso;
+import br.ufrpe.spjc.gui.taciano.FrmTipoIRepresentante;
 
 public class FrmPrincipal {
 
 	JFrame frmSpjcSistema;
 	private JDesktopPane desktop;
 	
-	public static String acaoInicializacao;
-	public static String perfilLogado;
-	
-	private DefaultMutableTreeNode root;
-
-
 	/**
 	 * Create the application.
 	 */
 	public FrmPrincipal() {
 		initialize();
-		
-		carregar();
 	}
-
-	/**
-	 * Carregar a permissoes de cada perfil
-	 */
-	private void carregar() {
-		if (Constantes.PERFIL_ALUNO.equalsIgnoreCase(FrmPrincipal.perfilLogado)) {
-			
-		} else if (Constantes.PERFIL_PROFESSOR.equalsIgnoreCase(FrmPrincipal.perfilLogado)) {
-
-		} else {
-			tbBtnProfessor.setEnabled(true);
-			tbBtnAluno.setEnabled(true);
-    		tbBtnDisciplina.setEnabled(true);
-    		tbBtnTurma.setEnabled(true);
-			tbBtnRendimentoEscolar.setEnabled(true);				
-		}
-	}
-
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frmSpjcSistema = new JFrame();
-		frmSpjcSistema.setResizable(false);
+		frmSpjcSistema.setResizable(true);
 		frmSpjcSistema.setBounds(100, 100, 828, 490);
 		frmSpjcSistema.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSpjcSistema.setTitle("SPJC - Sistema Judicial de Juizados Cíveis");
 		frmSpjcSistema.getContentPane().setLayout(new BoxLayout(frmSpjcSistema.getContentPane(), BoxLayout.X_AXIS));
 		
 		desktop = new JDesktopPane();
+		desktop.setBackground(Color.WHITE);
 		frmSpjcSistema.setContentPane(desktop);
 
 		//Make dragging a little faster but perhaps uglier.
 	    desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
 	    desktop.setLayout(null);
-	    
+   
 	    JMenuBar menuBar = new JMenuBar();
+	    menuBar.setBackground(Color.WHITE);
 	    menuBar.setBounds(0, 0, 254, 21);
+	    menuBar.setSize(800, 35);
 	    desktop.add(menuBar);
 	    
 	    JMenu mnCrudTipoI = new JMenu("CRUD Tipo I");
 	    menuBar.add(mnCrudTipoI);
 	    
 	    JMenuItem mntmRepresentante = new JMenuItem("Representante");
+	    mntmRepresentante.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		FrmTipoIRepresentante window=new FrmTipoIRepresentante();
+	    		window.setVisible(true);
+	    	}
+	    });
 	    mnCrudTipoI.add(mntmRepresentante);
 	    
 	    JMenuItem mntmParte = new JMenuItem("Parte");
@@ -102,6 +77,12 @@ public class FrmPrincipal {
 	    menuBar.add(mnCrudTipoII);
 	    
 	    JMenu mnDocumento = new JMenu("Documento");
+	    mnDocumento.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		FrmTipoIIDocumento window=new FrmTipoIIDocumento();
+	    		window.setVisible(true);
+	    	}
+	    });
 	    mnCrudTipoII.add(mnDocumento);
 	    
 	    JMenuItem mntmComunicao = new JMenuItem("Comunicação");
@@ -113,8 +94,14 @@ public class FrmPrincipal {
 	    JMenu mnCrudTipoIII = new JMenu("CRUD Tipo III");
 	    menuBar.add(mnCrudTipoIII);
 	    
-	    JMenuItem mntmProcesso_1 = new JMenuItem("Processo");
-	    mnCrudTipoIII.add(mntmProcesso_1);
+	    JMenuItem mntmProcessoTipoIII = new JMenuItem("Processo");
+	    mntmProcessoTipoIII.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		FrmTipoIIIProcesso window=new FrmTipoIIIProcesso();
+	    		window.setVisible(true);
+	    	}
+	    });
+	    mnCrudTipoIII.add(mntmProcessoTipoIII);
 	    
 	    JMenuItem mntmDocumento = new JMenuItem("Documento");
 	    mnCrudTipoIII.add(mntmDocumento);
@@ -126,6 +113,12 @@ public class FrmPrincipal {
 	    menuBar.add(mnRelatorio);
 	    
 	    JMenuItem mntmRelatrioResumido = new JMenuItem("Relatório Resumido Processo");
+	    mntmRelatrioResumido.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		FrmRelatorioResumido window= new FrmRelatorioResumido();
+	    		window.setVisible(true);
+	    	}
+	    });
 	    mnRelatorio.add(mntmRelatrioResumido);
 	    
 	    JMenuItem mntmRelatrioDetalhadoComunicacao = new JMenuItem("Relatório Detalhado Comunicacao");
@@ -140,43 +133,10 @@ public class FrmPrincipal {
 	    desktop.add(pnlCorpo);
 	    pnlCorpo.setLayout(null);
         
-	    //create the tree by passing in the root node
-	    root= new DefaultMutableTreeNode("Turmas");
-	    
-	    carregar( root );
-
-	}
-
-	private void carregar(DefaultMutableTreeNode root) {
-		
-//		// Carregar as turmas
-//		List<Turma> turmas= new ArrayList<Turma>();
-//		if (Constantes.PERFIL_ALUNO.equalsIgnoreCase(FrmPrincipal.perfilLogado)) {
-//			turmas= Fachada.getInstance().listarTurmas();
-//			
-//		} else if (Constantes.PERFIL_PROFESSOR.equalsIgnoreCase(FrmPrincipal.perfilLogado)) {
-//			turmas= Fachada.getInstance().listarTurmasProfessor(professorLogado);
-//		} 		
-//		
-//		for (Turma turma : turmas) {
-//			DefaultMutableTreeNode node = new DefaultMutableTreeNode(
-//					"Turma: "+ FrmPrincipal.completeToLeft(
-//							turma.getDisciplina().getId() + "",'0' ,2)
-//					 +" " + turma.getDisciplina().getNome());
-//			root.add( node );
-//			
-//			// buscar os alunos da turma
-//			List<RendimentoEscolar> rendEscolarres = Fachada.getInstance().listarRendimentoEscolarPorTurma( turma ); 
-//			for (RendimentoEscolar rendimentoEscolar : rendEscolarres) {
-//				DefaultMutableTreeNode nodeRend = new DefaultMutableTreeNode(
-//						"Aluno: "+ FrmPrincipal.completeToLeft(
-//								rendimentoEscolar.getAluno().getId() + "",'0' ,2)
-//						 +" " + rendimentoEscolar.getAluno().getNome());
-//				node.add( nodeRend );
-//			}
-//		}
-		
-		// Carregar os rendimentos
+		if ( !FrmLogin.usuarioLogado ) {
+			JOptionPane.showMessageDialog(null, "Usuário não logado");
+			//frmSpjcSistema.dispose();
+		} 
 		
 	}
 	
