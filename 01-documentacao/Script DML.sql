@@ -65,12 +65,12 @@ INSERT INTO Feito (id, nome) VALUES
 (8, 'Reivindicação de Bens Móveis e Semoventes'),
 (9, 'Indenização por Danos Morais');
 
-INSERT INTO Endereco (cep, cidade, pais, estado, bairro, rua) VALUES
-(50920135, 'Recife', 'Brasil', 'PE', 'Jardim São Paulo', 'Av. Liberdade'),
-(50120240, 'Recife', 'Brasil', 'PE', 'Ibura', 'Rua Aberta'),
-(50000000, 'Recife', 'Brasil', 'PE', 'Recife Antigo', 'Rua um'),
-(50400110, 'Recife', 'Brasil', 'PE', 'Boa Viagem', 'Av. da Praia'),
-(51240420, 'Recife', 'Brasil', 'PE', 'Parnamirim', 'Av. Leda');
+INSERT INTO Endereco (cep, cidade, estado, bairro, rua) VALUES
+(50920135, 'Recife', 'PE', 'Jardim São Paulo', 'Av. Liberdade'),
+(50120240, 'Recife', 'PE', 'Ibura', 'Rua Aberta'),
+(50000000, 'Recife', 'PE', 'Recife Antigo', 'Rua um'),
+(50400110, 'Recife', 'PE', 'Boa Viagem', 'Av. da Praia'),
+(51240420, 'Recife', 'PE', 'Parnamirim', 'Av. Leda');
 
 INSERT INTO Magistrado (cpf,endereco,matricula,nome,numeroEndereco,senha) VALUES 
 ('71874846073', 50120240, 1893647, 'Paulo Andre Ferreira', '45','123456'),

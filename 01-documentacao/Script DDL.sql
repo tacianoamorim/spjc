@@ -116,7 +116,6 @@ CREATE TABLE Endereco (
  ,rua                            VARCHAR(100) NOT NULL
  ,bairro                         VARCHAR(100) NOT NULL
  ,estado                         CHAR(2) NOT NULL
- ,pais                           VARCHAR(100) NULL
  ,cidade                         VARCHAR(100) NOT NULL
  ,PRIMARY KEY (cep)
 ) ENGINE=InnoDB;

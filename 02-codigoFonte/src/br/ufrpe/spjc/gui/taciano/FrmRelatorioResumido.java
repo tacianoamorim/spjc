@@ -7,7 +7,15 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import br.ufrpe.spjc.util.JasperReportUtil;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -85,10 +93,33 @@ public class FrmRelatorioResumido extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Visualizar relatório");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
+							Map<String, Object> parametros = new HashMap<String, Object>();
+							parametros.put("ano", 1);
+							parametros.put("semestre", 2);
+							
+							URL url= getClass().getResource("RelatorioResumidoPautaAudiencia.jrxml");
+							
+							StringBuilder query= new StringBuilder();
+							query.append("SELECT DISTINCT jpa.nome, ")
+							.append(" jpa.dataAgendamento, ")
+							.append(" jpa.hora, ")
+							.append(" jpa.processo, ")
+							.append(" prp.tipo,  ")
+							.append(" prp.polo, ")
+							.append(" prp.nomePTR ")
+							.append(" FROM DBSPJC.juizadoPautaAudiencia jpa ")
+							.append("   INNER JOIN DBSPJC.parteRepresentanteProcesso prp ON prp.processo= jpa.processo ")
+							.append(" ORDER BY 1, 2, 3, 4, 5 ");
+							
+							//gerando o jasper design
+							JasperDesign desenho= JRXmlLoader.load( url.getFile());
+							
+							JasperReportUtil.gerar(desenho, query.toString(), parametros);
+							setVisible(false);
 							
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(null, e.getMessage());
@@ -100,7 +131,7 @@ public class FrmRelatorioResumido extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Fechar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();

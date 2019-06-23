@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 5.0.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioResumidoPautaAudiencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f1247a0b-5962-426a-9d23-ba6f1edbe7ec">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DBSPJC"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT jpa.nome,
+	jpa.`dataAgendamento`,
+	jpa.hora,
+	jpa.processo,
+	prp.`Tipo`,
+	prp.polo,
+	prp.`nomePTR`
+FROM `DBSPJC`.`juizadoPautaAudiencia` jpa
+	INNER JOIN `DBSPJC`.`parteRepresentanteProcesso` prp ON 
+	 prp.processo = jpa.processo 
+ORDER BY 1 DESC,
+	2 DESC,
+	3 DESC,
+	4 DESC,
+	5 DESC,
+	6 DESC]]>
+	</queryString>
+	<title>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="7" y="10" width="550" height="30" uuid="0b0e0055-769c-4d69-a562-7aaf234c7a82"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório resumido de processos em pauta]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="222" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
