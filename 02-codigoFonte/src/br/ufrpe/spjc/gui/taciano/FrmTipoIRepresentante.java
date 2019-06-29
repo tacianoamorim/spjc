@@ -83,7 +83,6 @@ public class FrmTipoIRepresentante extends JDialog {
 		panelList.setLayout(new BoxLayout(panelList, BoxLayout.X_AXIS));		
 		
 		resumidoTableModel = new FrmRelatorioResumidoTableModel();
-		//pnlJogadores.setLayout(new BoxLayout(pnlJogadores, BoxLayout.X_AXIS));
 		
 		tbLista = new JTable(resumidoTableModel);
 		formatarTabela(tbLista);	
@@ -91,8 +90,6 @@ public class FrmTipoIRepresentante extends JDialog {
 		JScrollPane scpLista = new JScrollPane(tbLista);
 		tbLista.setFillsViewportHeight(true);
 		panelList.add(scpLista);
-		
-		
 		
 		JPanel panelForm = new JPanel();
 		panelForm.setBounds(12, 202, 746, 205);
@@ -253,11 +250,11 @@ public class FrmTipoIRepresentante extends JDialog {
 		}
 	}
 	
-	private void formatarTabela(JTable jTableJogador) {
-		jTableJogador.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		jTableJogador.getColumnModel().getColumn(0).setPreferredWidth(170);
-		jTableJogador.getColumnModel().getColumn(1).setPreferredWidth(370);
-		jTableJogador.getColumnModel().getColumn(2).setPreferredWidth(100);
-		jTableJogador.getColumnModel().getColumn(3).setPreferredWidth(100);
+	private void formatarTabela(JTable jTable) {
+		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		jTable.getColumnModel().getColumn(0).setPreferredWidth(170);
+		jTable.getColumnModel().getColumn(1).setPreferredWidth(370);
+		jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+		jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
 	}	
 }

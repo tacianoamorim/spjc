@@ -43,6 +43,7 @@ public class FrmRelatorioResumido extends JDialog {
 			FrmRelatorioResumido dialog = new FrmRelatorioResumido();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
