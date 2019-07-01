@@ -69,12 +69,14 @@ public class FrmLogin extends JDialog {
 		contentPanel.add(lblSenha);
 		
 		txtTxtcpf = new JTextField();
+		txtTxtcpf.setText("012");
 		txtTxtcpf.setFont(new Font("Dialog", Font.PLAIN, 14));
 		txtTxtcpf.setBounds(122, 77, 222, 24);
 		contentPanel.add(txtTxtcpf);
 		txtTxtcpf.setColumns(10);
 		
 		textField = new JTextField();
+		textField.setText("012");
 		textField.setFont(new Font("Dialog", Font.PLAIN, 14));
 		textField.setBounds(120, 119, 224, 24);
 		contentPanel.add(textField);

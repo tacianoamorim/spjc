@@ -1,6 +1,6 @@
 package br.ufrpe.spjc.repositorio;
 
-public class RepositorioJuizado {
+public class JuizadoDAO {
 
 	public void inserir() {
 		System.out.println("Inserir Repositorio");

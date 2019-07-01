@@ -14,7 +14,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 public interface JasperReportUtil {
@@ -40,7 +39,7 @@ public interface JasperReportUtil {
 		JRResultSetDataSource jrRS = new JRResultSetDataSource( rs );
 		 
 		//executa o relatório
-		JasperPrint impressao = JasperFillManager.fillReport( relatorio , parametros, jrRS );
+		JasperPrint impressao = JasperFillManager.fillReport( relatorio , parametros );
 		 
 		//exibe o resultado
 		JasperViewer viewer = new JasperViewer( impressao , true );

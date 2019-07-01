@@ -1,12 +1,12 @@
 package br.ufrpe.spjc.gui.taciano;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,6 +20,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import br.ufrpe.spjc.negocio.controlador.RepresentanteControl;
+import br.ufrpe.spjc.negocio.entidade.Endereco;
+import br.ufrpe.spjc.negocio.entidade.Representante;
+import br.ufrpe.spjc.util.Utils;
 
 public class FrmTipoIRepresentante extends JDialog {
 
@@ -35,13 +40,15 @@ public class FrmTipoIRepresentante extends JDialog {
 	private JTextField txtTelefone;
 	private JTextField txtNumero;
 	private JTextField txtCPF;
-	private JTextField txtCEP;
+	private JTextField txtMatricula;
 	private JTextField txtLogradouro;
-	private JTextField textField;
+	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtUF;
 	private JTable tbLista;
-	private FrmRelatorioResumidoTableModel resumidoTableModel;
+	private FrmTipoITableModel tableModel;
+	private JComboBox<String> cbxTipo, cbxPolo;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -82,9 +89,8 @@ public class FrmTipoIRepresentante extends JDialog {
 		contentPanel.add(panelList);
 		panelList.setLayout(new BoxLayout(panelList, BoxLayout.X_AXIS));		
 		
-		resumidoTableModel = new FrmRelatorioResumidoTableModel();
-		
-		tbLista = new JTable(resumidoTableModel);
+		tableModel = new FrmTipoITableModel();
+		tbLista = new JTable(tableModel);
 		formatarTabela(tbLista);	
 		
 		JScrollPane scpLista = new JScrollPane(tbLista);
@@ -136,7 +142,7 @@ public class FrmTipoIRepresentante extends JDialog {
 		lblPolo.setBounds(267, 58, 145, 15);
 		panelForm.add(lblPolo);
 		
-		JComboBox cbxPolo = new JComboBox();
+		cbxPolo = new JComboBox<String>();
 		cbxPolo.setBounds(267, 75, 145, 24);
 		panelForm.add(cbxPolo);
 		
@@ -162,26 +168,31 @@ public class FrmTipoIRepresentante extends JDialog {
 		lblTipo.setBounds(12, 12, 66, 15);
 		panelForm.add(lblTipo);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(12, 28, 119, 24);
-		panelForm.add(comboBox);
-		
-		JLabel lblCep = new JLabel("CEP:");
-		lblCep.setBounds(12, 104, 66, 15);
-		panelForm.add(lblCep);
-		
-		txtCEP = new JTextField();
-		txtCEP.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				// https://viacep.com.br/ws/50920135/json/
-				JOptionPane.showMessageDialog(null, "Fr");
-				
+		cbxTipo = new JComboBox<String>();
+		cbxTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if ( "A".equals(Utils.getId(cbxTipo.getSelectedItem().toString(), "-"))) {
+					txtMatricula.setText("");
+					txtMatricula.setEnabled(false);
+					txtMatricula.setBackground(Color.GRAY);
+				} else {
+					txtMatricula.setEnabled(true);
+					txtMatricula.setBackground(Color.WHITE);
+				}	
 			}
 		});
-		txtCEP.setBounds(12, 123, 109, 25);
-		panelForm.add(txtCEP);
-		txtCEP.setColumns(10);
+		cbxTipo.setBounds(12, 28, 119, 24);
+		panelForm.add(cbxTipo);
+		
+		JLabel lblMatricula = new JLabel("Matrícula");
+		lblMatricula.setBounds(12, 104, 66, 15);
+		panelForm.add(lblMatricula);
+		
+		txtMatricula = new JTextField();
+		txtMatricula.setEnabled(false);
+		txtMatricula.setBounds(12, 123, 109, 25);
+		txtMatricula.setColumns(10);
+		panelForm.add(txtMatricula);
 		
 		JLabel lblLogradouro = new JLabel("Logradouro:");
 		lblLogradouro.setBounds(149, 104, 93, 15);
@@ -196,28 +207,37 @@ public class FrmTipoIRepresentante extends JDialog {
 		lblBairro.setBounds(12, 155, 66, 15);
 		panelForm.add(lblBairro);
 		
-		textField = new JTextField();
-		textField.setBounds(12, 171, 253, 25);
-		panelForm.add(textField);
-		textField.setColumns(10);
+		txtBairro = new JTextField();
+		txtBairro.setBounds(12, 171, 158, 25);
+		panelForm.add(txtBairro);
+		txtBairro.setColumns(10);
 		
 		JLabel lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(283, 155, 66, 15);
+		lblCidade.setBounds(188, 155, 66, 15);
 		panelForm.add(lblCidade);
 		
 		txtCidade = new JTextField();
-		txtCidade.setBounds(283, 171, 259, 25);
+		txtCidade.setBounds(188, 171, 223, 25);
 		panelForm.add(txtCidade);
 		txtCidade.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("UF:");
-		lblNewLabel_1.setBounds(564, 155, 99, 15);
+		lblNewLabel_1.setBounds(430, 155, 99, 15);
 		panelForm.add(lblNewLabel_1);
 		
 		txtUF = new JTextField();
-		txtUF.setBounds(564, 171, 158, 25);
+		txtUF.setBounds(430, 171, 158, 25);
 		panelForm.add(txtUF);
 		txtUF.setColumns(10);
+		
+		JLabel label = new JLabel("CEP:");
+		label.setBounds(600, 149, 66, 15);
+		panelForm.add(label);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(600, 168, 122, 25);
+		panelForm.add(textField_1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -227,10 +247,53 @@ public class FrmTipoIRepresentante extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
+						/*
+						 * CARREGAR DADOS
+						 */
+						Representante representante= new Representante();
+						representante.setNome(txtNome.getText());
+						representante.setEmail(txtEmail.getText());
+						representante.setNumero(txtNumero.getText());
+						representante.setOab(txtOAB.getText());
+						representante.setTelefone(txtTelefone.getText());
+						representante.setCpf(txtCPF.getText());
+
+						String idPolo= Utils.getId(cbxPolo.getSelectedItem().toString(), "-");
+						String idTipo= Utils.getId(cbxTipo.getSelectedItem().toString(), "-");
+						if ( "D".equals(idTipo) && txtMatricula.getText().length() >0 ) {
+							representante.setMatricula( Integer.parseInt( txtMatricula.getText() ) );
+						}
+						representante.setPolo(idPolo);
+						representante.setTipo(idTipo);
+						
+						Endereco endereco= new Endereco();
+						endereco.setRua(txtLogradouro.getText());
+						endereco.setBairro(txtBairro.getText());
+						endereco.setCidade(txtCidade.getText());
+						endereco.setEstado(txtUF.getText());
+						endereco.setPais("Brasil");
+						representante.setEndereco(endereco);
+						
+						if (!validaCampos()) {
+							JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Validação de campos", 
+									JOptionPane.ERROR_MESSAGE);
+							return;
+						} else {
+							
+							RepresentanteControl.getInstance().inserir(representante);
+							
+							limpar();
+						}
+						
 					}
 				});
 				
 				JButton btnNovo = new JButton("Novo");
+				btnNovo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						limpar();
+					}
+				});
 				btnNovo.setActionCommand("OK");
 				buttonPane.add(btnNovo);
 				okButton.setActionCommand("OK");
@@ -248,6 +311,20 @@ public class FrmTipoIRepresentante extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		/**
+		 * CARREGAR COMBO
+		 */
+		cbxTipo.addItem("A-Advogado");
+		cbxTipo.addItem("D-Defensor Público");
+		
+		cbxPolo.addItem("A-Ativo");
+		cbxPolo.addItem("P-Passivo");
+		
+		// Carregar lista
+		List<Representante> lista= RepresentanteControl.getInstance().list(new Representante());
+		tableModel.addList(lista);
+		
 	}
 	
 	private void formatarTabela(JTable jTable) {
@@ -257,4 +334,71 @@ public class FrmTipoIRepresentante extends JDialog {
 		jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
 		jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
 	}	
+	
+	private void limpar() {
+		txtNome.setText("");
+		txtEmail.setText("");
+		txtCidade.setText("");
+		txtUF.setText("");
+		txtLogradouro.setText("");
+		txtMatricula.setText("");
+		txtNumero.setText("");
+		txtOAB.setText("");
+		txtTelefone.setText("");
+		txtCPF.setText("");
+		cbxPolo.setSelectedIndex(0);
+		cbxTipo.setSelectedIndex(0);
+	}
+	
+	private void carregarDados(Representante entity) {
+		txtNome.setText(entity.getNome());
+		txtEmail.setText(entity.getEmail());
+		txtCidade.setText("");
+		txtUF.setText("");
+		txtLogradouro.setText("");
+		txtMatricula.setText(entity.getMatricula()+"");
+		txtNumero.setText(entity.getNumero());
+		txtOAB.setText(entity.getOab());
+		txtTelefone.setText(entity.getTelefone());
+		txtCPF.setText(entity.getCpf());
+		
+		if ( "A".equals(entity.getPolo())) {
+			cbxPolo.setSelectedIndex(0);
+		} else {
+			cbxPolo.setSelectedIndex(1);
+		}
+		
+		if ( "A".equals(entity.getTipo())) {
+			cbxTipo.setSelectedIndex(0);
+		} else {
+			cbxTipo.setSelectedIndex(1);
+		}		
+	}
+	
+	private boolean validaCampos(){
+		boolean isValido= true;
+		
+		
+		String idTipo= Utils.getId(cbxTipo.getSelectedItem().toString(), "-");
+		if ( "D".equals(idTipo) && txtMatricula.getText().length() == 0) {
+			isValido= false;
+		}	
+		
+		if ( txtNome.getText().length() == 0 || 
+			txtEmail.getText().length() == 0 || 
+			txtOAB.getText().length() == 0 || 
+			txtCPF.getText().length() == 0 ||  
+			txtTelefone.getText().length() == 0 || 
+			txtLogradouro.getText().length() == 0 || 
+			txtNumero.getText().length() == 0 || 
+			txtBairro.getText().length() == 0 || 
+			txtCidade.getText().length() == 0 || 
+			txtUF.getText().length() == 0
+			) {
+			isValido= false;
+		}
+		
+		return isValido;
+	}
+	
 }

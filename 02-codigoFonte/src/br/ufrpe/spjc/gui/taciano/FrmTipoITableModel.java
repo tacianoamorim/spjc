@@ -7,29 +7,29 @@ import javax.swing.table.AbstractTableModel;
 
 import br.ufrpe.spjc.negocio.entidade.Representante;
 
-public class FrmRelatorioResumidoTableModel extends AbstractTableModel {
+public class FrmTipoITableModel extends AbstractTableModel {
 
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = 7419763598897891865L;
 	
-	private List<Representante> representantes;
+	private List<Representante> list;
 	private String[] colunas = new String[] { 
 		"CPF", "Nome", "Tipo", "Polo" 
 	};
 
 	/** Creates a new instance of TableModel */
-	public FrmRelatorioResumidoTableModel(List<Representante> representantes) {
-		this.representantes = representantes;
+	public FrmTipoITableModel(List<Representante> representantes) {
+		this.list = representantes;
 	}
 
-	public FrmRelatorioResumidoTableModel() {
-		this.representantes = new ArrayList<Representante>();
+	public FrmTipoITableModel() {
+		this.list = new ArrayList<Representante>();
 	}
 
 	public int getRowCount() {
-		return representantes.size();
+		return list.size();
 	}
 
 	public int getColumnCount() {
@@ -47,8 +47,8 @@ public class FrmRelatorioResumidoTableModel extends AbstractTableModel {
 	}
 
 	public void setValueAt(Representante aValue, int rowIndex) {
-		Representante representante = representantes.get(rowIndex);
-
+		Representante representante = list.get(rowIndex);
+		System.out.println("setValueAt01");
 		representante.setCpf( aValue.getCpf() );
 		representante.setNome(aValue.getNome());
 		representante.setTipo(aValue.getTipo());
@@ -63,8 +63,8 @@ public class FrmRelatorioResumidoTableModel extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		Representante representante = representantes.get(rowIndex);
-
+		Representante representante = list.get(rowIndex);
+		System.out.println("setValueAt02");
 		switch (columnIndex) {
 		case 0:
 			representante.setCpf( aValue.toString() );
@@ -82,7 +82,8 @@ public class FrmRelatorioResumidoTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Representante representanteSelecionado = representantes.get(rowIndex);
+		System.out.println("getValueAt");
+		Representante representanteSelecionado = list.get(rowIndex);
 		String valueObject = null;
 		switch (columnIndex) {
 		case 0:
@@ -108,34 +109,34 @@ public class FrmRelatorioResumidoTableModel extends AbstractTableModel {
 		return false;
 	}
 
-	public Representante getRepresentante(int indiceLinha) {
-		return representantes.get(indiceLinha);
+	public Representante get(int indiceLinha) {
+		return list.get(indiceLinha);
 	}
 
-	public void addRepresentante(Representante representante) {
-		representantes.add(representante);
+	public void add(Representante representante) {
+		list.add(representante);
 		int ultimoIndice = getRowCount() - 1;
 		fireTableRowsInserted(ultimoIndice, ultimoIndice);
 	}
 
-	public void removeRepresentante(int indiceLinha) {
-		representantes.remove(indiceLinha);
+	public void remove(int indiceLinha) {
+		list.remove(indiceLinha);
 		fireTableRowsDeleted(indiceLinha, indiceLinha);
 	}
 
-	public void addListaDeRepresentantes(List<Representante> novosRepresentantes) {
+	public void addList(List<Representante> novosRepresentantes) {
 		int tamanhoAntigo = getRowCount();
-		representantes.addAll(novosRepresentantes);
+		list.addAll(novosRepresentantes);
 		fireTableRowsInserted(tamanhoAntigo, getRowCount() - 1);
 	}
 
 	public void limpar() {
-		representantes.clear();
+		list.clear();
 		fireTableDataChanged();
 	}
 
 	public boolean isEmpty() {
-		return representantes.isEmpty();
+		return list.isEmpty();
 	}	
 	
 }

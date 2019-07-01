@@ -32,8 +32,8 @@ FROM DBSPJC.juizadoPautaAudiencia jpa
 	INNER JOIN DBSPJC.parteRepresentanteProcesso prp ON 
 	 prp.processo = jpa.processo 
 WHERE 
-	MONTH(jpa.dataAgendamento) BETWEEN 7 AND 12 
-    AND YEAR(jpa.dataAgendamento) = 2019
+	MONTH(jpa.dataAgendamento) BETWEEN $P{MES_INICIO} AND $P{MES_FIM} 
+    AND YEAR(jpa.dataAgendamento) = $P{ANO} 
 ORDER BY 
 	jpa.nome DESC,
 	jpa.dataAgendamento DESC,

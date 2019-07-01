@@ -11,6 +11,7 @@ public class Representante {
 	private int matricula;
 	private String telefone;
 	private String numero;
+	private Endereco endereco;
 
 	public String getCpf() {
 		return cpf;
@@ -91,5 +92,14 @@ public class Representante {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+	
 
 }

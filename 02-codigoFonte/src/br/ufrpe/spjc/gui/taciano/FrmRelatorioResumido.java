@@ -2,27 +2,26 @@ package br.ufrpe.spjc.gui.taciano;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import br.ufrpe.spjc.util.JasperReportUtil;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 
 public class FrmRelatorioResumido extends JDialog {
 
@@ -33,7 +32,7 @@ public class FrmRelatorioResumido extends JDialog {
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtAno;
-	private JTextField txtsemestre;
+	private JComboBox<Integer> cbxSemestre;
 
 	/**
 	 * Launch the application.
@@ -85,10 +84,11 @@ public class FrmRelatorioResumido extends JDialog {
 		contentPanel.add(txtAno);
 		txtAno.setColumns(10);
 		
-		txtsemestre = new JTextField();
-		txtsemestre.setBounds(149, 111, 124, 19);
-		contentPanel.add(txtsemestre);
-		txtsemestre.setColumns(10);
+		cbxSemestre = new JComboBox<Integer>();
+		cbxSemestre.setBounds(149, 108, 124, 24);
+		cbxSemestre.addItem(1);
+		cbxSemestre.addItem(2);
+		contentPanel.add(cbxSemestre);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -99,8 +99,15 @@ public class FrmRelatorioResumido extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
 							Map<String, Object> parametros = new HashMap<String, Object>();
-							parametros.put("ano", 1);
-							parametros.put("semestre", 2);
+							parametros.put("ANO", txtAno.getText());
+							
+							if (cbxSemestre.getSelectedItem().equals("1")) {
+								parametros.put("MES_INICIO", 1);
+								parametros.put("MES_FIM", 6);
+							} else {
+								parametros.put("MES_INICIO", 7);
+								parametros.put("MES_FIM", 12);								
+							}
 							
 							URL url= getClass().getResource("RelatorioResumidoPautaAudiencia.jrxml");
 							
