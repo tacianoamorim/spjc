@@ -1,5 +1,7 @@
 package br.ufrpe.spjc.negocio.controlador;
 
+import java.util.List;
+
 import br.ufrpe.framework.transaction.TransactionProxy;
 import br.ufrpe.spjc.negocio.entidade.Representante;
 import br.ufrpe.spjc.repositorio.EnderecoDAO;
@@ -35,8 +37,12 @@ public class RepresentanteControl {
 		return repositorio.findById(id);
 	}
 	
-	public Representante findByFilter(Representante filtro) {
+	public List<Representante> findByFilter(Representante filtro) {
 		return repositorio.findByFilter(filtro);
+	}
+	
+	public List<Representante> list(Representante filtro) {
+		return repositorio.list(filtro);
 	}
 	
 }
