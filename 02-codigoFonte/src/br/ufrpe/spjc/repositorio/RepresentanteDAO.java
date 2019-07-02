@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.ufrpe.framework.transaction.SystemException;
 import br.ufrpe.framework.transaction.TransactionManager;
+import br.ufrpe.spjc.negocio.entidade.Endereco;
 import br.ufrpe.spjc.negocio.entidade.Representante;
 
 public class RepresentanteDAO {
@@ -37,7 +38,7 @@ public class RepresentanteDAO {
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
 		} finally {
-			transactionManager.closeConnection(connection);
+//			transactionManager.closeConnection(connection);
 		}
 		return representante;		
 	}
@@ -55,7 +56,11 @@ public class RepresentanteDAO {
 		representante.setTipo(rs.getString("tipoRepresentante"));
 		representante.setTelefone(rs.getString("telefone"));		
 		representante.setSenha(rs.getString("senha"));
-		representante.setCep(rs.getInt("endereco"));
+		
+		Endereco endereco= new Endereco();
+		endereco.setCep(rs.getInt("endereco"));
+		representante.setEndereco(endereco);
+		
 		return representante;
 	}
 	
@@ -96,7 +101,7 @@ public class RepresentanteDAO {
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
 		} finally {
-			transactionManager.closeConnection(connection);
+//			transactionManager.closeConnection(connection);
 		}
 		return representantes;		
 	}
@@ -123,12 +128,11 @@ public class RepresentanteDAO {
 			preStmt.setString(4, entity.getEmail());
 			preStmt.setString(5, entity.getPolo());
 			preStmt.setString(6, entity.getSenha());
-			
 			preStmt.setString(7, entity.getTelefone());
 			preStmt.setString(8, entity.getNumero());
 			preStmt.setString(9, entity.getTipo());
 			preStmt.setInt(10, entity.getMatricula());
-			preStmt.setInt(11, entity.getCep());
+			preStmt.setInt(11, entity.getEndereco().getCep());
 			
 			preStmt.execute();
 			
@@ -137,7 +141,7 @@ public class RepresentanteDAO {
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
 		} finally {
-			transactionManager.closeConnection(connection);
+//			transactionManager.closeConnection(connection);
 		}
 	}
 	
@@ -165,8 +169,8 @@ public class RepresentanteDAO {
 			preStmt.setString(6, entity.getTelefone());
 			preStmt.setString(7, entity.getNumero());
 			preStmt.setString(8, entity.getTipo());
-			preStmt.setInt(9,entity.getMatricula());
-			preStmt.setInt(10,entity.getCep());
+			preStmt.setInt(9, entity.getMatricula());
+			preStmt.setInt(10, entity.getEndereco().getCep());
 			preStmt.setString(11, entity.getCpf());
 			
 			preStmt.execute();
@@ -176,7 +180,32 @@ public class RepresentanteDAO {
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
 		} finally {
-			transactionManager.closeConnection(connection);
+//			transactionManager.closeConnection(connection);
+		}
+	}
+
+	public void apagar(Representante representante) {
+		Connection connection = null;
+		PreparedStatement preStmt = null;
+		TransactionManager transactionManager = TransactionManager.getInstance();
+		StringBuilder sql= new StringBuilder();
+
+		try {
+			connection = (Connection) transactionManager.getConnection();
+			
+			sql.append("DELETE FROM DBSPJC.Representante WHERE cpf= ? ");
+
+			preStmt= connection.prepareStatement(sql.toString());
+			preStmt.setString(1, representante.getCpf());
+			
+			preStmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
+					+ e.getErrorCode());
+		} finally {
+//			transactionManager.closeConnection(connection);
 		}
 	}	
 

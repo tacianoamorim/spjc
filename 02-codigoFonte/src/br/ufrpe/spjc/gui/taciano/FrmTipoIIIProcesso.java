@@ -9,6 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrmTipoIIIProcesso extends JDialog {
 
@@ -37,12 +41,23 @@ public class FrmTipoIIIProcesso extends JDialog {
 	 */
 	public FrmTipoIIIProcesso() {
 		setTitle("Formulário Tipo II - PROCESSO (Tabela Pai) e AUDIENCIA (Tabela Filha)");
-		setBounds(100, 100, 763, 415);
+		setBounds(100, 100, 863, 455);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		
+		JList cbxProcessos = new JList();
+		cbxProcessos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		cbxProcessos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		cbxProcessos.setBounds(12, 12, 831, 102);
+		contentPanel.add(cbxProcessos);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -70,5 +85,4 @@ public class FrmTipoIIIProcesso extends JDialog {
 			}
 		}
 	}
-
 }

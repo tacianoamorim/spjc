@@ -99,8 +99,7 @@ public class FrmTipoIRepresentante extends JDialog {
             public void mouseClicked(MouseEvent e) {
                 Representante representante= tableModel.get(tbLista.getSelectedRow());
                 limpar();
-	                carregarDados(representante);
-            	
+	            carregarDados(representante);
             }
             public void mousePressed(MouseEvent e) {
             }
@@ -291,6 +290,7 @@ public class FrmTipoIRepresentante extends JDialog {
 							representante.setOab(txtOAB.getText());
 							representante.setTelefone(txtTelefone.getText());
 							representante.setCpf(txtCPF.getText());
+							representante.setSenha(txtSenha.getText());
 	
 							String idPolo= Utils.getId(cbxPolo.getSelectedItem().toString(), "-");
 							String idTipo= Utils.getId(cbxTipo.getSelectedItem().toString(), "-");
@@ -323,7 +323,7 @@ public class FrmTipoIRepresentante extends JDialog {
 								carregarTable();
 
 							}
-						} catch (Exception e) {
+						} catch (Throwable e) {
 							JOptionPane.showMessageDialog(null, "Ocorreu o seuing erro ao gravar os dados: "
 									+ e.getMessage(), "ERROR", 
 									JOptionPane.ERROR_MESSAGE);
@@ -340,6 +340,36 @@ public class FrmTipoIRepresentante extends JDialog {
 				});
 				btnNovo.setActionCommand("OK");
 				buttonPane.add(btnNovo);
+				
+				JButton btnExcluir = new JButton("Apagar");
+				btnExcluir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+			                Representante representante= tableModel.get(tbLista.getSelectedRow());
+			               
+			                int selectedOption = JOptionPane.showConfirmDialog(null,"Confirma a exclusão do representante "+
+			                representante.getNome() +"?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+			        		if(selectedOption == JOptionPane.YES_OPTION){
+			        			RepresentanteControl.getInstance().apagar(representante);     
+			        			carregarTable();
+			        		}	
+						} catch (Throwable e) {
+							
+							if ( e.getMessage().contains("foreign key")) {
+								JOptionPane.showMessageDialog(null, "O representante não pode ser excuido pq existem processos vinculados. "
+										+ e.getMessage(), "ERROR", 
+										JOptionPane.ERROR_MESSAGE);
+							} else {							
+								JOptionPane.showMessageDialog(null, "Ocorreu o seuing erro ao gravar os dados: "
+										+ e.getMessage(), "ERROR", 
+										JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+				});
+				btnExcluir.setForeground(Color.RED);
+				btnExcluir.setActionCommand("OK");
+				buttonPane.add(btnExcluir);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -434,7 +464,6 @@ public class FrmTipoIRepresentante extends JDialog {
 	
 	private boolean validaCampos(){
 		boolean isValido= true;
-		
 		
 		String idTipo= Utils.getId(cbxTipo.getSelectedItem().toString(), "-");
 		if ( "D".equals(idTipo) && txtMatricula.getText().length() == 0) {

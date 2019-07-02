@@ -44,7 +44,7 @@ public class EnderecoDAO {
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
 		} finally {
-			transactionManager.closeConnection(connection);
+//			transactionManager.closeConnection(connection);
 		}
 		return endereco;		
 	}
@@ -60,7 +60,7 @@ public class EnderecoDAO {
 			connection = (Connection) transactionManager.getConnection();
 			
 			sql.append("INSERT INTO DBSPJC.Endereco (Cep, Rua, Bairro, Estado, Cidade) ");
-			sql.append("VALUES(?, ?, ?, ?, ?, ?) ");
+			sql.append("VALUES(?, ?, ?, ?, ?) ");
 
 			preStmt= connection.prepareStatement(sql.toString());
 			preStmt.setInt(1, entity.getCep());
@@ -76,7 +76,7 @@ public class EnderecoDAO {
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
 		} finally {
-			transactionManager.closeConnection(connection);
+//			transactionManager.closeConnection(connection);
 		}
 	}
 

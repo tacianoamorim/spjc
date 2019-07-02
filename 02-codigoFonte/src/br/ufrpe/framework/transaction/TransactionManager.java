@@ -12,11 +12,13 @@ import org.apache.log4j.Logger;
 public class TransactionManager {
 	private Properties dataBaseProperties = new Properties();
 	private Logger log = Logger.getLogger(TransactionManager.class);
+	private Connection connection;
 	
 	private static TransactionManager instance;
 	
 	public TransactionManager() {
 		loadConfiguration();
+		connection= getConnectionBegin();
 	}
 	
 	public static TransactionManager getInstance() {
@@ -37,6 +39,10 @@ public class TransactionManager {
 	}
 
 	public Connection getConnection() {
+		return connection;
+	}
+
+	private Connection getConnectionBegin() {
 		Connection connection= null;
 		try {
 			log.info("Abrindo a conecao");
@@ -66,7 +72,7 @@ public class TransactionManager {
 		}
 		return connection;
 	}
-
+	
 	public void getTransaction(Connection connection) {
 		try {
 			connection.setAutoCommit(false);

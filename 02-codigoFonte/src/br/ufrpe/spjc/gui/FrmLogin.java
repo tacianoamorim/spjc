@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import br.ufrpe.spjc.negocio.controlador.MagistradoControl;
+import br.ufrpe.spjc.negocio.controlador.RepresentanteControl;
+import br.ufrpe.spjc.negocio.controlador.ServidorControl;
+import br.ufrpe.spjc.negocio.entidade.Magistrado;
+import br.ufrpe.spjc.negocio.entidade.Representante;
+import br.ufrpe.spjc.negocio.entidade.Servidor;
 
 public class FrmLogin extends JDialog {
 
@@ -24,9 +32,13 @@ public class FrmLogin extends JDialog {
 	private static final long serialVersionUID = 6234032704127284755L;
 	
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtTxtcpf;
-	private JTextField textField;
+	private JTextField txtCpf;
+	private JTextField txtSenha;
 	public static boolean usuarioLogado= false;
+	private JComboBox<String> cbxTipo;
+	private String SOU_MAGISTRADO= "Sou magistrado";
+	private String SOU_SERVIDOR= "Sou servidor";
+	private String SOU_REPRESENTANTE= "Sou representante";
 
 	/**
 	 * Launch the application.
@@ -68,19 +80,26 @@ public class FrmLogin extends JDialog {
 		lblSenha.setBounds(40, 126, 66, 15);
 		contentPanel.add(lblSenha);
 		
-		txtTxtcpf = new JTextField();
-		txtTxtcpf.setText("012");
-		txtTxtcpf.setFont(new Font("Dialog", Font.PLAIN, 14));
-		txtTxtcpf.setBounds(122, 77, 222, 24);
-		contentPanel.add(txtTxtcpf);
-		txtTxtcpf.setColumns(10);
+		txtCpf = new JTextField();
+		txtCpf.setText("012");
+		txtCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
+		txtCpf.setBounds(122, 77, 222, 24);
+		contentPanel.add(txtCpf);
+		txtCpf.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setText("012");
-		textField.setFont(new Font("Dialog", Font.PLAIN, 14));
-		textField.setBounds(120, 119, 224, 24);
-		contentPanel.add(textField);
-		textField.setColumns(10);
+		txtSenha = new JTextField();
+		txtSenha.setText("012");
+		txtSenha.setFont(new Font("Dialog", Font.PLAIN, 14));
+		txtSenha.setBounds(120, 119, 224, 24);
+		contentPanel.add(txtSenha);
+		txtSenha.setColumns(10);
+		
+		cbxTipo = new JComboBox<String>();
+		cbxTipo.setBounds(122, 161, 222, 25);
+		cbxTipo.addItem(SOU_MAGISTRADO);
+		cbxTipo.addItem(SOU_REPRESENTANTE);
+		cbxTipo.addItem(SOU_SERVIDOR);
+		contentPanel.add(cbxTipo);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -89,14 +108,37 @@ public class FrmLogin extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if ( "012".equalsIgnoreCase(txtTxtcpf.getText()) ) {
-							setVisible(false);
-							usuarioLogado= true;
-							FrmPrincipal window= new FrmPrincipal();
-							window.frmSpjcSistema.setVisible(true);
+						
+						try {
 							
-						} else {
-							JOptionPane.showMessageDialog(null, "Usuário ou senha inválido.");
+							String senha= "";
+							
+							if ( SOU_MAGISTRADO.equals(cbxTipo.getSelectedItem()) ) {
+								Magistrado magistrado= MagistradoControl.getInstance().findById(txtCpf.getText());
+								senha= magistrado.getSenha();
+								
+							} else if ( SOU_REPRESENTANTE.equals(cbxTipo.getSelectedItem()) ) {
+								Representante entity= RepresentanteControl.getInstance().findById(txtCpf.getText());
+								senha= entity.getSenha();
+								
+							} else {
+								Servidor entity= ServidorControl.getInstance().findById(txtCpf.getText());
+								senha= entity.getSenha();								
+							}
+							
+							if ( senha.equals(txtSenha.getText()) ) {
+								setVisible(false);
+								usuarioLogado= true;
+								FrmPrincipal window= new FrmPrincipal();
+								window.frmSpjcSistema.setVisible(true);
+								
+							} else {
+								JOptionPane.showMessageDialog(null, "Usuário ou senha inválido.");
+							}
+							
+						} catch (Throwable e) {
+							JOptionPane.showMessageDialog(null, e.getMessage(), "Mensagem", JOptionPane.ERROR_MESSAGE);
+							System.out.println(e);
 						}
 					}
 				});

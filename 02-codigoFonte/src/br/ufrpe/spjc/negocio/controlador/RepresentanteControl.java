@@ -41,7 +41,7 @@ public class RepresentanteControl {
 	public Representante findById(String id) {
 		
 		Representante representante= repositorio.findById(id);
-		representante.setEndereco(enderecoDAO.findById(representante.getCep()));
+		representante.setEndereco(enderecoDAO.findById(representante.getEndereco().getCep()));
 		
 		return representante;
 	}
@@ -50,10 +50,14 @@ public class RepresentanteControl {
 		
 		List<Representante> representantes= repositorio.findByFilter(filtro);
 		for (Representante representante : representantes) {
-			representante.setEndereco(enderecoDAO.findById(representante.getCep()));
+			representante.setEndereco(enderecoDAO.findById(representante.getEndereco().getCep()));
 		}
 		
 		return representantes;
+	}
+
+	public void apagar(Representante representante) {
+		repositorio.apagar(representante);		
 	}
 	
 }

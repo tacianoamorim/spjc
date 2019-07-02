@@ -12,7 +12,6 @@ public class Representante {
 	private String telefone;
 	private String numero;
 	private Endereco endereco;
-	private int cep;
 
 	public String getCpf() {
 		return cpf;
@@ -100,14 +99,6 @@ public class Representante {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	public int getCep() {
-		return cep;
-	}
-
-	public void setCep(int cep) {
-		this.cep = cep;
 	}
 
 }
