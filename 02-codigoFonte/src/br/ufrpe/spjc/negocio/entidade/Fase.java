@@ -1,6 +1,6 @@
 package br.ufrpe.spjc.negocio.entidade;
 
-public class Juizado {
+public class Fase {
 	private int id;
 	private String nome;
 

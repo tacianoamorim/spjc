@@ -276,6 +276,7 @@ public class FrmTipoIRepresentante extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Salvar");
+				okButton.setForeground(new Color(60, 179, 113));
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
@@ -324,9 +325,8 @@ public class FrmTipoIRepresentante extends JDialog {
 
 							}
 						} catch (Throwable e) {
-							JOptionPane.showMessageDialog(null, "Ocorreu o seuing erro ao gravar os dados: "
-									+ e.getMessage(), "ERROR", 
-									JOptionPane.ERROR_MESSAGE);
+							e.printStackTrace();
+							Utils.msgExcption(e.getMessage());	
 						}
 						
 					}
@@ -360,9 +360,8 @@ public class FrmTipoIRepresentante extends JDialog {
 										+ e.getMessage(), "ERROR", 
 										JOptionPane.ERROR_MESSAGE);
 							} else {							
-								JOptionPane.showMessageDialog(null, "Ocorreu o seuing erro ao gravar os dados: "
-										+ e.getMessage(), "ERROR", 
-										JOptionPane.ERROR_MESSAGE);
+								e.printStackTrace();
+								Utils.msgExcption(e.getMessage());	
 							}
 						}
 					}

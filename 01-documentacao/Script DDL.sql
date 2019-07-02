@@ -36,7 +36,7 @@ CREATE INDEX FK_EstadoPauta ON Pauta (estadoPauta);
 
 CREATE TABLE Feito (
   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
- ,nome                           INTEGER UNSIGNED NOT NULL
+ ,nome                           VARCHAR(100) NOT NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE TABLE Fase (
@@ -252,7 +252,8 @@ CREATE INDEX FK_Documento_Representante ON Documento (representante);
 
 CREATE TABLE Representante (
   cpf                            VARCHAR(11) NOT NULL
- ,endereco                       INTEGER UNSIGNED NOT NULL  
+ ,endereco                       INTEGER UNSIGNED NOT NULL
+  
  ,nome                           VARCHAR(100) NULL
  ,oab                            VARCHAR(20) NULL
  ,email                          VARCHAR(100) NULL

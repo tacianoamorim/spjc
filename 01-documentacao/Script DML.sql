@@ -60,7 +60,7 @@ INSERT INTO Feito (id, nome) VALUES
 (3, 'Indenização por Atos Ilícitos'),
 (4, 'Relações de Consumo'),
 (5, 'Relação de Cartão de Crédito'),
-(6, 'Relação de Seguro de'),
+(6, 'Relação de Seguro'),
 (7, 'Saúde, Relação de Serviços de Educação'),
 (8, 'Reivindicação de Bens Móveis e Semoventes'),
 (9, 'Indenização por Danos Morais');
@@ -189,15 +189,15 @@ INSERT INTO Pauta (id,dataAgendamento,estadoPauta,qtdeProcesso) VALUES
 (7, '2019-08-10', 1, 0);
 
 INSERT INTO Audiencia (id,pauta,processo,magistrado,servidor,estadoAudiencia,situacao,tipo,hora,sala) VALUES 
-(1, 1, '00051564620198170002', NULL,'03576768574',1,'C','C','14:00:00', 'sala 2'),
-(2, 2, '00051564620198170002', '71874846073', NULL,1,'C','C','14:00:00', 'sala 2'),
-(3, 3, '00123948920198170001', NULL,'03576768574',1,'C','C','14:00:00', 'sala 2'),
-(4, 4, '00123948920198170001', '71874846073', NULL,1,'C','C','14:00:00', 'sala 2'),
-(5, 5, '00536456520198170002', '09457374848', NULL,1,'I','I','14:30:00', 'sala 2'),
-(6, 1, '00548648220198170002', '09457374848', NULL,1,'I','I','14:30:00', 'sala 2'),
-(7, 2, '00445554520198170002', '09457374848', NULL,1,'I','I','15:30:00', 'sala 2'),
-(8, 2, '00004646820198170002', '09457374848', NULL,1,'I','I','16:30:00', 'sala 2'),
-(9, 7, '00051564620198170002', '71874846073', NULL,1,'C','C','15:30:00', 'sala 2');
+(1, 1, '00051564620198170002', NULL,'03576768574',1,'C','C','13:00:00', 'sala 2'),
+(2, 2, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 2'),
+(3, 3, '00123948920198170001', NULL,'03576768574',1,'C','C','13:00:00', 'sala 2'),
+(4, 4, '00123948920198170001', '71874846073', NULL,1,'C','C','13:00:00', 'sala 2'),
+(5, 5, '00536456520198170002', '09457374848', NULL,1,'I','I','13:00:00', 'sala 2'),
+(6, 1, '00548648220198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 2'),
+(7, 2, '00445554520198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 2'),
+(8, 2, '00004646820198170002', '09457374848', NULL,1,'I','I','15:00:00', 'sala 2'),
+(9, 7, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 2');
 
 INSERT INTO Testemunha(id,nome, email, numeroEndereco, polo, telefone, dataNascimento ) VALUES 
 (1,'Ronald Motta','rmotta@gtec.com.br','45C','A','81 99989-0987','1988-10-10'),
