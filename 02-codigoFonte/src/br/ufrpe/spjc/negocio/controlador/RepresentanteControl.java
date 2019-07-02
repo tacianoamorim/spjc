@@ -25,24 +25,35 @@ public class RepresentanteControl {
 		return instance;
 	}
 	
-	public void inserir(Representante entity) {
+	public void salvar(Representante entity) {
 		// Verifica se o cpe ja esta cadastrado
 		if ( enderecoDAO.findById(entity.getEndereco().getCep()) == null ) {
 			enderecoDAO.inserir(entity.getEndereco());
 		}
-		repositorio.inserir(entity);
+		
+		if ( repositorio.findById(entity.getCpf()) == null ) {
+			repositorio.inserir(entity);
+		} else {
+			repositorio.update(entity);
+		}
 	}
 	
-	public Representante findById(int id) {
-		return repositorio.findById(id);
+	public Representante findById(String id) {
+		
+		Representante representante= repositorio.findById(id);
+		representante.setEndereco(enderecoDAO.findById(representante.getCep()));
+		
+		return representante;
 	}
 	
 	public List<Representante> findByFilter(Representante filtro) {
-		return repositorio.findByFilter(filtro);
-	}
-	
-	public List<Representante> list(Representante filtro) {
-		return repositorio.list(filtro);
+		
+		List<Representante> representantes= repositorio.findByFilter(filtro);
+		for (Representante representante : representantes) {
+			representante.setEndereco(enderecoDAO.findById(representante.getCep()));
+		}
+		
+		return representantes;
 	}
 	
 }

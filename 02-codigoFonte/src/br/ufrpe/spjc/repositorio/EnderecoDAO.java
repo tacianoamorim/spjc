@@ -22,7 +22,7 @@ public class EnderecoDAO {
 		try {
 			connection = (Connection) transactionManager.getConnection();
 			
-			sql.append("SELECT Rua, Bairro, Estado, Cidade, Pais  ");
+			sql.append("SELECT Rua, Bairro, Estado, Cidade ");
 			sql.append("FROM DBSPJC.Endereco WHERE Cep= ? ");
 			
 			preStmt = connection.prepareStatement(sql.toString());
@@ -59,7 +59,7 @@ public class EnderecoDAO {
 		try {
 			connection = (Connection) transactionManager.getConnection();
 			
-			sql.append("INSERT INTO DBSPJC.Endereco (Cep, Rua, Bairro, Estado, Cidade, Pais) ");
+			sql.append("INSERT INTO DBSPJC.Endereco (Cep, Rua, Bairro, Estado, Cidade) ");
 			sql.append("VALUES(?, ?, ?, ?, ?, ?) ");
 
 			preStmt= connection.prepareStatement(sql.toString());
@@ -68,7 +68,6 @@ public class EnderecoDAO {
 			preStmt.setString(3, entity.getBairro());
 			preStmt.setString(4, entity.getEstado());
 			preStmt.setString(5, entity.getCidade());
-			preStmt.setString(6, entity.getPais());
 			
 			preStmt.execute();
 			

@@ -82,7 +82,6 @@ public class FrmTipoITableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		System.out.println("getValueAt");
 		Representante representanteSelecionado = list.get(rowIndex);
 		String valueObject = null;
 		switch (columnIndex) {

@@ -252,6 +252,7 @@ CREATE INDEX FK_Documento_Representante ON Documento (representante);
 
 CREATE TABLE Representante (
   cpf                            VARCHAR(11) NOT NULL
+ ,endereco                       INTEGER UNSIGNED NOT NULL  
  ,nome                           VARCHAR(100) NULL
  ,oab                            VARCHAR(20) NULL
  ,email                          VARCHAR(100) NULL
@@ -263,6 +264,8 @@ CREATE TABLE Representante (
  ,matricula                      INTEGER UNSIGNED NULL
  ,PRIMARY KEY (cpf)
 ) ENGINE=InnoDB;
+CREATE INDEX FK_Representante_Endereco ON Representante (endereco);
+
 
 CREATE TABLE ProcessoRepresentante (
   processo                       VARCHAR(20) NOT NULL
@@ -518,5 +521,9 @@ ALTER TABLE ComunicacaoTestemunha
 ALTER TABLE ComunicacaoTestemunha
   ADD CONSTRAINT Rel_Testemunha_ComunicacaoTestemunha FOREIGN KEY (testemunha)
     REFERENCES Testemunha (id)
+;
+ALTER TABLE Representante
+  ADD CONSTRAINT Rel_Endereco_Representante FOREIGN KEY (endereco)
+    REFERENCES Endereco (cep)
 ;
 

@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -48,7 +50,8 @@ public class FrmTipoIRepresentante extends JDialog {
 	private JTable tbLista;
 	private FrmTipoITableModel tableModel;
 	private JComboBox<String> cbxTipo, cbxPolo;
-	private JTextField textField_1;
+	private JTextField txtCEP;
+	private JTextField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -92,6 +95,27 @@ public class FrmTipoIRepresentante extends JDialog {
 		tableModel = new FrmTipoITableModel();
 		tbLista = new JTable(tableModel);
 		formatarTabela(tbLista);	
+		tbLista.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+                Representante representante= tableModel.get(tbLista.getSelectedRow());
+                limpar();
+	                carregarDados(representante);
+            	
+            }
+            public void mousePressed(MouseEvent e) {
+            }
+
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+		
+		
 		
 		JScrollPane scpLista = new JScrollPane(tbLista);
 		tbLista.setFillsViewportHeight(true);
@@ -147,11 +171,11 @@ public class FrmTipoIRepresentante extends JDialog {
 		panelForm.add(cbxPolo);
 		
 		JLabel lblNEndereo = new JLabel("N. endereço:");
-		lblNEndereo.setBounds(564, 104, 99, 15);
+		lblNEndereo.setBounds(615, 104, 107, 15);
 		panelForm.add(lblNEndereo);
 		
 		txtNumero = new JTextField();
-		txtNumero.setBounds(564, 123, 158, 25);
+		txtNumero.setBounds(615, 123, 107, 25);
 		panelForm.add(txtNumero);
 		txtNumero.setColumns(10);
 		
@@ -190,16 +214,16 @@ public class FrmTipoIRepresentante extends JDialog {
 		
 		txtMatricula = new JTextField();
 		txtMatricula.setEnabled(false);
-		txtMatricula.setBounds(12, 123, 109, 25);
+		txtMatricula.setBounds(12, 123, 89, 25);
 		txtMatricula.setColumns(10);
 		panelForm.add(txtMatricula);
 		
 		JLabel lblLogradouro = new JLabel("Logradouro:");
-		lblLogradouro.setBounds(149, 104, 93, 15);
+		lblLogradouro.setBounds(277, 104, 326, 15);
 		panelForm.add(lblLogradouro);
 		
 		txtLogradouro = new JTextField();
-		txtLogradouro.setBounds(149, 123, 393, 25);
+		txtLogradouro.setBounds(277, 123, 326, 25);
 		panelForm.add(txtLogradouro);
 		txtLogradouro.setColumns(10);
 		
@@ -234,10 +258,19 @@ public class FrmTipoIRepresentante extends JDialog {
 		label.setBounds(600, 149, 66, 15);
 		panelForm.add(label);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(600, 168, 122, 25);
-		panelForm.add(textField_1);
+		txtCEP = new JTextField();
+		txtCEP.setColumns(10);
+		txtCEP.setBounds(600, 168, 122, 25);
+		panelForm.add(txtCEP);
+		
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setBounds(114, 104, 66, 15);
+		panelForm.add(lblSenha);
+		
+		txtSenha = new JTextField();
+		txtSenha.setColumns(10);
+		txtSenha.setBounds(114, 123, 140, 25);
+		panelForm.add(txtSenha);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -247,42 +280,53 @@ public class FrmTipoIRepresentante extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						/*
-						 * CARREGAR DADOS
-						 */
-						Representante representante= new Representante();
-						representante.setNome(txtNome.getText());
-						representante.setEmail(txtEmail.getText());
-						representante.setNumero(txtNumero.getText());
-						representante.setOab(txtOAB.getText());
-						representante.setTelefone(txtTelefone.getText());
-						representante.setCpf(txtCPF.getText());
+						try {
+							/*
+							 * CARREGAR DADOS
+							 */
+							Representante representante= new Representante();
+							representante.setNome(txtNome.getText());
+							representante.setEmail(txtEmail.getText());
+							representante.setNumero(txtNumero.getText());
+							representante.setOab(txtOAB.getText());
+							representante.setTelefone(txtTelefone.getText());
+							representante.setCpf(txtCPF.getText());
+	
+							String idPolo= Utils.getId(cbxPolo.getSelectedItem().toString(), "-");
+							String idTipo= Utils.getId(cbxTipo.getSelectedItem().toString(), "-");
+							if ( "D".equals(idTipo) && txtMatricula.getText().length() >0 ) {
+								representante.setMatricula( Integer.parseInt( txtMatricula.getText() ) );
+							}
+							representante.setPolo(idPolo);
+							representante.setTipo(idTipo);
+							
+							Endereco endereco= new Endereco();
+							int cep= Integer.parseInt(txtCEP.getText());
+							endereco.setCep(cep);
+							endereco.setRua(txtLogradouro.getText());
+							endereco.setBairro(txtBairro.getText());
+							endereco.setCidade(txtCidade.getText());
+							endereco.setEstado(txtUF.getText());
+							representante.setEndereco(endereco);
+							
+							if (!validaCampos()) {
+								JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Validação de campos", 
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							} else {
+								
+								RepresentanteControl.getInstance().salvar(representante);
+								limpar();
+								JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!", "Confirmação de cadastro/atualização", 
+										JOptionPane.INFORMATION_MESSAGE);
+								
+								carregarTable();
 
-						String idPolo= Utils.getId(cbxPolo.getSelectedItem().toString(), "-");
-						String idTipo= Utils.getId(cbxTipo.getSelectedItem().toString(), "-");
-						if ( "D".equals(idTipo) && txtMatricula.getText().length() >0 ) {
-							representante.setMatricula( Integer.parseInt( txtMatricula.getText() ) );
-						}
-						representante.setPolo(idPolo);
-						representante.setTipo(idTipo);
-						
-						Endereco endereco= new Endereco();
-						endereco.setRua(txtLogradouro.getText());
-						endereco.setBairro(txtBairro.getText());
-						endereco.setCidade(txtCidade.getText());
-						endereco.setEstado(txtUF.getText());
-						endereco.setPais("Brasil");
-						representante.setEndereco(endereco);
-						
-						if (!validaCampos()) {
-							JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Validação de campos", 
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Ocorreu o seuing erro ao gravar os dados: "
+									+ e.getMessage(), "ERROR", 
 									JOptionPane.ERROR_MESSAGE);
-							return;
-						} else {
-							
-							RepresentanteControl.getInstance().inserir(representante);
-							
-							limpar();
 						}
 						
 					}
@@ -321,18 +365,23 @@ public class FrmTipoIRepresentante extends JDialog {
 		cbxPolo.addItem("A-Ativo");
 		cbxPolo.addItem("P-Passivo");
 		
-		// Carregar lista
-		List<Representante> lista= RepresentanteControl.getInstance().list(new Representante());
-		tableModel.addList(lista);
+		carregarTable();
 		
+	}
+
+	private void carregarTable() {
+		// Carregar lista
+		tableModel.limpar();
+		List<Representante> lista= RepresentanteControl.getInstance().findByFilter(new Representante());
+		tableModel.addList(lista);
 	}
 	
 	private void formatarTabela(JTable jTable) {
 		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		jTable.getColumnModel().getColumn(0).setPreferredWidth(170);
 		jTable.getColumnModel().getColumn(1).setPreferredWidth(370);
-		jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-		jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+		jTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+		jTable.getColumnModel().getColumn(3).setPreferredWidth(80);
 	}	
 	
 	private void limpar() {
@@ -346,21 +395,29 @@ public class FrmTipoIRepresentante extends JDialog {
 		txtOAB.setText("");
 		txtTelefone.setText("");
 		txtCPF.setText("");
+		txtBairro.setText("");
 		cbxPolo.setSelectedIndex(0);
 		cbxTipo.setSelectedIndex(0);
+		txtCEP.setText("");
+		txtSenha.setText("");
 	}
 	
 	private void carregarDados(Representante entity) {
 		txtNome.setText(entity.getNome());
 		txtEmail.setText(entity.getEmail());
-		txtCidade.setText("");
-		txtUF.setText("");
-		txtLogradouro.setText("");
 		txtMatricula.setText(entity.getMatricula()+"");
 		txtNumero.setText(entity.getNumero());
 		txtOAB.setText(entity.getOab());
 		txtTelefone.setText(entity.getTelefone());
 		txtCPF.setText(entity.getCpf());
+		txtSenha.setText(entity.getSenha());
+		if ( entity.getEndereco() != null) {
+			txtLogradouro.setText(entity.getEndereco().getRua());
+			txtBairro.setText(entity.getEndereco().getBairro());
+			txtCidade.setText(entity.getEndereco().getCidade());
+			txtUF.setText(entity.getEndereco().getEstado());
+			txtCEP.setText(entity.getEndereco().getCep()+"");
+		}
 		
 		if ( "A".equals(entity.getPolo())) {
 			cbxPolo.setSelectedIndex(0);
@@ -393,6 +450,8 @@ public class FrmTipoIRepresentante extends JDialog {
 			txtNumero.getText().length() == 0 || 
 			txtBairro.getText().length() == 0 || 
 			txtCidade.getText().length() == 0 || 
+			txtCEP.getText().length() == 0 ||
+			txtSenha.getText().length() == 0 || 
 			txtUF.getText().length() == 0
 			) {
 			isValido= false;
@@ -400,5 +459,4 @@ public class FrmTipoIRepresentante extends JDialog {
 		
 		return isValido;
 	}
-	
 }

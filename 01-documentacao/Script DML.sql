@@ -157,15 +157,15 @@ INSERT INTO Recebimento (id,execucao,dataVencimento,numeroParcela,observacao,val
 (6,2, '2019-09-10', 3, 'Obs 3', 435.00),
 (7,2, '2019-10-10', 4, 'Obs 4', 450.00);
 
-INSERT INTO Representante (cpf,nome,email,matricula,numeroEndereco,oab,polo,senha,telefone,tipoRepresentante) VALUES 
-('15411554486','Paulo Andrade Lima', 'andradelima@uol.com', NULL, '150', '13256-PE','A','123456','81 96589-9856','D'),
-('45678565664','Bergue Santos', 'bsantos@uol.com', NULL, '2C', '12568-PE','A','123456','81 96589-9856','D'),
-('54606515613','Carlos Andre', 'candre@terra.com', NULL, '012', '545451-PE','P','123456','81 65489-6546','D'),
-('56789845656','Thiago Lima', 'tlima@yahoo.com', NULL, '456', '45600-PE','P','123456','81 96589-9856','D'),
-('12354563334','Paulo Marcelo Ferreira', 'pmf10@gmail.com', NULL, '565', '13256-PE','A','123456','81 96589-9856','A'),
-('00546116566','Mozart Silva', 'msilva@uol.com', NULL, '456', '65411-PE','A','123456','81 96589-6599','A'),
-('01234561231','Leornado Santana', 'lsantana@uol.com', NULL, '111', '22356-PE','P','123456','81 45666-2458','A'),
-('02132546548','Cristina Elizabeth Correia', 'ccorreia@terra.com', NULL, '895', '45646-PE','P','123456','81 96582-3256','A');
+INSERT INTO Representante (cpf,nome,email,matricula,numeroEndereco,oab,polo,senha,telefone,tipoRepresentante,endereco) VALUES 
+('15411554486','Paulo Andrade Lima', 'andradelima@uol.com', NULL, '150', '13256-PE','A','123456','81 96589-9856','D', 51240420),
+('45678565664','Bergue Santos', 'bsantos@uol.com', NULL, '2C', '12568-PE','A','123456','81 96589-9856','D', 51240420),
+('54606515613','Carlos Andre', 'candre@terra.com', NULL, '012', '545451-PE','P','123456','81 65489-6546','D', 50120240),
+('56789845656','Thiago Lima', 'tlima@yahoo.com', NULL, '456', '45600-PE','P','123456','81 96589-9856','D', 50000000),
+('12354563334','Paulo Marcelo Ferreira', 'pmf10@gmail.com', NULL, '565', '13256-PE','A','123456','81 96589-9856','A', 50920135),
+('00546116566','Mozart Silva', 'msilva@uol.com', NULL, '456', '65411-PE','A','123456','81 96589-6599','A', 50400110),
+('01234561231','Leornado Santana', 'lsantana@uol.com', NULL, '111', '22356-PE','P','123456','81 45666-2458','A', 51240420),
+('02132546548','Cristina Elizabeth Correia', 'ccorreia@terra.com', NULL, '895', '45646-PE','P','123456','81 96582-3256','A',51240420);
 
 INSERT INTO ProcessoRepresentante (processo,representante) VALUES 
 ('00051564620198170002', '00546116566'),
