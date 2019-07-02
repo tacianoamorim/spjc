@@ -345,6 +345,13 @@ public class FrmTipoIRepresentante extends JDialog {
 				btnExcluir.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
+							
+							if (tbLista.getSelectedRow() < 0) {
+								JOptionPane.showMessageDialog(null, "Selecione um registro na tabela. "
+									, "ERROR", JOptionPane.ERROR_MESSAGE);	
+								return;
+							} 
+							
 			                Representante representante= tableModel.get(tbLista.getSelectedRow());
 			               
 			                int selectedOption = JOptionPane.showConfirmDialog(null,"Confirma a exclusão do representante "+
@@ -352,6 +359,8 @@ public class FrmTipoIRepresentante extends JDialog {
 			        		if(selectedOption == JOptionPane.YES_OPTION){
 			        			RepresentanteControl.getInstance().apagar(representante);     
 			        			carregarTable();
+			        			JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!", "Confirmação de cadastro/atualização", 
+										JOptionPane.INFORMATION_MESSAGE);
 			        		}	
 						} catch (Throwable e) {
 							

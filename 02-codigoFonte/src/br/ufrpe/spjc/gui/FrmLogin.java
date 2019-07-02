@@ -83,14 +83,12 @@ public class FrmLogin extends JDialog {
 		contentPanel.add(lblSenha);
 		
 		txtCpf = new JTextField();
-		txtCpf.setText("012");
 		txtCpf.setFont(new Font("Dialog", Font.PLAIN, 14));
 		txtCpf.setBounds(122, 77, 222, 24);
 		contentPanel.add(txtCpf);
 		txtCpf.setColumns(10);
 		
 		txtSenha = new JTextField();
-		txtSenha.setText("012");
 		txtSenha.setFont(new Font("Dialog", Font.PLAIN, 14));
 		txtSenha.setBounds(120, 119, 224, 24);
 		contentPanel.add(txtSenha);
@@ -140,11 +138,11 @@ public class FrmLogin extends JDialog {
 								window.frmSpjcSistema.setVisible(true);
 								
 							} else {
-								JOptionPane.showMessageDialog(null, "Usuário ou senha inválido.");
+								JOptionPane.showMessageDialog(null, "Usuário ou senha inválida.");
 							}
 							
 						} catch (Throwable e) {
-							JOptionPane.showMessageDialog(null, e.getMessage(), "Mensagem", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Usuário ou senha inválida. \n" + e.getCause(), "Mensagem", JOptionPane.ERROR_MESSAGE);
 							System.out.println(e);
 						}
 					}
