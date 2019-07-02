@@ -16,7 +16,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -36,7 +35,7 @@ public class FrmTipoIIIProcesso extends JDialog {
 	
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox<Processo> cbxProcessos;
-	private FrmTipoIIITableModel tableModel;
+//	private FrmTipoIIITableModel tableModel;
 	private JTextField txtNPU;
 	private TextArea txtProcesso;
 	private JTextField txtSala;
@@ -74,6 +73,8 @@ public class FrmTipoIIIProcesso extends JDialog {
 		cbxProcessos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				carregarPauta( (Processo) cbxProcessos.getSelectedItem() );
 				
 			}
 		});
@@ -165,16 +166,14 @@ public class FrmTipoIIIProcesso extends JDialog {
 		lblTipo.setBounds(305, 318, 187, 15);
 		contentPanel.add(lblTipo);
 		
-		tableModel = new FrmTipoIIITableModel();
-		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Apagar");
-				okButton.setForeground(Color.RED);
-				okButton.addActionListener(new ActionListener() {
+				JButton btnApagar = new JButton("Apagar");
+				btnApagar.setForeground(Color.RED);
+				btnApagar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
 					}
@@ -193,12 +192,12 @@ public class FrmTipoIIIProcesso extends JDialog {
 				btnSalvar.setForeground(new Color(32, 178, 170));
 				btnSalvar.setActionCommand("OK");
 				buttonPane.add(btnSalvar);
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnApagar.setActionCommand("OK");
+				buttonPane.add(btnApagar);
+				getRootPane().setDefaultButton(btnApagar);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Fechar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
@@ -220,6 +219,7 @@ public class FrmTipoIIIProcesso extends JDialog {
 	}
 	
 	private void carregarPauta(Processo processo) {
+		cbxPauta.removeAll();
 		List<Pauta> lista= ProcessoControl.getInstance().buscarPautaAtivas(processo.getJuizado().getId());
 		for (Pauta pauta : lista) {
 			cbxPauta.addItem(pauta);
@@ -263,13 +263,13 @@ public class FrmTipoIIIProcesso extends JDialog {
 //		}		
 	}
 	
-	private void carregarTable() {
-		// Carregar lista
-		tableModel.limpar();
-		//List<Representante> lista= RepresentanteControl.getInstance().findByFilter(new Representante());
-		//tableModel.addList(lista);
-	}
+//	private void carregarTable() {
+//		// Carregar lista
+//		tableModel.limpar();
+//		//List<Representante> lista= RepresentanteControl.getInstance().findByFilter(new Representante());
+//		//tableModel.addList(lista);
+//	}
 	
-	private void formatarTabela(JTable jTable) {
-	}	
+//	private void formatarTabela(JTable jTable) {
+//	}	
 }

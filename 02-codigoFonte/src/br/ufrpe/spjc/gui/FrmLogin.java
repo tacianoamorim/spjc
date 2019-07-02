@@ -34,11 +34,13 @@ public class FrmLogin extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtCpf;
 	private JTextField txtSenha;
-	public static boolean usuarioLogado= false;
 	private JComboBox<String> cbxTipo;
-	private String SOU_MAGISTRADO= "Sou magistrado";
-	private String SOU_SERVIDOR= "Sou servidor";
-	private String SOU_REPRESENTANTE= "Sou representante";
+
+	public static String TIPO_USUARIO;
+	public static Object USUARIO_LOGADO;
+	public static String SOU_MAGISTRADO= "Sou magistrado";
+	public static String SOU_SERVIDOR= "Sou servidor";
+	public static String SOU_REPRESENTANTE= "Sou representante";
 
 	/**
 	 * Launch the application.
@@ -114,21 +116,26 @@ public class FrmLogin extends JDialog {
 							String senha= "";
 							
 							if ( SOU_MAGISTRADO.equals(cbxTipo.getSelectedItem()) ) {
-								Magistrado magistrado= MagistradoControl.getInstance().findById(txtCpf.getText());
-								senha= magistrado.getSenha();
+								Magistrado entity= MagistradoControl.getInstance().findById(txtCpf.getText());
+								senha= entity.getSenha();
+								TIPO_USUARIO= SOU_MAGISTRADO;
+								USUARIO_LOGADO= entity;
 								
 							} else if ( SOU_REPRESENTANTE.equals(cbxTipo.getSelectedItem()) ) {
 								Representante entity= RepresentanteControl.getInstance().findById(txtCpf.getText());
 								senha= entity.getSenha();
+								TIPO_USUARIO= SOU_REPRESENTANTE;
+								USUARIO_LOGADO= entity;
 								
 							} else {
 								Servidor entity= ServidorControl.getInstance().findById(txtCpf.getText());
-								senha= entity.getSenha();								
+								senha= entity.getSenha();		
+								TIPO_USUARIO= SOU_SERVIDOR;
+								USUARIO_LOGADO= entity;
 							}
 							
 							if ( senha.equals(txtSenha.getText()) ) {
 								setVisible(false);
-								usuarioLogado= true;
 								FrmPrincipal window= new FrmPrincipal();
 								window.frmSpjcSistema.setVisible(true);
 								
