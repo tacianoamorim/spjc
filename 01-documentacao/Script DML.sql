@@ -80,7 +80,7 @@ INSERT INTO Magistrado (cpf,endereco,matricula,nome,numeroEndereco,senha) VALUES
 ('74745757578', 51240420, 1893647, 'Thiago Mello Arruda', '6789','123456');
 
 INSERT INTO Servidor (cpf,dataFim,dataInicio,endereco,juizado,matricula,nome,numeroEndereco,senha,tipoServidor) VALUES 
-('98764736373', '2021-06-11', '2019-06-10', 51240420, NULL, 1843556,'Florentina de Jesus','4567','12345678','A'),
+('98764736373', '2021-06-11', '2019-06-10', 51240420, NULL, 1843556,'Florentina de Jesus','12345678','12345678','A'),
 ('00394575873', '2021-07-10', '2019-06-10', 50400110, NULL, 1867890,'Paula Fernandes','45','12345678','T'),
 ('02198374484', '2021-01-12', '2019-06-10', 50000000, NULL, 1835645,'Moises Dias','345','12345678','T'),
 ('03576768574', '2025-10-10', '2019-06-10', 50000000, NULL, 2030393,'Lucas Paes','1','18936475','C'),
@@ -186,7 +186,7 @@ INSERT INTO Pauta (id,dataAgendamento,estadoPauta,qtdeProcesso) VALUES
 (4, '2019-06-21', 1, 1),
 (5, '2019-06-30', 1, 1),
 (6, '2019-07-11', 1, 0),
-(7, '2019-08-10', 1, 0);
+(7, '2019-08-10', 1, 1);
 
 INSERT INTO Audiencia (id,pauta,processo,magistrado,servidor,estadoAudiencia,situacao,tipo,hora,sala) VALUES 
 (1, 1, '00051564620198170002', NULL,'03576768574',1,'C','C','13:00:00', 'sala 2'),

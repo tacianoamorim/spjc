@@ -114,8 +114,6 @@ public class FrmTipoIRepresentante extends JDialog {
             }
         });
 		
-		
-		
 		JScrollPane scpLista = new JScrollPane(tbLista);
 		tbLista.setFillsViewportHeight(true);
 		panelList.add(scpLista);
@@ -322,6 +320,7 @@ public class FrmTipoIRepresentante extends JDialog {
 										JOptionPane.INFORMATION_MESSAGE);
 								
 								carregarTable();
+								tableModel.fireTableDataChanged();
 
 							}
 						} catch (Throwable e) {
