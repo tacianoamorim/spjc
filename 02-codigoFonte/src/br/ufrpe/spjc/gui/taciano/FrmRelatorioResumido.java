@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -19,7 +20,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import br.ufrpe.spjc.negocio.controlador.RelatorioControl;
+import br.ufrpe.spjc.negocio.vo.RelatorioVO;
 import br.ufrpe.spjc.util.JasperReportUtil;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
@@ -98,40 +102,38 @@ public class FrmRelatorioResumido extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
+							URL url= getClass().getResource("RelatorioResumidoPautaAudiencia.jrxml");
+							String semestre;
+							int ano, mesInicio, mesFim;
+							
 							Map<String, Object> parametros = new HashMap<String, Object>();
+							ano= Integer.parseInt(txtAno.getText());
 							parametros.put("ANO", txtAno.getText());
 							
-							if (cbxSemestre.getSelectedItem().equals("1")) {
-								parametros.put("MES_INICIO", 1);
-								parametros.put("MES_FIM", 6);
+							if (cbxSemestre.getSelectedIndex() == 0) {
+								semestre= "1";
+								mesInicio= 1;
+								mesFim= 6;
 							} else {
-								parametros.put("MES_INICIO", 7);
-								parametros.put("MES_FIM", 12);								
+								semestre= "2";
+								mesInicio= 7;
+								mesFim= 12;							
 							}
+							parametros.put("SEMESTRE", semestre);
 							
-							URL url= getClass().getResource("RelatorioResumidoPautaAudiencia.jrxml");
+							List<RelatorioVO> lista= RelatorioControl.getInstance().list(mesInicio, mesFim, ano);
 							
-							StringBuilder query= new StringBuilder();
-							query.append("SELECT DISTINCT jpa.nome, ")
-							.append(" jpa.dataAgendamento, ")
-							.append(" jpa.hora, ")
-							.append(" jpa.processo, ")
-							.append(" prp.tipo,  ")
-							.append(" prp.polo, ")
-							.append(" prp.nomePTR ")
-							.append(" FROM DBSPJC.juizadoPautaAudiencia jpa ")
-							.append("   INNER JOIN DBSPJC.parteRepresentanteProcesso prp ON prp.processo= jpa.processo ")
-							.append(" ORDER BY 1, 2, 3, 4, 5 ");
-							
+							JRBeanCollectionDataSource dataSource = 
+									new JRBeanCollectionDataSource(lista);
+
 							//gerando o jasper design
 							JasperDesign desenho= JRXmlLoader.load( url.getFile());
 							
-							JasperReportUtil.gerar(desenho, query.toString(), parametros);
-							setVisible(false);
+							JasperReportUtil.gerar(desenho, dataSource, parametros);
 							
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(null, e.getMessage());
-						}
+						}						
 					}
 				});
 				okButton.setActionCommand("OK");
