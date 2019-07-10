@@ -6,6 +6,7 @@ public class Servidor {
 	private String senha;
 	private int matricula;
 	private String tipoServidor;
+	private Juizado juizado;
 
 	public String getCpf() {
 		return cpf;
@@ -45,6 +46,14 @@ public class Servidor {
 
 	public void setTipoServidor(String tipoServidor) {
 		this.tipoServidor = tipoServidor;
+	}
+
+	public Juizado getJuizado() {
+		return juizado;
+	}
+
+	public void setJuizado(Juizado juizado) {
+		this.juizado = juizado;
 	}
 
 }

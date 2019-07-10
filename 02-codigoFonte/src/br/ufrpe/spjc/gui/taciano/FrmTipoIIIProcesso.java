@@ -189,6 +189,8 @@ public class FrmTipoIIIProcesso extends JDialog {
 	private void limpar() {
 		txtNPU.setText("");
 		txtProcesso.setText("");
+		txtSala.setText("");
+		cbxPauta.setSelectedIndex(0);
 		cbxHorario.setSelectedIndex(0);
 		cbxTipo.setSelectedIndex(0);
 	}

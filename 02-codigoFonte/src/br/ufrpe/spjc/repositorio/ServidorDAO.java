@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import br.ufrpe.framework.transaction.SystemException;
 import br.ufrpe.framework.transaction.TransactionManager;
+import br.ufrpe.spjc.negocio.entidade.Juizado;
 import br.ufrpe.spjc.negocio.entidade.Servidor;
 
 public class ServidorDAO {
@@ -22,7 +23,7 @@ public class ServidorDAO {
 		try {
 			connection = (Connection) transactionManager.getConnection();
 			
-			sql.append("SELECT Cpf, Nome, Senha, TipoServidor, Matricula ");
+			sql.append("SELECT Cpf, Nome, Senha, TipoServidor, Matricula, Juizado ");
 			sql.append("FROM DBSPJC.Servidor WHERE Cpf= ? ");
 			
 			preStmt = connection.prepareStatement(sql.toString());
@@ -37,6 +38,10 @@ public class ServidorDAO {
 				servidor.setNome(rs.getString("nome"));
 				servidor.setTipoServidor(rs.getString("TipoServidor"));
 				servidor.setSenha(rs.getString("senha"));
+				
+				Juizado juizado= new Juizado();
+				juizado.setId(rs.getInt("Juizado"));
+				servidor.setJuizado(juizado);
 			}
 
 		} catch (SQLException e) {

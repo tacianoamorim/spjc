@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import br.ufrpe.spjc.gui.taciano.FrmRelatorioResumido;
@@ -96,8 +97,14 @@ public class FrmPrincipal {
 	    JMenuItem mntmProcessoTipoIII = new JMenuItem("Processo");
 	    mntmProcessoTipoIII.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		FrmTipoIIIProcesso window=new FrmTipoIIIProcesso();
-	    		window.setVisible(true);
+	    		if ( FrmLogin.TIPO_USUARIO.equals(FrmLogin.SOU_SERVIDOR)) {
+	    			FrmTipoIIIProcesso window=new FrmTipoIIIProcesso();
+	    			window.setVisible(true);
+	    			
+	    		} else {
+	    			JOptionPane.showMessageDialog(null, "Para acessar essa opção vc deve logar como servidor.");
+	    		}
+	    		
 	    	}
 	    });
 	    mnCrudTipoIII.add(mntmProcessoTipoIII);
