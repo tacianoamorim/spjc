@@ -40,7 +40,7 @@ public class Processo {
 
 	@Override
 	public String toString() {
-		return "Npu= " + npu 
+		return  npu 
 				+ " - Juizado= " + juizado.getNome()
 				+ " - Fase= " + processoFase.getFase().getNome() 
 				+ " - Feito= " + processoFeito.getFeito().getNome();

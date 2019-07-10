@@ -94,9 +94,9 @@ INSERT INTO  CursoEspecializacao (id,servidor,dataConclusao,nivel,nome,cargaHora
 (2, '84637673636', '2010-06-09', 'superior', 'Administracao',60), 
 (3, '98764736373', '2003-11-01', 'superior', 'Contabilidade',120); 
 
-INSERT INTO Juizado (id,dataFim,dataInicio,endereco,magistrado,nome,numeroEndereco,servidorChefe,telefone) VALUES
-(1, '2020-06-10','2019-06-10',50000000,'71874846073','Juizados Civeis 1G','45C','98764736373','081 99991-8752'),
-(2, '2020-06-10','2019-06-10',50000000,'09457374848','Juizados Civeis 2G','45C','84637673636','081 99991-6475');
+INSERT INTO Juizado (id,dataFim,dataInicio,endereco,magistrado,nome,numeroEndereco,servidorChefe,telefone, salaAudiencia) VALUES
+(1, '2020-06-10','2019-06-10',50000000,'71874846073','Juizados Civeis 1G','45C','98764736373','081 99991-8752', 'Sala 20'),
+(2, '2020-06-10','2019-06-10',50000000,'09457374848','Juizados Civeis 2G','45C','84637673636','081 99991-6475', 'Sala 21');
 
 UPDATE Servidor SET juizado=1 WHERE cpf= '98764736373';
 UPDATE Servidor SET juizado=1 WHERE cpf= '00394575873';
@@ -189,15 +189,15 @@ INSERT INTO Pauta (id,dataAgendamento,estadoPauta,qtdeProcesso) VALUES
 (7, '2019-08-10', 1, 1);
 
 INSERT INTO Audiencia (id,pauta,processo,magistrado,servidor,estadoAudiencia,situacao,tipo,hora,sala) VALUES 
-(1, 1, '00051564620198170002', NULL,'03576768574',1,'C','C','13:00:00', 'sala 2'),
-(2, 2, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 2'),
-(3, 3, '00123948920198170001', NULL,'03576768574',1,'C','C','13:00:00', 'sala 2'),
-(4, 4, '00123948920198170001', '71874846073', NULL,1,'C','C','13:00:00', 'sala 2'),
-(5, 5, '00536456520198170002', '09457374848', NULL,1,'I','I','13:00:00', 'sala 2'),
-(6, 1, '00548648220198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 2'),
-(7, 2, '00445554520198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 2'),
-(8, 2, '00004646820198170002', '09457374848', NULL,1,'I','I','15:00:00', 'sala 2'),
-(9, 7, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 2');
+(1, 1, '00051564620198170002', NULL,'03576768574',1,'C','C','13:00:00', 'sala 21'),
+(2, 2, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 21'),
+(3, 3, '00123948920198170001', NULL,'03576768574',1,'C','C','13:00:00', 'sala 20'),
+(4, 4, '00123948920198170001', '71874846073', NULL,1,'C','C','13:00:00', 'sala 20'),
+(5, 5, '00536456520198170002', '09457374848', NULL,1,'I','I','13:00:00', 'sala 21'),
+(6, 1, '00548648220198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 21'),
+(7, 2, '00445554520198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 21'),
+(8, 2, '00004646820198170002', '09457374848', NULL,1,'I','I','15:00:00', 'sala 21'),
+(9, 7, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 21');
 
 INSERT INTO Testemunha(id,nome, email, numeroEndereco, polo, telefone, dataNascimento ) VALUES 
 (1,'Ronald Motta','rmotta@gtec.com.br','45C','A','81 99989-0987','1988-10-10'),

@@ -17,6 +17,7 @@ CREATE TABLE Juizado (
  ,numeroEndereco                 VARCHAR(10) NOT NULL
  ,dataInicio                     DATE NULL
  ,dataFim                        DATE NULL
+ ,salaAudiencia                  VARCHAR(100) NULL
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_Juizado_Endereco ON Juizado (endereco);

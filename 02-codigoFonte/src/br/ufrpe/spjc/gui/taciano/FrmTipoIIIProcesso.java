@@ -25,6 +25,7 @@ import br.ufrpe.spjc.negocio.entidade.Pauta;
 import br.ufrpe.spjc.negocio.entidade.Processo;
 import br.ufrpe.spjc.negocio.entidade.Representante;
 import br.ufrpe.spjc.util.Utils;
+import javax.swing.JTextArea;
 
 public class FrmTipoIIIProcesso extends JDialog {
 
@@ -34,15 +35,13 @@ public class FrmTipoIIIProcesso extends JDialog {
 	private static final long serialVersionUID = 5287862733905941387L;
 	
 	private final JPanel contentPanel = new JPanel();
-	private JComboBox<Processo> cbxProcessos;
 //	private FrmTipoIIITableModel tableModel;
 	private JTextField txtNPU;
-	private TextArea txtProcesso;
 	private JTextField txtSala;
-	private JComboBox<Audiencia> cbxHorario;
 	private JComboBox<Audiencia> cbxTipo;
 	private JComboBox<Pauta> cbxPauta;
-	private JComboBox<Processo> cbxAudiencias;
+	private JComboBox<Processo> cbxHorario;
+	private JTextArea txtProcesso;
 
 	/**
 	 * Launch the application.
@@ -62,55 +61,39 @@ public class FrmTipoIIIProcesso extends JDialog {
 	 */
 	public FrmTipoIIIProcesso() {
 		setTitle("Formulário Tipo II - PROCESSO (Tabela Pai) e AUDIENCIA (Tabela Filha)");
-		setBounds(100, 100, 680, 464);
+		setBounds(100, 100, 680, 397);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		cbxProcessos = new JComboBox<Processo>();
-		cbxProcessos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				carregarPauta( (Processo) cbxProcessos.getSelectedItem() );
-				
-			}
-		});
-		cbxProcessos.setBounds(12, 46, 641, 30);
-		contentPanel.add(cbxProcessos);
-		
-		JLabel lblProcesso = new JLabel("Processo:");
-		lblProcesso.setBounds(12, 24, 66, 15);
-		contentPanel.add(lblProcesso);
-		
 		JLabel lblPautasDisponveis = new JLabel("Pautas disponíveis:");
-		lblPautasDisponveis.setBounds(12, 88, 152, 15);
+		lblPautasDisponveis.setBounds(12, 12, 152, 15);
 		contentPanel.add(lblPautasDisponveis);
 		
 		cbxPauta = new JComboBox<Pauta>();
-		cbxPauta.setBounds(12, 105, 641, 30);
+		cbxPauta.setBounds(12, 29, 641, 30);
 		contentPanel.add(cbxPauta);
 		
-		cbxAudiencias = new JComboBox<Processo>();
-		cbxAudiencias.setBounds(12, 163, 641, 30);
-		contentPanel.add(cbxAudiencias);
+		cbxHorario = new JComboBox<Processo>();
+		cbxHorario.setBounds(12, 87, 641, 30);
+		contentPanel.add(cbxHorario);
 		
 		JLabel lblHorrios = new JLabel("Horários:");
-		lblHorrios.setBounds(12, 147, 152, 15);
+		lblHorrios.setBounds(12, 71, 152, 15);
 		contentPanel.add(lblHorrios);
 		
 		JLabel lblNmeroDoProcesso = new JLabel("Número do processo:");
-		lblNmeroDoProcesso.setBounds(12, 205, 189, 15);
+		lblNmeroDoProcesso.setBounds(12, 136, 189, 15);
 		contentPanel.add(lblNmeroDoProcesso);
 		
 		txtNPU = new JTextField();
-		txtNPU.setBounds(12, 223, 189, 25);
+		txtNPU.setBounds(12, 154, 189, 25);
 		contentPanel.add(txtNPU);
 		txtNPU.setColumns(10);
 		
-		JButton btnBuscarProcesso = new JButton("Buscar");
+		JButton btnBuscarProcesso = new JButton("Buscar => ");
 		btnBuscarProcesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -129,42 +112,35 @@ public class FrmTipoIIIProcesso extends JDialog {
 				}
 			}
 		});
-		btnBuscarProcesso.setBounds(86, 255, 114, 25);
+		btnBuscarProcesso.setBounds(64, 186, 136, 25);
 		contentPanel.add(btnBuscarProcesso);
 		
-		txtProcesso = new TextArea();
-		txtProcesso.setEnabled(false);
-		txtProcesso.setBounds(227, 223, 422, 79);
-		contentPanel.add(txtProcesso);
-		
-		JLabel lblProcesso_1 = new JLabel("Processo:");
-		lblProcesso_1.setBounds(227, 205, 189, 15);
+		JLabel lblProcesso_1 = new JLabel("Informaçõesdo processo:");
+		lblProcesso_1.setBounds(227, 136, 344, 15);
 		contentPanel.add(lblProcesso_1);
 		
 		JLabel lblSala = new JLabel("Sala:");
-		lblSala.setBounds(510, 320, 136, 15);
+		lblSala.setBounds(517, 272, 136, 15);
 		contentPanel.add(lblSala);
 		
 		txtSala = new JTextField();
+		txtSala.setEditable(false);
 		txtSala.setColumns(10);
-		txtSala.setBounds(510, 338, 136, 25);
+		txtSala.setBounds(517, 290, 136, 25);
 		contentPanel.add(txtSala);
 		
-		cbxHorario = new JComboBox<Audiencia>();
-		cbxHorario.setBounds(12, 335, 281, 30);
-		contentPanel.add(cbxHorario);
-		
-		JLabel lblHorrio = new JLabel("Horário:");
-		lblHorrio.setBounds(12, 320, 66, 15);
-		contentPanel.add(lblHorrio);
-		
 		cbxTipo = new JComboBox<Audiencia>();
-		cbxTipo.setBounds(305, 333, 187, 30);
+		cbxTipo.setBounds(12, 287, 469, 30);
 		contentPanel.add(cbxTipo);
 		
 		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(305, 318, 187, 15);
+		lblTipo.setBounds(12, 272, 187, 15);
 		contentPanel.add(lblTipo);
+		
+		txtProcesso = new JTextArea();
+		txtProcesso.setEditable(false);
+		txtProcesso.setBounds(227, 154, 421, 104);
+		contentPanel.add(txtProcesso);
 		
 		{
 			JPanel buttonPane = new JPanel();
@@ -208,22 +184,6 @@ public class FrmTipoIIIProcesso extends JDialog {
 			}
 		}
 		
-		carregarProcessos();
-	}
-
-	private void carregarProcessos() {
-		List<Processo> lista= ProcessoControl.getInstance().findByFilter(new Processo());
-		for (Processo processo : lista) {
-			cbxProcessos.addItem(processo);
-		}
-	}
-	
-	private void carregarPauta(Processo processo) {
-		cbxPauta.removeAll();
-		List<Pauta> lista= ProcessoControl.getInstance().buscarPautaAtivas(processo.getJuizado().getId());
-		for (Pauta pauta : lista) {
-			cbxPauta.addItem(pauta);
-		}
 	}
 	
 	private void limpar() {
@@ -262,14 +222,4 @@ public class FrmTipoIIIProcesso extends JDialog {
 //			cbxTipo.setSelectedIndex(1);
 //		}		
 	}
-	
-//	private void carregarTable() {
-//		// Carregar lista
-//		tableModel.limpar();
-//		//List<Representante> lista= RepresentanteControl.getInstance().findByFilter(new Representante());
-//		//tableModel.addList(lista);
-//	}
-	
-//	private void formatarTabela(JTable jTable) {
-//	}	
 }
