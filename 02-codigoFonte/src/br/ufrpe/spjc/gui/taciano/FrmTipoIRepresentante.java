@@ -273,8 +273,56 @@ public class FrmTipoIRepresentante extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
+				
+				JButton btnNovo = new JButton("Novo");
+				btnNovo.setForeground(new Color(255, 255, 255));
+				btnNovo.setBackground(new Color(0, 0, 255));
+				btnNovo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						limpar();
+					}
+				});
+				btnNovo.setActionCommand("OK");
+				buttonPane.add(btnNovo);
+				
+				JButton btnExcluir = new JButton("Apagar");
+				btnExcluir.setBackground(new Color(255, 0, 0));
+				btnExcluir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							
+							if (tbLista.getSelectedRow() < 0) {
+								JOptionPane.showMessageDialog(null, "Selecione um registro na tabela. "
+									, "ERROR", JOptionPane.ERROR_MESSAGE);	
+								return;
+							} 
+							
+			                Representante representante= tableModel.get(tbLista.getSelectedRow());
+			               
+			                int selectedOption = JOptionPane.showConfirmDialog(null,"Confirma a exclusão do representante "+
+			                representante.getNome() +"?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+			        		if(selectedOption == JOptionPane.YES_OPTION){
+			        			RepresentanteControl.getInstance().apagar(representante);     
+			        			carregarTable();
+			        			JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!", "Confirmação de cadastro/atualização", 
+										JOptionPane.INFORMATION_MESSAGE);
+			        		}	
+						} catch (Throwable e) {
+							
+							if ( e.getMessage().contains("foreign key")) {
+								JOptionPane.showMessageDialog(null, "O representante não pode ser excuido pq existem processos vinculados. "
+										+ e.getMessage(), "ERROR", 
+										JOptionPane.ERROR_MESSAGE);
+							} else {							
+								e.printStackTrace();
+								Utils.msgExcption(e.getMessage());	
+							}
+						}
+					}
+				});
 				JButton okButton = new JButton("Salvar");
-				okButton.setForeground(new Color(60, 179, 113));
+				okButton.setBackground(new Color(0, 128, 0));
+				okButton.setForeground(new Color(255, 255, 255));
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
@@ -330,59 +378,16 @@ public class FrmTipoIRepresentante extends JDialog {
 						
 					}
 				});
-				
-				JButton btnNovo = new JButton("Novo");
-				btnNovo.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						limpar();
-					}
-				});
-				btnNovo.setActionCommand("OK");
-				buttonPane.add(btnNovo);
-				
-				JButton btnExcluir = new JButton("Apagar");
-				btnExcluir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						try {
-							
-							if (tbLista.getSelectedRow() < 0) {
-								JOptionPane.showMessageDialog(null, "Selecione um registro na tabela. "
-									, "ERROR", JOptionPane.ERROR_MESSAGE);	
-								return;
-							} 
-							
-			                Representante representante= tableModel.get(tbLista.getSelectedRow());
-			               
-			                int selectedOption = JOptionPane.showConfirmDialog(null,"Confirma a exclusão do representante "+
-			                representante.getNome() +"?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-			        		if(selectedOption == JOptionPane.YES_OPTION){
-			        			RepresentanteControl.getInstance().apagar(representante);     
-			        			carregarTable();
-			        			JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!", "Confirmação de cadastro/atualização", 
-										JOptionPane.INFORMATION_MESSAGE);
-			        		}	
-						} catch (Throwable e) {
-							
-							if ( e.getMessage().contains("foreign key")) {
-								JOptionPane.showMessageDialog(null, "O representante não pode ser excuido pq existem processos vinculados. "
-										+ e.getMessage(), "ERROR", 
-										JOptionPane.ERROR_MESSAGE);
-							} else {							
-								e.printStackTrace();
-								Utils.msgExcption(e.getMessage());	
-							}
-						}
-					}
-				});
-				btnExcluir.setForeground(Color.RED);
-				btnExcluir.setActionCommand("OK");
-				buttonPane.add(btnExcluir);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				btnExcluir.setForeground(new Color(255, 255, 255));
+				btnExcluir.setActionCommand("OK");
+				buttonPane.add(btnExcluir);
 			}
 			{
 				JButton cancelButton = new JButton("Fechar");
+				cancelButton.setBackground(new Color(255, 255, 255));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();

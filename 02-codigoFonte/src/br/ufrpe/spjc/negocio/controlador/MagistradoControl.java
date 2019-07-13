@@ -1,6 +1,9 @@
 package br.ufrpe.spjc.negocio.controlador;
 
+import java.util.List;
+
 import br.ufrpe.framework.transaction.TransactionProxy;
+import br.ufrpe.spjc.negocio.entidade.Entity;
 import br.ufrpe.spjc.negocio.entidade.Magistrado;
 import br.ufrpe.spjc.repositorio.MagistradoDAO;
 
@@ -23,5 +26,9 @@ public class MagistradoControl {
 	public Magistrado findById(String id) {
 		Magistrado magistrado= repositorio.findById(id);
 		return magistrado;
+	}
+
+	public List<Entity> list() {
+		return repositorio.List();
 	}
 }

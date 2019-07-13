@@ -179,14 +179,14 @@ INSERT INTO ProcessoRepresentante (processo,representante) VALUES
 ('00004646820198170002', '01234561231'),
 ('00445554520198170002', '02132546548');
 
-INSERT INTO Pauta (id,dataAgendamento,estadoPauta,qtdeProcesso) VALUES 
-(1, '2019-06-10', 1, 2),
-(2, '2019-06-15', 1, 2),
-(3, '2019-06-18', 1, 1),
-(4, '2019-06-21', 1, 1),
-(5, '2019-06-30', 1, 1),
-(6, '2019-07-11', 1, 0),
-(7, '2019-08-10', 1, 1);
+INSERT INTO Pauta (id,juizado,dataAgendamento,estadoPauta,qtdeProcesso) VALUES 
+(1, 2, '2019-06-10', 1, 2),
+(2, 2, '2019-06-15', 1, 3),
+(3, 1, '2019-06-18', 1, 2),
+(4, 1, '2019-06-21', 1, 2),
+(5, 2, '2019-06-30', 1, 1),
+(6, 2, '2019-07-11', 1, 0),
+(7, 2, '2019-08-10', 1, 1);
 
 INSERT INTO Audiencia (id,pauta,processo,magistrado,servidor,estadoAudiencia,situacao,tipo,hora,sala) VALUES 
 (1, 1, '00051564620198170002', NULL,'03576768574',1,'C','C','13:00:00', 'sala 21'),
@@ -197,7 +197,9 @@ INSERT INTO Audiencia (id,pauta,processo,magistrado,servidor,estadoAudiencia,sit
 (6, 1, '00548648220198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 21'),
 (7, 2, '00445554520198170002', '09457374848', NULL,1,'I','I','14:00:00', 'sala 21'),
 (8, 2, '00004646820198170002', '09457374848', NULL,1,'I','I','15:00:00', 'sala 21'),
-(9, 7, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 21');
+(9, 7, '00051564620198170002', '71874846073', NULL,1,'C','C','13:00:00', 'sala 21'),
+(10, 3, '00145656920198170001', '09457374848', NULL,1,'I','I','14:00:00', 'sala 20'),
+(11, 4, '00012254520198170001', '71874846073', NULL,1,'C','C','14:00:00', 'sala 20');
 
 INSERT INTO Testemunha(id,nome, email, numeroEndereco, polo, telefone, dataNascimento ) VALUES 
 (1,'Ronald Motta','rmotta@gtec.com.br','45C','A','81 99989-0987','1988-10-10'),

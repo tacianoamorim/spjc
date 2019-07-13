@@ -17,7 +17,8 @@ CREATE TABLE Juizado (
  ,numeroEndereco                 VARCHAR(10) NOT NULL
  ,dataInicio                     DATE NULL
  ,dataFim                        DATE NULL
- ,salaAudiencia                  VARCHAR(100) NULL
+ ,salaAudiencia                  VARCHAR(100) NULL
+
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_Juizado_Endereco ON Juizado (endereco);
@@ -29,11 +30,13 @@ CREATE INDEX FK_Juizado_Magistrado ON Juizado (magistrado);
 CREATE TABLE Pauta (
   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL
  ,estadoPauta                    INTEGER UNSIGNED NOT NULL
+ ,juizado                        INTEGER UNSIGNED NOT NULL 
  ,dataAgendamento                DATETIME NOT NULL
  ,qtdeProcesso                   INTEGER UNSIGNED NULL DEFAULT 0
  ,PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 CREATE INDEX FK_EstadoPauta ON Pauta (estadoPauta);
+CREATE INDEX FK_JuizadoPauta ON Juizado (juizado);
 
 CREATE TABLE Feito (
   id                             INTEGER UNSIGNED AUTO_INCREMENT NOT NULL

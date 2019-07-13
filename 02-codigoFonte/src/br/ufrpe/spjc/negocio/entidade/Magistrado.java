@@ -1,19 +1,17 @@
 package br.ufrpe.spjc.negocio.entidade;
 
-public class Magistrado {
-	private String cpf;
+public class Magistrado extends Entity {
 	private int matricula;
-	private String nome;
 	private String senha;
 	private String numero;
 	private Endereco endereco;
 
 	public String getCpf() {
-		return cpf;
+		return super.getCpf();
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		super.setCpf(cpf);
 	}
 
 	public int getMatricula() {
@@ -25,11 +23,11 @@ public class Magistrado {
 	}
 
 	public String getNome() {
-		return nome;
+		return super.getNome();
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		super.setNome(nome);
 	}
 
 	public String getSenha() {

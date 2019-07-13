@@ -67,4 +67,10 @@ public class Audiencia {
 		this.estadoAudiencia = estadoAudiencia;
 	}
 
+	@Override
+	public String toString() {
+		return id + "(" + hora.get(Calendar.HOUR) +":"+ hora.get(Calendar.MINUTE) + ") " + processo.getNpu();
+	}
+
+	
 }

@@ -1,27 +1,25 @@
 package br.ufrpe.spjc.negocio.entidade;
 
-public class Servidor {
-	private String cpf;
-	private String nome;
+public class Servidor extends Entity {
 	private String senha;
 	private int matricula;
 	private String tipoServidor;
 	private Juizado juizado;
 
 	public String getCpf() {
-		return cpf;
+		return super.getCpf();
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		super.setCpf(cpf);
 	}
 
 	public String getNome() {
-		return nome;
+		return super.getNome();
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		super.setNome(nome);
 	}
 
 	public String getSenha() {

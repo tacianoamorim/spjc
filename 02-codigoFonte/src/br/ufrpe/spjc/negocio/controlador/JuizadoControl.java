@@ -1,6 +1,9 @@
 package br.ufrpe.spjc.negocio.controlador;
 
+import java.util.List;
+
 import br.ufrpe.framework.transaction.TransactionProxy;
+import br.ufrpe.spjc.negocio.entidade.Juizado;
 import br.ufrpe.spjc.repositorio.JuizadoDAO;
 
 public class JuizadoControl {
@@ -22,6 +25,10 @@ public class JuizadoControl {
 	public void inserir() {
 		System.out.println("Inserir Controlador");
 		repositorio.inserir();
+	}
+	
+	public List<Juizado> findByFilter(Juizado filtro) {
+		return repositorio.findByFilter(filtro);
 	}
 	
 }

@@ -1,9 +1,8 @@
 package br.ufrpe.spjc.negocio.entidade;
 
-public class Juizado {
+public class TipoDocumento {
 	private int id;
 	private String nome;
-	private String salaAudiencia;
 
 	public int getId() {
 		return id;
@@ -21,18 +20,9 @@ public class Juizado {
 		this.nome = nome;
 	}
 
-	public String getSalaAudiencia() {
-		return salaAudiencia;
-	}
-
-	public void setSalaAudiencia(String salaAudiencia) {
-		this.salaAudiencia = salaAudiencia;
-	}
-
 	@Override
 	public String toString() {
 		return id + "- " + nome;
 	}
 
-	
 }

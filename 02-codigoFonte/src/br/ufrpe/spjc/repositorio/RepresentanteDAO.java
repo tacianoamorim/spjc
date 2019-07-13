@@ -76,7 +76,6 @@ public class RepresentanteDAO {
 			connection = (Connection) transactionManager.getConnection();
 			
 			if (filtro != null) {
-			
 				sql.append("SELECT cpf, nome, oab, email, polo, senha, telefone, ");
 				sql.append(" numeroEndereco, tipoRepresentante, matricula, endereco ");
 				sql.append(" FROM DBSPJC.Representante WHERE 0= 0 ");
@@ -100,12 +99,9 @@ public class RepresentanteDAO {
 			e.printStackTrace();
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
-		} finally {
-//			transactionManager.closeConnection(connection);
-		}
+		} 
 		return representantes;		
 	}
-	
 	
 	public void inserir(Representante entity) {
 		Connection connection = null;
@@ -140,9 +136,7 @@ public class RepresentanteDAO {
 			e.printStackTrace();
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
-		} finally {
-//			transactionManager.closeConnection(connection);
-		}
+		} 
 	}
 	
 	public void update(Representante entity) {
@@ -179,8 +173,6 @@ public class RepresentanteDAO {
 			e.printStackTrace();
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
-		} finally {
-//			transactionManager.closeConnection(connection);
 		}
 	}
 
@@ -194,7 +186,6 @@ public class RepresentanteDAO {
 			connection = (Connection) transactionManager.getConnection();
 			
 			sql.append("DELETE FROM DBSPJC.Representante WHERE cpf= ? ");
-
 			preStmt= connection.prepareStatement(sql.toString());
 			preStmt.setString(1, representante.getCpf());
 			
@@ -204,9 +195,7 @@ public class RepresentanteDAO {
 			e.printStackTrace();
 			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
 					+ e.getErrorCode());
-		} finally {
-//			transactionManager.closeConnection(connection);
-		}
+		} 
 	}	
 
 }
