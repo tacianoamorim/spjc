@@ -31,4 +31,19 @@ public class MagistradoControl {
 	public List<Entity> list() {
 		return repositorio.List();
 	}
+
+	public void salvar(Magistrado magistrado) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<Magistrado> findByFilter(Magistrado magistrado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void apagar(Magistrado magistrado) {
+		// TODO Auto-generated method stub
+		
+	}
 }

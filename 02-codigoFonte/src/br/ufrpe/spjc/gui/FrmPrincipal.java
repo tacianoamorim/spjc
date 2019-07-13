@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import br.ufrpe.spjc.gui.marcos.FrmRelatorio;
 import br.ufrpe.spjc.gui.taciano.FrmRelatorioResumido;
 import br.ufrpe.spjc.gui.taciano.FrmTipoIIDocumento;
 import br.ufrpe.spjc.gui.taciano.FrmTipoIIIProcesso;
@@ -130,8 +131,14 @@ public class FrmPrincipal {
 	    JMenuItem mntmRelatrioDetalhadoComunicacao = new JMenuItem("Relatório Detalhado Comunicacao");
 	    mnRelatorio.add(mntmRelatrioDetalhadoComunicacao);
 	    
-	    JMenuItem mntmRelatrioDetalhadoConciliacao = new JMenuItem("Relatório Detalhado Conciliacao");
+	    JMenuItem mntmRelatrioDetalhadoConciliacao = new JMenuItem("Relatório Detalhado Servidores");
 	    mnRelatorio.add(mntmRelatrioDetalhadoConciliacao);
+	    mntmRelatrioDetalhadoConciliacao.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		FrmRelatorio window= new FrmRelatorio();
+	    		window.setVisible(true);
+	    	}
+	    });	    
 	    
 	    JPanel pnlCorpo = new JPanel();
 	    pnlCorpo.setBounds(0, 51, 822, 410);

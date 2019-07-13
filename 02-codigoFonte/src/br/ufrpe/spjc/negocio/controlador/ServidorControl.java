@@ -1,10 +1,12 @@
 package br.ufrpe.spjc.negocio.controlador;
 
+import java.util.Calendar;
 import java.util.List;
 
 import br.ufrpe.framework.transaction.TransactionProxy;
 import br.ufrpe.spjc.negocio.entidade.Entity;
 import br.ufrpe.spjc.negocio.entidade.Servidor;
+import br.ufrpe.spjc.negocio.vo.RelatorioServidorVO;
 import br.ufrpe.spjc.repositorio.ServidorDAO;
 
 public class ServidorControl {
@@ -30,5 +32,10 @@ public class ServidorControl {
 	
 	public List<Entity> findByFilter(Servidor filtro) {
 		return repositorio.findByFilter(filtro);
+	}
+	
+	public List<RelatorioServidorVO> getRelatorioServidor(Calendar 
+			dataInicio, Calendar dataFinal) {
+		return repositorio.getRelatorioServidor(dataInicio, dataFinal);
 	}
 }

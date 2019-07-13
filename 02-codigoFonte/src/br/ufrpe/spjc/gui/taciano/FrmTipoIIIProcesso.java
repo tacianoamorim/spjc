@@ -3,6 +3,7 @@ package br.ufrpe.spjc.gui.taciano;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import br.ufrpe.spjc.negocio.controlador.JuizadoControl;
@@ -28,10 +31,6 @@ import br.ufrpe.spjc.negocio.entidade.Juizado;
 import br.ufrpe.spjc.negocio.entidade.Pauta;
 import br.ufrpe.spjc.negocio.entidade.Processo;
 import br.ufrpe.spjc.util.Utils;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.SystemColor;
-import javax.swing.ImageIcon;
 
 public class FrmTipoIIIProcesso extends JDialog {
 
@@ -109,23 +108,12 @@ public class FrmTipoIIIProcesso extends JDialog {
 		btnBuscarProcesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Processo processo= ProcessoControl.getInstance().findById(txtNPU.getText());
-					if (processo == null) {
-						JOptionPane.showMessageDialog(null, "Processo não localizado", "Atenção", 
-								JOptionPane.INFORMATION_MESSAGE);
-						return;
-					}
-					txtNPU.setText("");
-					
-					String sql= processo.getNpu() + "\n"
-							+ "Feito: "+ processo.getProcessoFeito().getFeito().getNome();
-					
-					txtProcesso.setText(sql);
+					pesquisarProcesso(txtNPU.getText());
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 					Utils.msgExcption(e.getMessage());				
-				}
+				}	
 			}
 		});
 		btnBuscarProcesso.setBounds(135, 220, 66, 42);
@@ -255,7 +243,23 @@ public class FrmTipoIIIProcesso extends JDialog {
 		}
 	}
 	
+	private void pesquisarProcesso(String npu) {
+		Processo processo= ProcessoControl.getInstance().findById(npu);
+		if (processo == null) {
+			JOptionPane.showMessageDialog(null, "Processo não localizado", "Atenção", 
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		txtNPU.setText(npu);
+		String txt= processo.getNpu() + "\n"
+				+ "Feito: "+ processo.getProcessoFeito().getFeito().getNome();
+		
+		txtProcesso.setText(txt);
+	}
+	
 	private void carregarHorarios() {	
+		//if ( )
+		
 		cbxHorario.removeAllItems();
 		int idPauta= Integer.parseInt(Utils.getId(cbxPauta.getSelectedItem().toString(), "-"));
 		

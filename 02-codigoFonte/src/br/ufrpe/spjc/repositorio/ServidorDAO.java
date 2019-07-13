@@ -1,10 +1,12 @@
 package br.ufrpe.spjc.repositorio;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.ufrpe.framework.transaction.SystemException;
@@ -12,6 +14,7 @@ import br.ufrpe.framework.transaction.TransactionManager;
 import br.ufrpe.spjc.negocio.entidade.Entity;
 import br.ufrpe.spjc.negocio.entidade.Juizado;
 import br.ufrpe.spjc.negocio.entidade.Servidor;
+import br.ufrpe.spjc.negocio.vo.RelatorioServidorVO;
 
 public class ServidorDAO {
 
@@ -90,6 +93,50 @@ public class ServidorDAO {
 					servidor.setNome(rs.getString("nome"));
 					servidores.add(servidor);
 				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SystemException("\n " + e.getMessage() + " - Codigo: "
+					+ e.getErrorCode());
+		} 
+		return servidores;		
+	}
+	
+	
+	public List<RelatorioServidorVO> getRelatorioServidor(Calendar dataInicio, Calendar dataFinal) {
+		Connection connection = null;
+		PreparedStatement preStmt = null;
+		ResultSet rs = null;
+		TransactionManager transactionManager = TransactionManager.getInstance();
+		List<RelatorioServidorVO> servidores= new ArrayList<RelatorioServidorVO>();
+		StringBuilder sql= new StringBuilder();
+
+		try {
+			connection = (Connection) transactionManager.getConnection();
+			
+			sql.append("SELECT *  ");
+			sql.append("FROM DBSPJC.listarServidores  ");
+			sql.append("WHERE dataInicio BETWEEN ? AND ? ");
+			preStmt = connection.prepareStatement(sql.toString());
+			
+			Date dataIni= new Date(dataInicio.getTimeInMillis());
+//			dataIni.setHours(0);
+//			dataIni.setMinutes(0);
+			Date dataFim= new Date(dataFinal.getTimeInMillis());
+//			dataFim.setHours(23);
+//			dataFim.setMinutes(59);
+			
+			preStmt.setDate(1, dataIni);
+			preStmt.setDate(2, dataFim);
+			rs = preStmt.executeQuery();
+
+			while (rs.next()) {
+				RelatorioServidorVO servidor= new RelatorioServidorVO();
+				servidor.setCpf(rs.getString("cpf"));
+				servidor.setNomeJuizado(rs.getString("nomeJuizado"));
+				servidor.setNomeServidor(rs.getString("nomeServidor"));
+				servidores.add(servidor);
 			}
 
 		} catch (SQLException e) {

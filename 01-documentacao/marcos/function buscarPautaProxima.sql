@@ -27,4 +27,8 @@ begin
 
 end; //
 
-# SELECT DBSPJC.buscarPautaProxima('2019-07-10');
+ SELECT DBSPJC.buscarPautaProxima('2019-07-10');
+ 
+ 
+ 
+ 

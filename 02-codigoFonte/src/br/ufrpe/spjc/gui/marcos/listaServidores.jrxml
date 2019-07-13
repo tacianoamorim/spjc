@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 5.0.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaServidores" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54087b0b-4771-4f28-aad1-7f888cff6c08">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="nomeServidor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="18" width="580" height="30" uuid="5b17f75a-c435-4d42-8ef2-4dd6f7d6fa35"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Listagem de servidores]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="0" width="100" height="30" uuid="815fc380-1d60-4c7b-9311-ba6071ef11c5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fed7d916-f19d-446a-97d1-39eb63183021"/>
+				</reportElement>
+				<text><![CDATA[cpf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="100" height="30" uuid="7502634d-2639-4838-b963-ee18fb24d439">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f514b8f9-a130-4745-84b3-d55edc8fec43"/>
+				</reportElement>
+				<text><![CDATA[nomeServidor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="11" width="100" height="19" uuid="973f62c5-ff78-4401-ba89-14fb0cc6f397">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fed7d916-f19d-446a-97d1-39eb63183021"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="7" width="100" height="30" uuid="857e6457-ba67-4ada-9a33-d49f1cec8c2c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f514b8f9-a130-4745-84b3-d55edc8fec43"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomeServidor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
