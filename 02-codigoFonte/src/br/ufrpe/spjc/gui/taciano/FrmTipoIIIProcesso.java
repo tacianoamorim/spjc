@@ -229,6 +229,8 @@ public class FrmTipoIIIProcesso extends JDialog {
 									audiencia.setPauta(idPauta);
 									audiencia.setProcesso(txtNPU.getText());
 									audiencia.setSala(txtSala.getText());
+									audiencia.setTipo(cbxTipo.getSelectedItem().toString());
+									audiencia.setHoraMarcacao(idHora);
 									
 									Calendar cal= new GregorianCalendar();
 									cal.set(Calendar.HOUR, idHora);
@@ -345,9 +347,8 @@ public class FrmTipoIIIProcesso extends JDialog {
 			//Pauta pauta= PautaControl.getInstance().findById(idPauta);
 			
 			for (Audiencia audiencia : lista) {
-				int hora= audiencia.getHora().get(Calendar.HOUR);
+				int hora= audiencia.getHoraMarcacao();
 				
-				hora= hora + 3;
 				audiencia.setHoraMarcacao(hora);
 				if ( mapHorario.containsKey(hora) ) {
 					mapHorario.remove(hora);

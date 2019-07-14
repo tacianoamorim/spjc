@@ -13,6 +13,7 @@ import java.util.List;
 import br.ufrpe.framework.transaction.SystemException;
 import br.ufrpe.framework.transaction.TransactionManager;
 import br.ufrpe.spjc.negocio.entidade.Audiencia;
+import br.ufrpe.spjc.util.Utils;
 
 public class AudienciaDAO {
 
@@ -30,6 +31,7 @@ public class AudienciaDAO {
 		Calendar dataHora= new GregorianCalendar();
 		dataHora.setTimeInMillis(hora.getTime());
 		audiencia.setHora(dataHora);
+		audiencia.setHoraMarcacao(hora.getHours());
 		
 		return audiencia;
 	}
@@ -103,22 +105,23 @@ public class AudienciaDAO {
 			connection = (Connection) transactionManager.getConnection();
 			
 			sql.append("INSERT INTO DBSPJC.Audiencia " + 
-						"(magistrado, servidor, pauta, processo, tipo, hora, sala) " + 
+						"(pauta, processo, tipo, hora, sala, estadoAudiencia, situacao) " + 
 						"VALUES (?, ?, ?, ?, ?, ?, ?) ");
 			preStmt= connection.prepareStatement(sql.toString());
 			
-			if ( entity.getMagistrado() != null) {
-				preStmt.setString(1, entity.getMagistrado());			
-				preStmt.setString(2, null);
-			} else {
-				preStmt.setString(1, null);			
-				preStmt.setString(2, entity.getServidor());
-			}
-			preStmt.setInt(3, entity.getPauta());
-			preStmt.setString(4, entity.getProcesso());
-			preStmt.setString(5, entity.getTipo());
-			preStmt.setDate(6, new java.sql.Date( entity.getHora().getTimeInMillis()) );
-			preStmt.setString(7, entity.getSala());
+			
+			int hora= entity.getHoraMarcacao();
+			java.sql.Time time= new java.sql.Time(hora, 0, 0);
+			
+			preStmt.setInt(1, entity.getPauta());
+			preStmt.setString(2, entity.getProcesso());
+			
+			String codigo= Utils.getId(entity.getTipo().toString(), "-");
+			preStmt.setString(3, codigo);  
+			preStmt.setTime(4, time );
+			preStmt.setString(5, entity.getSala() );
+			preStmt.setInt(6, 1);
+			preStmt.setString(7, "I");
 			preStmt.execute();
 			
 		} catch (SQLException e) {
