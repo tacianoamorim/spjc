@@ -87,7 +87,11 @@ public class Documento {
 
 	@Override
 	public String toString() {
-		return id + "- " + processo + " [" + texto + "]";
+		String txt = id + "- " + processo;
+		if (texto != null) 
+			txt= txt + " [" + texto + "]";
+		
+		return txt;
 	}
 
 	

@@ -5,11 +5,12 @@ import java.util.Calendar;
 public class Audiencia {
 	private int id;
 	private Calendar hora;
-	private Pauta pauta;
-	private Processo processo;
+	private int pauta;
+	private String processo;
 	private String Tipo;
 	private String sala;
-	private EstadoAudiencia estadoAudiencia;
+	private String magistrado;
+	private String servidor;
 
 	public int getId() {
 		return id;
@@ -27,19 +28,19 @@ public class Audiencia {
 		this.hora = hora;
 	}
 
-	public Pauta getPauta() {
+	public int getPauta() {
 		return pauta;
 	}
 
-	public void setPauta(Pauta pauta) {
+	public void setPauta(int pauta) {
 		this.pauta = pauta;
 	}
 
-	public Processo getProcesso() {
+	public String getProcesso() {
 		return processo;
 	}
 
-	public void setProcesso(Processo processo) {
+	public void setProcesso(String processo) {
 		this.processo = processo;
 	}
 
@@ -59,18 +60,26 @@ public class Audiencia {
 		this.sala = sala;
 	}
 
-	public EstadoAudiencia getEstadoAudiencia() {
-		return estadoAudiencia;
+	public String getMagistrado() {
+		return magistrado;
 	}
 
-	public void setEstadoAudiencia(EstadoAudiencia estadoAudiencia) {
-		this.estadoAudiencia = estadoAudiencia;
+	public void setMagistrado(String magistrado) {
+		this.magistrado = magistrado;
+	}
+
+	public String getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(String servidor) {
+		this.servidor = servidor;
 	}
 
 	@Override
 	public String toString() {
-		return id + "(" + hora.get(Calendar.HOUR) +":"+ hora.get(Calendar.MINUTE) + ") " + processo.getNpu();
+		return id + "(" + hora.get(Calendar.HOUR) + ":" + hora.get(Calendar.MINUTE) + ") " 
+				+ processo;
 	}
 
-	
 }

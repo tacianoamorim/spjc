@@ -33,10 +33,16 @@ public class Pauta {
 
 	@Override
 	public String toString() {
-		return id + "- " 
+		String txt= "";
+		if ( id == 0 ) {
+			txt= " -- ESCOLHA UMA OPÇÃO -- ";
+		} else {
+			txt= id + "- " 
 				+ dataAgendamento.get(Calendar.DATE) +"/"+ dataAgendamento.get(Calendar.MONTH) +"/"+
-					dataAgendamento.get(Calendar.YEAR)  
-				+ " (" + qtdeProcesso + ")";
+				dataAgendamento.get(Calendar.YEAR)  
+			+ " (" + qtdeProcesso + ")";
+		}
+		return txt;
 	}
 
 	

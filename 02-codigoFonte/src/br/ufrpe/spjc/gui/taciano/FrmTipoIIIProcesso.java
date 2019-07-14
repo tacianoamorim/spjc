@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import br.ufrpe.spjc.negocio.controlador.AudienciaControl;
 import br.ufrpe.spjc.negocio.controlador.JuizadoControl;
 import br.ufrpe.spjc.negocio.controlador.PautaControl;
 import br.ufrpe.spjc.negocio.controlador.ProcessoControl;
@@ -42,11 +44,12 @@ public class FrmTipoIIIProcesso extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNPU;
 	private JTextField txtSala;
-	private JComboBox<Audiencia> cbxTipo;
+	private JComboBox<String> cbxTipo;
 	private JComboBox<Pauta> cbxPauta;
 	private JComboBox<Audiencia> cbxHorario;
 	private JTextArea txtProcesso;
 	private JComboBox<Juizado> cbxJuizado;
+	private String ITEM_ESCOLHA= "--- ESCOLHA UM OPCAO ---";
 	/**
 	 * Launch the application.
 	 */
@@ -81,7 +84,9 @@ public class FrmTipoIIIProcesso extends JDialog {
 		contentPanel.add(cbxPauta);
 		cbxPauta.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	carregarHorarios();
+		    	if ( cbxPauta.getSelectedIndex() > 0 ) {
+		    		carregarHorarios();
+		    	}
 		    }
 		});	
 		
@@ -133,7 +138,7 @@ public class FrmTipoIIIProcesso extends JDialog {
 		txtSala.setBounds(517, 319, 136, 25);
 		contentPanel.add(txtSala);
 		
-		cbxTipo = new JComboBox<Audiencia>();
+		cbxTipo = new JComboBox<String>();
 		cbxTipo.setBounds(12, 316, 493, 30);
 		contentPanel.add(cbxTipo);
 		
@@ -175,7 +180,20 @@ public class FrmTipoIIIProcesso extends JDialog {
 				btnApagar.setForeground(new Color(255, 255, 255));
 				btnApagar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						
+						try {
+							if (cbxHorario.getItemCount() > 0 ) {
+								int idAud= ( (Audiencia) cbxHorario.getSelectedItem()).getId();
+								if (idAud > 0 ) {
+									AudienciaControl.getInstance().apagar(idAud);
+	
+									carregarHorarios();
+								}
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Ocorreu um erro ao apagar o registro.", "Erro", 
+									JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}	
 					}
 				});
 				
@@ -191,6 +209,46 @@ public class FrmTipoIIIProcesso extends JDialog {
 				buttonPane.add(btnNova);
 				
 				JButton btnSalvar = new JButton("Salvar");
+				btnSalvar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if (cbxHorario.getItemCount() > 0) {
+//							int idTipoDocumento= ((TipoDocumento)cbxTipoDocumento.getSelectedItem()).getId();
+//							int idDocumento= ((Documento)cbxDocumentos.getSelectedItem()).getId();
+//							String idEditor= ((Entity) cbxEditor.getSelectedItem()).getCpf();
+//							if ( idDocumento>0 || (idTipoDocumento > 0 && !idEditor.equals("0") &&
+//									txtProcesso.getText().trim().length() > 0) ) {
+//								
+//								Documento documento= new Documento();
+//								if (idDocumento > 0) {
+//									documento.setId(idDocumento);
+//								}
+//								documento.setDataCriacao(new GregorianCalendar());
+//								documento.setTexto(txtTexto.getText());
+//								documento.setTipoDocumento(idTipoDocumento);
+//								documento.setProcesso(txtNpu.getText());
+//								documento.setTexto(txtTexto.getText());		
+//								
+//								if ( idTipoDocumento == 6 || idTipoDocumento == 5 ) {
+//									documento.setServidor(idEditor);
+//								} else {
+//									documento.setMagistrado(idEditor);
+//								}
+//	
+//								DocumentoControl.getInstance().salvar(documento);
+//								
+//								JOptionPane.showMessageDialog(null, "Documento gravado com sucesso", "Aviso", 
+//										JOptionPane.INFORMATION_MESSAGE);
+//								
+//								carregarListaDocumento();
+//								
+//							} else {
+//								JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Atenção", 
+//										JOptionPane.INFORMATION_MESSAGE);
+//								return;
+//							}	
+						}
+					}
+				});
 				btnSalvar.setBackground(new Color(0, 128, 0));
 				btnSalvar.setForeground(new Color(255, 255, 255));
 				btnSalvar.setActionCommand("OK");
@@ -215,11 +273,16 @@ public class FrmTipoIIIProcesso extends JDialog {
 		List<Juizado> juizados= JuizadoControl.getInstance().findByFilter(new Juizado());
 		Juizado juizado= new Juizado();
 		juizado.setId(0);
-		juizado.setNome("--- ESCOLHA UM JUIZADO ---");
+		juizado.setNome(ITEM_ESCOLHA);
 		cbxJuizado.addItem(juizado);
 		for (Juizado juizdo : juizados) {
 			cbxJuizado.addItem(juizdo);
 		}
+		
+		// Carregar tipo audiencia
+		cbxTipo.addItem(ITEM_ESCOLHA);
+		cbxTipo.addItem("C- Conciliação");
+		cbxTipo.addItem("I- Instrução e Julgamento");
 	}
 	
 	private void limpar() {
@@ -230,17 +293,6 @@ public class FrmTipoIIIProcesso extends JDialog {
 		cbxHorario.setSelectedIndex(0);
 		cbxTipo.setSelectedIndex(0);
 		cbxJuizado.setSelectedIndex(0);
-	}
-	
-	private void carregarPauta() {	
-		cbxPauta.removeAllItems();
-		int idJuizado= Integer.parseInt(Utils.getId(cbxJuizado.getSelectedItem().toString(), "-"));
-		if ( idJuizado > 0 ) {
-			List<Pauta> lista= PautaControl.getInstance().buscarPautaAtivas(idJuizado);	
-			for (Pauta pauta : lista) {	
-				cbxPauta.addItem(pauta);	
-			}
-		}
 	}
 	
 	private void pesquisarProcesso(String npu) {
@@ -257,12 +309,29 @@ public class FrmTipoIIIProcesso extends JDialog {
 		txtProcesso.setText(txt);
 	}
 	
-	private void carregarHorarios() {	
-		//if ( )
+	private void carregarPauta() {	
+		cbxPauta.removeAllItems();
+		int idJuizado= Integer.parseInt(Utils.getId(cbxJuizado.getSelectedItem().toString(), "-"));
+		if ( idJuizado > 0 ) {
+			Pauta pauta= new Pauta();
+			pauta.setId(0);
+			cbxPauta.addItem(pauta);
+			
+			List<Pauta> lista= PautaControl.getInstance().buscarPautaAtivas(idJuizado);	
+			for (Pauta pta : lista) {	
+				cbxPauta.addItem(pta);	
+			}
+		}
 		
+		Juizado juizado= (Juizado) cbxJuizado.getSelectedItem();
+		txtSala.setText( juizado.getSalaAudiencia() );
+		
+	}
+	
+	private void carregarHorarios() {	
 		cbxHorario.removeAllItems();
 		int idPauta= Integer.parseInt(Utils.getId(cbxPauta.getSelectedItem().toString(), "-"));
-		
+		System.out.println("--- > CARRGERA");
 		Map<Integer, Audiencia> mapHorario= new HashMap<Integer, Audiencia>();
 		mapHorario.put(13, null);
 		mapHorario.put(14, null);
@@ -273,25 +342,25 @@ public class FrmTipoIIIProcesso extends JDialog {
 		
 		if ( idPauta > 0 ) {
 			List<Audiencia> lista= PautaControl.getInstance().buscarHorarioPautaDisponival(idPauta);	
-			Pauta pauta= PautaControl.getInstance().findById(idPauta);
+			//Pauta pauta= PautaControl.getInstance().findById(idPauta);
 			
 			for (Audiencia audiencia : lista) {
-				
 				int hora= audiencia.getHora().get(Calendar.HOUR);
+				System.out.println( "HORA BC: "+hora+ "  ");
 				if ( mapHorario.containsKey(hora) ) {
 					mapHorario.put(hora, audiencia);
 
 				} else {
 					Audiencia aud= new Audiencia();
 					Processo processo= new Processo();
-					processo.setNpu(" ");
-					aud.setProcesso(processo);
-					
-					pauta.getDataAgendamento().set(Calendar.HOUR, hora);
-					pauta.getDataAgendamento().set(Calendar.MINUTE, 0);
-					aud.setHora(pauta.getDataAgendamento());
-					aud.setSala( ((Juizado)cbxJuizado.getSelectedItem()).getSalaAudiencia() );
-					mapHorario.put(hora, aud);
+//					processo.setNpu(" ");
+//					aud.setProcesso(processo);
+//					
+//					pauta.getDataAgendamento().set(Calendar.HOUR, hora);
+//					pauta.getDataAgendamento().set(Calendar.MINUTE, 0);
+//					aud.setHora(pauta.getDataAgendamento());
+//					aud.setSala( ((Juizado)cbxJuizado.getSelectedItem()).getSalaAudiencia() );
+//					mapHorario.put(hora, aud);
 				}
 			}
 			

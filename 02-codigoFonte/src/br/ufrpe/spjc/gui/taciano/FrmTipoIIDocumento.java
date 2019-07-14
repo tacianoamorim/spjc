@@ -164,35 +164,18 @@ public class FrmTipoIIDocumento extends JDialog {
 						
 						pesquisarProcesso(doc.getProcesso());
 						
-						
-						
-						
 						Entity entity= new Entity();
 						entity.setCpf("0");
 						entity.setNome(" ESCOLHA UMA OPÇÃO -");
 						cbxEditor.addItem(entity);
 						
 						List<Entity> lista=new ArrayList<Entity>();
-						Servidor filtro= new Servidor();
-	//					if ( idDocumento == 6 ) {
-	//						lblEditor.setText("Conciliador:");
-	//						filtro.setTipoServidor("C");
-	//						lista= ServidorControl.getInstance().findByFilter(filtro);
-	//						System.out.println("Conciliador");
-	//					} else if ( idTipoDocumento == 5 ) {
-	//						lblEditor.setText("Analista:");
-	//						filtro.setTipoServidor("A");
-	//						lista= ServidorControl.getInstance().findByFilter(filtro);
-	//						System.out.println("Analista");
-	//					} else {
-	//						lblEditor.setText("Magistrado:");
-	//						lista= MagistradoControl.getInstance().list();
-	//						System.out.println("Magistrado");
-	//					}
-						
 						for (Entity ent : lista) {
 							cbxEditor.addItem(ent);
 						}
+						
+						cbxEditor.setEnabled(false);
+						cbxTipoDocumento.setEnabled(false);
 					}
 				}
 			}
@@ -271,14 +254,20 @@ public class FrmTipoIIDocumento extends JDialog {
 				JButton btnCancelar = new JButton("Apagar");
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if (cbxDocumentos.getItemCount() > 0 ) {
-							int idDoc= ( (Documento) cbxDocumentos.getSelectedItem()).getId();
-							if (idDoc > 0 ) {
-								DocumentoControl.getInstance().apagar(idDoc);
-
-								carregarListaDocumento();
+						try {
+							if (cbxDocumentos.getItemCount() > 0 ) {
+								int idDoc= ( (Documento) cbxDocumentos.getSelectedItem()).getId();
+								if (idDoc > 0 ) {
+									DocumentoControl.getInstance().apagar(idDoc);
+	
+									carregarListaDocumento();
+								}
 							}
-						}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Ocorreu um erro ao apagar o registro.", "Erro", 
+									JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}							
 					}
 				});
 				btnCancelar.setForeground(Color.WHITE);
@@ -332,6 +321,8 @@ public class FrmTipoIIDocumento extends JDialog {
 	}
 	
 	private void limpar() {
+		cbxEditor.setEnabled(true);
+		cbxTipoDocumento.setEnabled(true);
 		
 		lblEditor.setText("Editor:");
 		cbxTipoDocumento.setSelectedIndex(0);
@@ -378,13 +369,11 @@ public class FrmTipoIIDocumento extends JDialog {
 				lista= MagistradoControl.getInstance().list();
 				txtTexto.setText("");
 				txtTexto.setText("DESCISÃO \n\n");
-								
 			}
 			
 			for (Entity ent : lista) {
 				cbxEditor.addItem(ent);
 			}
-
 		} 		
 	}	
 }
