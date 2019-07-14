@@ -1,6 +1,4 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
+SET AUTOCOMMIT FALSE;
 
 USE DBSPJC;
 
@@ -89,8 +87,8 @@ INSERT INTO Servidor (cpf,dataFim,dataInicio,endereco,juizado,matricula,nome,num
 ('46473646353', '2023-05-02', '2019-06-10', 50400110, NULL, 1678221,'Joao Batista','1783','123456789','T'),
 ('74857574774', '2023-09-01', '2019-06-10', 50920135, NULL, 1283746,'Marcos Silva','1','18936475','C');
 
-INSERT INTO  CursoEspecializacao (servidor, dataConclusao, nivel, nome, cargaHoraria) VALUES 
-('84637673636', '2017-06-09', 'superior', 'Contabilidade',68), 
+INSERT INTO  CursoEspecializacao (servidor,dataConclusao,nivel,nome,cargaHoraria) VALUES 
+( '84637673636', '2017-06-09', 'superior', 'Contabilidade',68), 
 ('84637673636', '2010-06-09', 'superior', 'Administracao',60), 
 ('98764736373', '2003-11-01', 'superior', 'Contabilidade',120); 
 

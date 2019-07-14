@@ -11,6 +11,19 @@ public class Audiencia {
 	private String sala;
 	private String magistrado;
 	private String servidor;
+	private int horaMarcacao;
+
+	public Audiencia() {
+		super();
+	}
+	
+	public Audiencia(int id, int horaMarcacao) {
+		super();
+		this.id = id;
+		this.horaMarcacao = horaMarcacao;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -76,10 +89,23 @@ public class Audiencia {
 		this.servidor = servidor;
 	}
 
+	public int getHoraMarcacao() {
+		return horaMarcacao;
+	}
+
+	public void setHoraMarcacao(int horaMarcacao) {
+		this.horaMarcacao = horaMarcacao;
+	}
+
 	@Override
 	public String toString() {
-		return id + "(" + hora.get(Calendar.HOUR) + ":" + hora.get(Calendar.MINUTE) + ") " 
-				+ processo;
+		String txt= "";
+		if ( id > 0) {
+			txt= "(" + horaMarcacao + ":00) => " 	+ processo;
+		} else {
+			txt= "(" + horaMarcacao + ":00) => - - - - - - - - - - - - - - - - - ";
+		}
+		return txt;
 	}
 
 }

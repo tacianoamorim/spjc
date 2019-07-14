@@ -6,11 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
+import java.sql.Time;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -181,14 +182,17 @@ public class FrmTipoIIIProcesso extends JDialog {
 				btnApagar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
-							if (cbxHorario.getItemCount() > 0 ) {
-								int idAud= ( (Audiencia) cbxHorario.getSelectedItem()).getId();
-								if (idAud > 0 ) {
-									AudienciaControl.getInstance().apagar(idAud);
-	
-									carregarHorarios();
-								}
-							}
+							int idAud= ( (Audiencia) cbxHorario.getSelectedItem()).getId();
+							if (idAud > 0 ) {
+								AudienciaControl.getInstance().apagar(idAud);
+								//limpar();
+								cbxPauta.removeAll();
+								cbxHorario.removeAll();
+								carregarPauta();
+								JOptionPane.showMessageDialog(null, "Pocesso removido da pauta.", "Sucesso", 
+										JOptionPane.INFORMATION_MESSAGE);
+							} 
+							
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(null, "Ocorreu um erro ao apagar o registro.", "Erro", 
 									JOptionPane.INFORMATION_MESSAGE);
@@ -211,41 +215,37 @@ public class FrmTipoIIIProcesso extends JDialog {
 				JButton btnSalvar = new JButton("Salvar");
 				btnSalvar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if (cbxHorario.getItemCount() > 0) {
-//							int idTipoDocumento= ((TipoDocumento)cbxTipoDocumento.getSelectedItem()).getId();
-//							int idDocumento= ((Documento)cbxDocumentos.getSelectedItem()).getId();
-//							String idEditor= ((Entity) cbxEditor.getSelectedItem()).getCpf();
-//							if ( idDocumento>0 || (idTipoDocumento > 0 && !idEditor.equals("0") &&
-//									txtProcesso.getText().trim().length() > 0) ) {
-//								
-//								Documento documento= new Documento();
-//								if (idDocumento > 0) {
-//									documento.setId(idDocumento);
-//								}
-//								documento.setDataCriacao(new GregorianCalendar());
-//								documento.setTexto(txtTexto.getText());
-//								documento.setTipoDocumento(idTipoDocumento);
-//								documento.setProcesso(txtNpu.getText());
-//								documento.setTexto(txtTexto.getText());		
-//								
-//								if ( idTipoDocumento == 6 || idTipoDocumento == 5 ) {
-//									documento.setServidor(idEditor);
-//								} else {
-//									documento.setMagistrado(idEditor);
-//								}
-//	
-//								DocumentoControl.getInstance().salvar(documento);
-//								
-//								JOptionPane.showMessageDialog(null, "Documento gravado com sucesso", "Aviso", 
-//										JOptionPane.INFORMATION_MESSAGE);
-//								
-//								carregarListaDocumento();
-//								
-//							} else {
-//								JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Atenção", 
-//										JOptionPane.INFORMATION_MESSAGE);
-//								return;
-//							}	
+						try {
+							if (cbxHorario.getItemCount() > 0) {
+								
+								if ( cbxTipo.getSelectedIndex() > 0 && txtNPU.getText() != null && txtProcesso.getText() != null ) {
+									int idHora= ( (Audiencia) cbxHorario.getSelectedItem() ).getHoraMarcacao();
+									int idPauta= ( (Pauta) cbxPauta.getSelectedItem() ).getId();
+									String idTipo= cbxTipo.getSelectedItem().toString();
+									
+									Time time= new Time(idHora, 0, 0);
+									
+									Audiencia audiencia= new Audiencia();
+									audiencia.setPauta(idPauta);
+									audiencia.setProcesso(txtNPU.getText());
+									audiencia.setSala(txtSala.getText());
+									
+									Calendar cal= new GregorianCalendar();
+									cal.set(Calendar.HOUR, idHora);
+									audiencia.setHora(cal);
+									AudienciaControl.getInstance().salvar(audiencia);
+									JOptionPane.showMessageDialog(null, "Registro salvo", "Atenção", 
+											JOptionPane.INFORMATION_MESSAGE);
+									
+									
+								} else {
+									JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Atenção", 
+											JOptionPane.INFORMATION_MESSAGE);
+									return;
+								}	
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
 						}
 					}
 				});
@@ -289,10 +289,10 @@ public class FrmTipoIIIProcesso extends JDialog {
 		txtNPU.setText("");
 		txtProcesso.setText("");
 		txtSala.setText("");
-		cbxPauta.setSelectedIndex(0);
+		cbxJuizado.setSelectedIndex(0);
 		cbxHorario.setSelectedIndex(0);
 		cbxTipo.setSelectedIndex(0);
-		cbxJuizado.setSelectedIndex(0);
+		cbxPauta.setSelectedIndex(0);
 	}
 	
 	private void pesquisarProcesso(String npu) {
@@ -311,6 +311,7 @@ public class FrmTipoIIIProcesso extends JDialog {
 	
 	private void carregarPauta() {	
 		cbxPauta.removeAllItems();
+		cbxHorario.removeAllItems();
 		int idJuizado= Integer.parseInt(Utils.getId(cbxJuizado.getSelectedItem().toString(), "-"));
 		if ( idJuizado > 0 ) {
 			Pauta pauta= new Pauta();
@@ -331,14 +332,13 @@ public class FrmTipoIIIProcesso extends JDialog {
 	private void carregarHorarios() {	
 		cbxHorario.removeAllItems();
 		int idPauta= Integer.parseInt(Utils.getId(cbxPauta.getSelectedItem().toString(), "-"));
-		System.out.println("--- > CARRGERA");
-		Map<Integer, Audiencia> mapHorario= new HashMap<Integer, Audiencia>();
-		mapHorario.put(13, null);
-		mapHorario.put(14, null);
-		mapHorario.put(15, null);
-		mapHorario.put(16, null);
-		mapHorario.put(17, null);
-		mapHorario.put(18, null);
+		Map<Integer, Audiencia> mapHorario= new TreeMap<Integer, Audiencia>();
+		mapHorario.put(13, new Audiencia(0, 13));
+		mapHorario.put(14, new Audiencia(0, 14));
+		mapHorario.put(15, new Audiencia(0, 15));
+		mapHorario.put(16, new Audiencia(0, 16));
+		mapHorario.put(17, new Audiencia(0, 17));
+		mapHorario.put(18, new Audiencia(0, 18));
 		
 		if ( idPauta > 0 ) {
 			List<Audiencia> lista= PautaControl.getInstance().buscarHorarioPautaDisponival(idPauta);	
@@ -346,21 +346,12 @@ public class FrmTipoIIIProcesso extends JDialog {
 			
 			for (Audiencia audiencia : lista) {
 				int hora= audiencia.getHora().get(Calendar.HOUR);
-				System.out.println( "HORA BC: "+hora+ "  ");
+				
+				hora= hora + 3;
+				audiencia.setHoraMarcacao(hora);
 				if ( mapHorario.containsKey(hora) ) {
+					mapHorario.remove(hora);
 					mapHorario.put(hora, audiencia);
-
-				} else {
-					Audiencia aud= new Audiencia();
-					Processo processo= new Processo();
-//					processo.setNpu(" ");
-//					aud.setProcesso(processo);
-//					
-//					pauta.getDataAgendamento().set(Calendar.HOUR, hora);
-//					pauta.getDataAgendamento().set(Calendar.MINUTE, 0);
-//					aud.setHora(pauta.getDataAgendamento());
-//					aud.setSala( ((Juizado)cbxJuizado.getSelectedItem()).getSalaAudiencia() );
-//					mapHorario.put(hora, aud);
 				}
 			}
 			
