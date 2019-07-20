@@ -33,7 +33,7 @@ import br.ufrpe.spjc.negocio.entidade.ProcessoFase;
 import br.ufrpe.spjc.negocio.entidade.ProcessoFeito;
 import br.ufrpe.spjc.util.Utils;
 
-public class FormularioProcesso extends JDialog {
+public class Form_II_Processo extends JDialog {
 
 	/**
 	 * serialVersionUID
@@ -62,7 +62,7 @@ public class FormularioProcesso extends JDialog {
 	public static void main(String[] args) {
 		
 		try {
-			FormularioProcesso dialog = new FormularioProcesso();
+			Form_II_Processo dialog = new Form_II_Processo();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class FormularioProcesso extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FormularioProcesso() {
+	public Form_II_Processo() {
 		
 		setBounds(100, 100, 679, 482);
 		getContentPane().setLayout(null);

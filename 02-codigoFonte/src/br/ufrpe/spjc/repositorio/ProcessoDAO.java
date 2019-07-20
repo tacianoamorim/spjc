@@ -86,11 +86,17 @@ public class ProcessoDAO {
 				if ( filtro.getNpu() != null )
 					sql.append("	AND p.npu= ? ");
 				
+				if ( filtro.getJuizado() != null )
+					sql.append("	AND p.juizado= ? ");
+				
 				preStmt = connection.prepareStatement(sql.toString());
 				int idx= 1;
 				
 				if ( filtro.getNpu() != null )
 					preStmt.setString(idx++, filtro.getNpu());
+				
+				if ( filtro.getJuizado() != null )
+					preStmt.setInt(idx++, filtro.getJuizado().getId());				
 				
 				rs = preStmt.executeQuery();
 	
