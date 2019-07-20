@@ -5,6 +5,17 @@ public class Juizado {
 	private String nome;
 	private String salaAudiencia;
 
+	
+	public Juizado() {
+		super();
+	}
+
+	public Juizado(int id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
+
 	public int getId() {
 		return id;
 	}

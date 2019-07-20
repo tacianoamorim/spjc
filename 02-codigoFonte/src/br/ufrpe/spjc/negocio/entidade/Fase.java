@@ -16,8 +16,14 @@ public class Fase {
 		return nome;
 	}
 
+	@Override
+	public String toString() {
+		return id + "- " + nome;
+	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	
 }

@@ -20,4 +20,8 @@ public class Feito {
 		this.nome = nome;
 	}
 
+	@Override
+	public String toString() {
+		return id + "- " + nome;
+	}
 }

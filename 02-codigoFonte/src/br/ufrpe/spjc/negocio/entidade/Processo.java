@@ -4,7 +4,8 @@ public class Processo {
 	private String npu;
 	private ProcessoFase processoFase;
 	private ProcessoFeito processoFeito;
-	private Juizado juizado;;
+	private Juizado juizado;
+	private String observacao;
 
 	public String getNpu() {
 		return npu;
@@ -36,6 +37,14 @@ public class Processo {
 
 	public void setJuizado(Juizado juizado) {
 		this.juizado = juizado;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	@Override

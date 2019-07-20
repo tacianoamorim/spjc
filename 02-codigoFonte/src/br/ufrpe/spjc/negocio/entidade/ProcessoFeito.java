@@ -4,6 +4,16 @@ public class ProcessoFeito {
 	private String npu;
 	private Feito feito;
 
+	public ProcessoFeito() {
+		super();
+	}
+
+	public ProcessoFeito(String npu, Feito feito) {
+		super();
+		this.npu = npu;
+		this.feito = feito;
+	}
+	
 	public String getNpu() {
 		return npu;
 	}
