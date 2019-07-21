@@ -41,7 +41,7 @@ public class Form_II_Processo extends JDialog {
 	private static final long serialVersionUID = -2551738506958296384L;
 	
 	private final JPanel contentPanel = new JPanel();
-	private Tabela tableModel;
+	private TableProcesso tableModel;
 	private JTable tbLista;
 
 	private JTextPane txtObservacao;
@@ -156,7 +156,7 @@ public class Form_II_Processo extends JDialog {
 		JLabel texto = new JLabel("Cadastro de Magistrado");
 		contentPanel.add(texto);
 		
-		tableModel = new Tabela();
+		tableModel = new TableProcesso();
 		
 		setResizable(false);
 		setAutoRequestFocus(false);

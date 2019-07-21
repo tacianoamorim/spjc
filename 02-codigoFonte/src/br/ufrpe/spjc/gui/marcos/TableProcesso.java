@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.ufrpe.spjc.negocio.entidade.Magistrado;
 import br.ufrpe.spjc.negocio.entidade.Processo;
 
 public class TableProcesso extends AbstractTableModel {
@@ -15,23 +14,20 @@ public class TableProcesso extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 7419763598897891865L;
 	
-	private List<Magistrado> list;
+	private List<Processo> list;
 	private String[] colunas = new String[] { 
-		"CPF", "Nome", "Matricula"
+		"NPU", "Observação"
 	};
 
 	private List<Processo> list1;
-	private String[] colunas1 = new String[] { 
-		"NPUp", "Juizado", "NPUf"
-	};
 
 	/** Creates a new instance of TableModel */
-	public TableProcesso(List<Magistrado> magistrado) {
-		this.list = magistrado;
+	public TableProcesso(List<Processo> processo) {
+		this.list = processo;
 	}
 
 	public TableProcesso() {
-		this.list = new ArrayList<Magistrado>();
+		this.list = new ArrayList<Processo>();
 	}
 
 	public int getRowCount() {
@@ -52,32 +48,25 @@ public class TableProcesso extends AbstractTableModel {
 		return String.class;
 	}
 
-	public void setValueAt(Magistrado aValue, int rowIndex) {
-		Magistrado magistrado = list.get(rowIndex);
-		System.out.println("setValueAt01");
-		magistrado.setCpf( aValue.getCpf() );
-		magistrado.setNome(aValue.getNome());
-		magistrado.setMatricula(aValue.getMatricula());
-		magistrado.setEndereco(aValue.getEndereco());
+	public void setValueAt(Processo aValue, int rowIndex) {
+		Processo processo = list.get(rowIndex);
+		processo.setNpu( aValue.getNpu() );
+		processo.setObservacao(aValue.getObservacao());
 		
 		fireTableCellUpdated(rowIndex, 0);
 		fireTableCellUpdated(rowIndex, 1);
-		fireTableCellUpdated(rowIndex, 2);
-		fireTableCellUpdated(rowIndex, 3);
 
 	}
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		Magistrado magistrado = list.get(rowIndex);
+		Processo processo = list.get(rowIndex);
 		System.out.println("setValueAt02");
 		switch (columnIndex) {
 		case 0:
-			magistrado.setCpf( aValue.toString() );
+			processo.setNpu( aValue.toString() );
 		case 1:
-			magistrado.setNome(aValue.toString());
-		case 2:
-			magistrado.setMatricula(Integer.parseInt(aValue.toString()));  //  aValue.toString().hashCode() );
+			processo.setObservacao(aValue.toString());
 	
 		default:
 			System.err.println("indice da coluna invalido");
@@ -86,20 +75,17 @@ public class TableProcesso extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Magistrado magistradoselecionado = list.get(rowIndex);
+		Processo processoselecionado = list.get(rowIndex);
 		String valueObject = null;
 		switch (columnIndex) {
 		case 0:
-			valueObject = magistradoselecionado.getCpf();
+			valueObject = processoselecionado.getNpu();
 			break;
 		case 1:
-			valueObject = magistradoselecionado.getNome();
-			break;
-		case 2:
-			valueObject = magistradoselecionado.getMatricula()+"";
+			valueObject = processoselecionado.getObservacao();
 			break;
 		default:
-			System.err.println("indice invalido para propriedade do bean Magistrado.class");
+			System.err.println("indice invalido para propriedade do bean Processo.class");
 		}
 		return valueObject;
 	}
@@ -113,10 +99,7 @@ public class TableProcesso extends AbstractTableModel {
 			valueObject = processo.getNpu();
 			break;
 		case 1:
-			valueObject = processo.getJuizado()+"";
-			break;
-		case 2:
-			valueObject = processo.getProcessoFase()+"";
+			valueObject = processo.getObservacao()+"";
 			break;
 		default:
 			System.err.println("indice invalido para propriedade do bean Processo.class");
@@ -129,7 +112,7 @@ public class TableProcesso extends AbstractTableModel {
 		return false;
 	}
 
-	public Magistrado get(int indiceLinha) {
+	public Processo get(int indiceLinha) {
 		return list.get(indiceLinha);
 	}
 
@@ -137,8 +120,8 @@ public class TableProcesso extends AbstractTableModel {
 		return list1.get(indiceLinha1);
 	}
 
-	public void add(Magistrado magistrado) {
-		list.add(magistrado);
+	public void add(Processo processo) {
+		list.add(processo);
 		int ultimoIndice = getRowCount() - 1;
 		fireTableRowsInserted(ultimoIndice, ultimoIndice);
 	}
@@ -158,9 +141,9 @@ public class TableProcesso extends AbstractTableModel {
 		list1.remove(indiceLinha);
 		fireTableRowsDeleted(indiceLinha, indiceLinha);
 	}
-	public void addList(List<Magistrado> novosmagistrado) {
+	public void addList(List<Processo> novosprocesso) {
 		int tamanhoAntigo = getRowCount();
-		list.addAll(novosmagistrado);
+		list.addAll(novosprocesso);
 		fireTableRowsInserted(tamanhoAntigo, getRowCount() - 1);
 	}
 	
