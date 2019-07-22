@@ -32,7 +32,8 @@ public class ProcessoDAO {
 		try {
 			connection = (Connection) transactionManager.getConnection();
 			
-			sql.append("SELECT p.npu, j.nome AS 'Juizado', f.nome AS 'Fase', ft.nome AS 'Feito'  ");
+			sql.append("SELECT p.npu, j.nome AS 'Juizado', f.nome AS 'Fase', ft.nome AS 'Feito',  ");
+			sql.append("	j.id AS 'idJuizado', f.id AS 'idFase', ft.id AS 'idFeito', observacao  ");
 			sql.append("FROM DBSPJC.Processo p  ");
 			sql.append("	INNER JOIN DBSPJC.ProcessoFase pf ON pf.processo= p.npu ");
 			sql.append("    INNER JOIN DBSPJC.ProcessoFeito pft ON pft.processo= p.npu ");

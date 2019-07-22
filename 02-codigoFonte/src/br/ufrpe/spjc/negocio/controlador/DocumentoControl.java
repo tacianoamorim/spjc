@@ -23,7 +23,11 @@ public class DocumentoControl {
 	}
 
 	public List<Documento> list() {
-		return repositorio.list();
+		return repositorio.list(null);
+	}
+	
+	public List<Documento> list(String npu) {
+		return repositorio.list(npu);
 	}
 	
 	public void apagar(int id) {

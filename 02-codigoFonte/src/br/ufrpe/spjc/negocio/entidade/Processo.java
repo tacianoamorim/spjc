@@ -49,10 +49,15 @@ public class Processo {
 
 	@Override
 	public String toString() {
-		return  npu 
-				+ " - Juizado= " + juizado.getNome()
-				+ " - Fase= " + processoFase.getFase().getNome() 
-				+ " - Feito= " + processoFeito.getFeito().getNome();
+		String retorno= "0- ESCOLHA UM PROCESSO ";
+		if (!"0".equals(npu)) {
+			retorno= npu 
+					+ " - Juizado= " + juizado.getNome()
+					+ " - Fase= " + processoFase.getFase().getNome() 
+					+ " - Feito= " + processoFeito.getFeito().getNome();
+		}
+		
+		return retorno;
 	}
 
 	

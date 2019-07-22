@@ -71,7 +71,7 @@ public class DocumentoDAO {
 		} 
 	}
 
-	public List<Documento> list() {
+	public List<Documento> list(String npu) {
 		Connection connection = null;
 		PreparedStatement preStmt = null;
 		ResultSet rs = null;
@@ -83,8 +83,16 @@ public class DocumentoDAO {
 			connection = (Connection) transactionManager.getConnection();
 			sql.append("SELECT id, processo, magistrado, servidor, texto, tipoDocumento ");
 			sql.append("FROM DBSPJC.Documento  ");
+			
+			if ( npu != null )
+				sql.append("WHERE processo= ?  ");
+			
 			sql.append("ORDER BY tipoDocumento,  processo ");
 			preStmt = connection.prepareStatement(sql.toString());
+			
+			if ( npu != null )
+				preStmt.setString(1, npu);
+			
 			rs = preStmt.executeQuery();
 
 			while (rs.next()) {
@@ -106,7 +114,7 @@ public class DocumentoDAO {
 		} 
 		return entities;	
 	}
-
+	
 	public void update(Documento entity) {
 		Connection connection = null;
 		PreparedStatement preStmt = null;
